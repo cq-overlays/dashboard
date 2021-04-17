@@ -30,6 +30,7 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
+    "@emotion/core": "^11.0.0",
     "@fontsource/open-sans": "^4.2.2",
     "@material-ui/core": "^4.11.3",
     "install": "^0.13.0",
@@ -37,7 +38,6 @@
     "npm": "^7.10.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "styled-components": "^5.2.3",
     "utils": "^0.3.1"
   }
 }
