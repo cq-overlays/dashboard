@@ -2,12 +2,6 @@
   "name": "octo-overlays",
   "version": "0.0.0",
   "author": "LeptoFlare",
-  "files": [
-    "src",
-    "dashboard",
-    "extension",
-    "schemas"
-  ],
   "scripts": {
     "build": "npx parcel build src/dashboard/*.html --out-dir dashboard --public-url ./",
     "dev": "npx parcel watch src/dashboard/*.html --out-dir dashboard --public-url ./"
@@ -25,6 +19,12 @@
   },
   "repository": "https://github.com/LeptoFlare/octo-overlays.git",
   "license": "MIT",
+  "files": [
+    "src",
+    "dashboard",
+    "extension",
+    "schemas"
+  ],
   "devDependencies": {
     "parcel-bundler": "^1.12.5",
     "typescript": "^4.2.4"
