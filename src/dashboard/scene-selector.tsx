@@ -2,9 +2,9 @@ import * as React from "react";
 import { css } from "@emotion/core";
 import { TextField, Button, Box } from "@material-ui/core";
 
-import render from "./utils/render";
-import useReplicant from "./utils/useReplicant";
-import Section from "./utils/Section";
+import render from "../render";
+import useReplicant from "../useReplicant";
+import Section from "../Section";
 
 render(() => {
   const [scene, setScene] = useReplicant("currentScene");
