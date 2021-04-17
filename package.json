@@ -2,10 +2,6 @@
   "name": "cq-overlay-controls",
   "version": "0.0.0",
   "author": "LeptoFlare",
-  "scripts": {
-    "build": "npx parcel build src/dashboard/*.html --out-dir dashboard --public-url ./",
-    "dev": "npx parcel watch src/dashboard/*.html --out-dir dashboard --public-url ./"
-  },
   "nodecg": {
     "compatibleRange": "^1.1.1",
     "dashboardPanels": [
@@ -16,6 +12,10 @@
         "width": 3
       }
     ]
+  },
+  "scripts": {
+    "build": "npx parcel build src/dashboard/*.html --out-dir dashboard --public-url ./",
+    "dev": "npx parcel watch src/dashboard/*.html --out-dir dashboard --public-url ./"
   },
   "repository": "https://github.com/LeptoFlare/octo-overlays.git",
   "license": "MIT",
