@@ -1,0 +1,43 @@
+{
+  "name": "octo-overlays",
+  "version": "0.0.0",
+  "author": "LeptoFlare",
+  "files": [
+    "src",
+    "dashboard",
+    "extension",
+    "schemas"
+  ],
+  "scripts": {
+    "build": "npx parcel build src/dashboard/*.html --out-dir dashboard --public-url ./",
+    "dev": "npx parcel watch src/dashboard/*.html --out-dir dashboard --public-url ./"
+  },
+  "nodecg": {
+    "compatibleRange": "^1.1.1",
+    "dashboardPanels": [
+      {
+        "name": "scene-selector",
+        "file": "scene-selector.html",
+        "title": "Scenes",
+        "width": 3
+      }
+    ]
+  },
+  "repository": "https://github.com/LeptoFlare/octo-overlays.git",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "@fontsource/open-sans": "^4.2.2",
+    "@material-ui/core": "^4.11.3",
+    "install": "^0.13.0",
+    "nodecg": "^1.8.1",
+    "npm": "^7.10.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.2.3",
+    "utils": "^0.3.1"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react"
+  },
+  "include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+    "node_modules/nodecg/types/browser.d.ts",
+  ]
+}
