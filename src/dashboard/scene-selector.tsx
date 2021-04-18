@@ -1,13 +1,13 @@
-import * as React from "react";
-import { css } from "@emotion/core";
-import { TextField, Button, Box } from "@material-ui/core";
+import * as React from "react"
+import { css } from "@emotion/core"
+import { TextField, Button, Box } from "@material-ui/core"
 
-import render from "../render";
-import useReplicant from "../useReplicant";
-import Section from "../Section";
+import render from "../render"
+import useReplicant from "../useReplicant"
+import Section from "../Section"
 
 render(() => {
-  const [scene, setScene] = useReplicant("currentScene");
+  const [scene, setScene] = useReplicant("currentScene")
 
   return (
     <Box
@@ -21,8 +21,8 @@ render(() => {
       <SceneBox name="Maplist Scene" {...{ scene, setScene }} />
       <SceneBox name="BRB Scene" {...{ scene, setScene }} />
     </Box>
-  );
-});
+  )
+})
 
 const SceneBox = ({ name, scene, setScene }) => (
   <Section>
@@ -44,4 +44,4 @@ const SceneBox = ({ name, scene, setScene }) => (
       </Button>
     </Box>
   </Section>
-);
+)

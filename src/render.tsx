@@ -1,12 +1,12 @@
-import * as React from "react";
-import { render } from "react-dom";
-import { css } from "@emotion/core";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import "@fontsource/open-sans/300.css";
-import "@fontsource/open-sans/400.css";
-import "@fontsource/open-sans/600.css";
-import "@fontsource/open-sans/700.css";
-import "@fontsource/open-sans/800.css";
+import * as React from "react"
+import { render } from "react-dom"
+import { css } from "@emotion/core"
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
+import "@fontsource/open-sans/300.css"
+import "@fontsource/open-sans/400.css"
+import "@fontsource/open-sans/600.css"
+import "@fontsource/open-sans/700.css"
+import "@fontsource/open-sans/800.css"
 
 const theme = createMuiTheme({
   typography: {
@@ -43,7 +43,7 @@ const theme = createMuiTheme({
       A100: "#8992A2",
     },
   },
-});
+})
 
 const Template = ({ children }) => (
   <ThemeProvider theme={theme}>
@@ -55,13 +55,13 @@ const Template = ({ children }) => (
       {children}
     </div>
   </ThemeProvider>
-);
+)
 
-export default (App) => {
+export default App => {
   render(
     <Template>
       <App />
     </Template>,
     document.getElementById("app")
-  );
-};
+  )
+}
