@@ -10,6 +10,12 @@
         "file": "scene-selector.html",
         "title": "Scenes",
         "width": 3
+      },
+      {
+        "name": "scene-options",
+        "file": "scene-options.html",
+        "title": "Options",
+        "width": 4
       }
     ]
   },
@@ -30,9 +36,11 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "@emotion/core": "^11.0.0",
+    "@emotion/css": "^11.1.3",
     "@fontsource/open-sans": "^4.2.2",
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "*",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "install": "^0.13.0",
