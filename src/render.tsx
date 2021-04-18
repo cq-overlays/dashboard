@@ -1,14 +1,15 @@
 import * as React from "react"
 import { render } from "react-dom"
-import { css } from "@emotion/core"
+import { css } from "@emotion/css"
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
+import { StylesProvider } from "@material-ui/core/styles"
 import "@fontsource/open-sans/300.css"
 import "@fontsource/open-sans/400.css"
 import "@fontsource/open-sans/600.css"
 import "@fontsource/open-sans/700.css"
 import "@fontsource/open-sans/800.css"
 
-const theme = createMuiTheme({
+export const theme = createMuiTheme({
   typography: {
     fontFamily: [
       "Open Sans",
@@ -43,17 +44,26 @@ const theme = createMuiTheme({
       A100: "#8992A2",
     },
   },
+  overrides: {
+    MuiPaper: {
+      root: {
+        backgroundColor: "#2c374b",
+      },
+    },
+  },
 })
 
 const Template = ({ children }) => (
   <ThemeProvider theme={theme}>
-    <div
-      className={css`
-        font-family: "Open Sans", "Roboto", "Helvetica", "Arial", "sans-serif";
-      `}
-    >
-      {children}
-    </div>
+    <StylesProvider injectFirst>
+      <div
+        className={css`
+          font-family: "Open Sans", "Roboto", "Helvetica", "Arial", "sans-serif";
+        `}
+      >
+        {children}
+      </div>
+    </StylesProvider>
   </ThemeProvider>
 )
 

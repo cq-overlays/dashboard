@@ -1,17 +1,17 @@
 import * as React from "react"
-import { css } from "@emotion/core"
-import { TextField, Button, Box } from "@material-ui/core"
+import { css } from "@emotion/css"
+import { Button, Box } from "@material-ui/core"
 
 import render from "../render"
 import useReplicant from "../useReplicant"
 import Section from "../Section"
 
-render(() => {
+const Panel = () => {
   const [scene, setScene] = useReplicant("currentScene")
 
   return (
     <Box
-      css={css`
+      className={css`
         display: flex;
         flex-direction: column;
       `}
@@ -22,12 +22,12 @@ render(() => {
       <SceneBox name="BRB Scene" {...{ scene, setScene }} />
     </Box>
   )
-})
+}
 
 const SceneBox = ({ name, scene, setScene }) => (
   <Section>
     <Box
-      css={css`
+      className={css`
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -45,3 +45,5 @@ const SceneBox = ({ name, scene, setScene }) => (
     </Box>
   </Section>
 )
+
+render(Panel)
