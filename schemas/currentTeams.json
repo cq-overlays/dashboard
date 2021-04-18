@@ -1,16 +1,39 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "array",
+  "minItems": 2,
+  "maxItems": 2,
   "items": {
     "type": "object",
     "properties": {
       "name": {"type": "string"},
-      "color": {"type": "string", "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"},
       "score": {"type": "number"},
       "roster": {
         "type": "array",
         "items": {"type": "string"}
       }
     }
-  }
+  },
+  "default": [
+    {
+      "name": "Team A",
+      "score": 0,
+      "roster": [
+        "Atmosphere",
+        "Airport",
+        "Assumption",
+        "Application"
+      ]
+    },
+    {
+      "name": "Team B",
+      "score": 0,
+      "roster": [
+        "Balloon",
+        "Brick",
+        "Breakfast",
+        "Bathtub"
+      ]
+    }
+  ]
 }

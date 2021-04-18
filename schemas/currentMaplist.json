@@ -8,5 +8,22 @@
       "mode": {"type": "string"},
       "winner": {"type": "string"}
     }
-  }
+  },
+  "default": [
+    {
+      "map": "Urchin Underpass",
+      "mode": "Rocket",
+      "winner": null
+    },
+    {
+      "map": "Urchin Underpass",
+      "mode": "Rocket",
+      "winner": null
+    },
+    {
+      "map": "Urchin Underpass",
+      "mode": "Rocket",
+      "winner": null
+    }
+  ]
 }
