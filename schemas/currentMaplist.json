@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "map": {"type": "string"},
+      "mode": {"type": "string"},
+      "winner": {"type": "string"}
+    }
+  }
+}
