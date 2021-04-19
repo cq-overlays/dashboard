@@ -7,7 +7,6 @@ export default <T, U>(
   opts?: ReplicantOptions<T>
 ): [T | U, (input: T) => void] => {
   const [value, updateValue] = useState<T | U>()
-
   const replicant = nodecg.Replicant(name, namespace, opts)
 
   useEffect(() => {
