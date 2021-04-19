@@ -8,35 +8,19 @@
     "properties": {
       "name": {"type": "string"},
       "color": {"type": "string", "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"},
-      "score": {"type": "number"},
-      "roster": {
-        "type": "array",
-        "items": {"type": "string"}
-      }
+      "score": {"type": "number"}
     }
   },
   "default": [
     {
       "name": "Team A",
       "color": "#e36d60",
-      "score": 0,
-      "roster": [
-        "Atmosphere",
-        "Airport",
-        "Assumption",
-        "Application"
-      ]
+      "score": 0
     },
     {
       "name": "Team B",
       "color": "#2fb89a",
-      "score": 0,
-      "roster": [
-        "Balloon",
-        "Brick",
-        "Breakfast",
-        "Bathtub"
-      ]
+      "score": 0
     }
   ]
 }
