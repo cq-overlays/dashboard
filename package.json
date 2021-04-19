@@ -6,8 +6,8 @@
     "compatibleRange": "^1.1.1",
     "dashboardPanels": [
       {
-        "name": "scenes",
-        "file": "scenes.html",
+        "name": "scene",
+        "file": "scene.html",
         "title": "Scenes",
         "width": 2
       },
