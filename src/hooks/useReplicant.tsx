@@ -1,12 +1,23 @@
+/**
+ * A base react hook for creating other custom replicant hooks.
+ */
 import { useEffect, useState } from "react"
 import { ReplicantOptions } from "nodecg/types/server"
 
-export default <T, U>(
-  name: string,
-  namespace?: string,
+type ReplicantParameters<T> = {
+  name: string
+  namespace?: string
   opts?: ReplicantOptions<T>
-): [T | U, (input: T) => void] => {
-  const [value, updateValue] = useState<T | U>()
+  initialState?: undefined
+}
+
+export default <T, U>({
+  name,
+  namespace = undefined,
+  opts = undefined,
+  initialState = undefined,
+}: ReplicantParameters<T>): [T | U, (input: T) => void] => {
+  const [value, updateValue] = useState<T | U>(initialState)
   const replicant = nodecg.Replicant(name, namespace, opts)
 
   useEffect(() => {
