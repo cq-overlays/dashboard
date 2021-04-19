@@ -7,6 +7,7 @@
     "type": "object",
     "properties": {
       "name": {"type": "string"},
+      "color": {"type": "string", "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"},
       "score": {"type": "number"},
       "roster": {
         "type": "array",
@@ -17,6 +18,7 @@
   "default": [
     {
       "name": "Team A",
+      "color": "#e36d60",
       "score": 0,
       "roster": [
         "Atmosphere",
@@ -27,6 +29,7 @@
     },
     {
       "name": "Team B",
+      "color": "#2fb89a",
       "score": 0,
       "roster": [
         "Balloon",
