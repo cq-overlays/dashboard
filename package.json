@@ -6,16 +6,16 @@
     "compatibleRange": "^1.1.1",
     "dashboardPanels": [
       {
-        "name": "scene-selector",
-        "file": "scene-selector.html",
+        "name": "scenes",
+        "file": "scenes.html",
         "title": "Scenes",
-        "width": 3
+        "width": 2
       },
       {
-        "name": "scene-options",
-        "file": "scene-options.html",
-        "title": "Options",
-        "width": 4
+        "name": "teams",
+        "file": "teams.html",
+        "title": "Teams",
+        "width": 3
       }
     ]
   },
