@@ -3,11 +3,11 @@ import { css } from "@emotion/css"
 import { Button, Box } from "@material-ui/core"
 
 import render from "../render"
-import useReplicant from "../useReplicant"
-import Section from "../Section"
+import useSceneReplicant from "../hooks/useSceneReplicant"
+import Section from "../components/Section"
 
 const Panel = () => {
-  const [scene, setScene] = useReplicant("currentScene")
+  const [scene, setScene] = useSceneReplicant()
 
   return (
     <Box
