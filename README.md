@@ -1,11 +1,1 @@
 # C.Q. Overlay Controls
-- Replicants are solely used as a way to transfer data to `graphics`
-- Here is a model of where data is stored:
-  - User to Dashboard - `state`
-  - Dashboard to Graphics - `replicant`
-- Each dashboard panel only has one replicant.
-  - Names should follow this format:
-    - `currentFoobar.json`
-    - `foobar.html`
-    - `foobar.tsx`
-- This replicant must be defined in `schemas`
