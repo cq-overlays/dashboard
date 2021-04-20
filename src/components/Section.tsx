@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import { css } from "@emotion/css"
 import { Box, InputLabel } from "@material-ui/core"
 import { theme } from "../render"

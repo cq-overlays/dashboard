@@ -1,6 +1,12 @@
 {
   "compilerOptions": {
-    "jsx": "react"
+    "target": "es2015",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "jsx": "react",
+    "esModuleInterop": true,
+    "strict": true,
+    // "noImplicitAny": true,
   },
   "include": [
       "src/**/*.ts",

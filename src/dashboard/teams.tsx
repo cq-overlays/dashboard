@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import { css } from "@emotion/css"
 import { Box, TextField, Button, SvgIcon } from "@material-ui/core"
 import { Autocomplete } from "@material-ui/lab"
@@ -248,16 +248,17 @@ const DropdownColors = ({ dispatch, colors }) => {
       { name: "Yellow", value: "#D9C100" },
       { name: "True Blue", value: "#007AC9" },
     ],
-    [
-      { name: "Fork", value: "#E36D60" },
-      { name: "Spoon", value: "#2FB89A" },
-    ],
   ]
 
   return (
     <Dropdown
       options={colorOptions}
-      value={colorOptions.filter(o => colors.includes(o[0].value)).pop()}
+      value={
+        colorOptions.filter(o => colors.includes(o[0].value)).pop() || [
+          { name: "Fork", value: "#E36D60" },
+          { name: "Spoon", value: "#2FB89A" },
+        ]
+      }
       onChange={dispatchColors}
       getOptionSelected={(o: ColorPair): boolean => colorOptions.includes(o)}
       getOptionLabel={(o: ColorPair) => `${o[0].name} vs ${o[1].name}`}
