@@ -1,5 +1,5 @@
 /**
- * A base react hook for creating other custom replicant hooks.
+ * A base react hook, to be implemented in other custom replicant hooks.
  */
 import { useEffect, useState } from "react"
 import { ReplicantOptions } from "nodecg/types/server"
