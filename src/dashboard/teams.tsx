@@ -50,8 +50,8 @@ const Scoreboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
     function replicateScore() {
       if (
         replicant &&
-        replicant[0].score !== teams.scoreA &&
-        replicant[1].score !== teams.scoreB
+        (replicant[0].score !== teams.scoreA ||
+          replicant[1].score !== teams.scoreB)
       ) {
         replicate([{ score: teams.scoreA }, { score: teams.scoreB }])
       }
