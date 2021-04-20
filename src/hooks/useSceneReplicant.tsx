@@ -8,16 +8,12 @@ type Scene =
   | "BRB Scene"
 
 const useSceneReplicant = (): [Scene, (input: any) => void] => {
-  const [sceneReplicant, setSceneReplicant]: [
-    Scene,
-    (input: any) => void
-  ] = useReplicant({
+  const [sceneReplicant, setSceneReplicant]: any = useReplicant({
     name: "currentScene",
+    opts: {
+      defaultValue: "Empty Scene",
+    },
   })
-
-  if (sceneReplicant === undefined) {
-    setSceneReplicant("Empty Scene")
-  }
 
   return [sceneReplicant, setSceneReplicant]
 }
