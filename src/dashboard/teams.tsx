@@ -15,6 +15,9 @@ import useTeamsReplicant, {
   ActionTypes,
 } from "../hooks/useTeamsReplicant"
 import useLoadedDataReplicant, {
+  Colorlist,
+  ColorPair,
+  LoadedData,
   Teamlist,
 } from "../hooks/useLoadedDataReplicant"
 
@@ -38,7 +41,6 @@ const Panel = () => {
             replicant,
             dispatch,
             replicate,
-            teamlist: loadedData?.teamlist,
           }}
         />
       </Section>
@@ -49,7 +51,7 @@ const Panel = () => {
             replicant,
             dispatch,
             replicate,
-            teamlist: loadedData?.teamlist,
+            loadedData,
           }}
         />
       </Section>
@@ -62,7 +64,7 @@ type BoardProps = {
   replicant: TeamsReplicant
   dispatch: React.Dispatch<ActionTypes>
   replicate: Function
-  teamlist?: Teamlist
+  loadedData?: LoadedData
 }
 
 const Scoreboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
@@ -192,7 +194,7 @@ const Nameboard = ({
   replicant,
   dispatch,
   replicate,
-  teamlist,
+  loadedData,
 }: BoardProps) => {
   const replicateNameboard = () =>
     replicate([
@@ -219,18 +221,22 @@ const Nameboard = ({
           dispatch={dispatch}
           type="A"
           name={teams.nameA}
-          teamlist={teamlist}
+          teamlist={loadedData ? loadedData.teamlist : {}}
         />
         <Box ml={1.5} />
         <DropdownTeamName
           dispatch={dispatch}
           type="B"
           name={teams.nameB}
-          teamlist={teamlist}
+          teamlist={loadedData ? loadedData.teamlist : {}}
         />
       </Box>
       <Box mt={3}>
-        <DropdownColors dispatch={dispatch} colors={teams.colors} />
+        <DropdownColors
+          dispatch={dispatch}
+          colors={teams.colors}
+          colorlist={loadedData ? loadedData.colorlist : []}
+        />
       </Box>
       <Box
         mt={3}
@@ -266,9 +272,11 @@ const Nameboard = ({
 const DropdownColors = ({
   dispatch,
   colors,
+  colorlist,
 }: {
   dispatch: Function
   colors: Array<string>
+  colorlist: Colorlist | Array<any>
 }) => {
   const dispatchColors = (event: unknown, newVal: ColorPair) => {
     dispatch({
@@ -277,53 +285,17 @@ const DropdownColors = ({
     })
   }
 
-  type ColorPair = Array<{
-    name: string
-    value: string
-  }>
-
-  const colorOptions: Array<ColorPair> = [
-    [
-      { name: "Slimy Green", value: "#25B100" },
-      { name: "Grape", value: "#571DB1" },
-    ],
-    [
-      { name: "Winter Green", value: "#03B362" },
-      { name: "Dark Magenta", value: "#B1008D" },
-    ],
-    [
-      { name: "Turquoise", value: "#0CAE6E" },
-      { name: "Pumpkin", value: "#F75900" },
-    ],
-    [
-      { name: "Mustard", value: "#CE8003" },
-      { name: "Purple", value: "#9208B2" },
-    ],
-    [
-      { name: "Blue", value: "#2922B5" },
-      { name: "Green", value: "#5EB604" },
-    ],
-    [
-      { name: "Rich Purple", value: "#7B0393" },
-      { name: "Green Apple", value: "#43BA05" },
-    ],
-    [
-      { name: "Yellow", value: "#D9C100" },
-      { name: "True Blue", value: "#007AC9" },
-    ],
-  ]
-
   return (
     <Dropdown
-      options={colorOptions}
+      options={colorlist}
       value={
-        colorOptions.filter(o => colors.includes(o[0].value)).pop() || [
+        colorlist.filter(o => colors.includes(o[0].value)).pop() || [
           { name: "Fork", value: "#E36D60" },
           { name: "Spoon", value: "#2FB89A" },
         ]
       }
       onChange={dispatchColors}
-      getOptionSelected={(o: ColorPair): boolean => colorOptions.includes(o)}
+      getOptionSelected={(o: ColorPair): boolean => colorlist.includes(o)}
       getOptionLabel={(o: ColorPair) => `${o[0].name} vs ${o[1].name}`}
       renderOption={(o: ColorPair) => (
         <>
@@ -346,7 +318,7 @@ const DropdownTeamName = ({
   dispatch: Function
   type: string
   name: string
-  teamlist: Teamlist | undefined
+  teamlist: Teamlist | Object
 }) => {
   const dispatchTeamName = (event: unknown, newVal: any) => {
     dispatch({
@@ -354,7 +326,7 @@ const DropdownTeamName = ({
       payload: newVal,
     })
   }
-  const teams = Object.keys(teamlist || {})
+  const teams = Object.keys(teamlist)
 
   return (
     <Dropdown
