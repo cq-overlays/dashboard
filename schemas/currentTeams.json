@@ -14,12 +14,12 @@
   "default": [
     {
       "name": "Team A",
-      "color": "#e36d60",
+      "color": "#E36D60",
       "score": 0
     },
     {
       "name": "Team B",
-      "color": "#2fb89a",
+      "color": "#2FB89A",
       "score": 0
     }
   ]

@@ -34,8 +34,8 @@ const createState = (teamsReplicant): TeamsState => ({
   scoreA: teamsReplicant?.[0]?.score || 0,
   scoreB: teamsReplicant?.[1]?.score || 0,
   colors: [
-    teamsReplicant?.[0]?.color || "#e36d60",
-    teamsReplicant?.[1]?.color || "#2fb89a",
+    teamsReplicant?.[0]?.color || "#E36D60",
+    teamsReplicant?.[1]?.color || "#2FB89A",
   ],
 })
 
