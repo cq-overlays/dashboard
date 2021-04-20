@@ -2,7 +2,7 @@ import * as React from "react"
 import { css } from "@emotion/css"
 import { Button, Box } from "@material-ui/core"
 
-import render from "../render"
+import render, { theme } from "../render"
 import useSceneReplicant from "../hooks/useSceneReplicant"
 import Section from "../components/Section"
 
@@ -20,6 +20,11 @@ const Panel = () => {
       <SceneBox name="Maplist Scene" {...{ scene, setScene }} />
       <SceneBox name="Rosters Scene" {...{ scene, setScene }} />
       <SceneBox name="BRB Scene" {...{ scene, setScene }} />
+      <Box
+        className={css`
+          margin-top: -${theme.spacing(1.5)}px;
+        `}
+      />
     </Box>
   )
 }
