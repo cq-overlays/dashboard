@@ -185,12 +185,12 @@ const Nameboard = ({ teams, replicant, dispatch, replicate }) => {
           width: 100%;
         `}
       >
-        <DropdownTeamName type="A" dispatch={dispatch} />
+        <DropdownTeamName dispatch={dispatch} type="A" name={teams.nameA} />
         <Box ml={1.5} />
-        <DropdownTeamName type="B" dispatch={dispatch} />
+        <DropdownTeamName dispatch={dispatch} type="B" name={teams.nameB} />
       </Box>
       <Box mt={3}>
-        <DropdownColors dispatch={dispatch} />
+        <DropdownColors dispatch={dispatch} colors={teams.colors} />
       </Box>
       <Box
         mt={3}
@@ -223,7 +223,7 @@ const Nameboard = ({ teams, replicant, dispatch, replicate }) => {
   )
 }
 
-const DropdownColors = ({ dispatch }) => {
+const DropdownColors = ({ dispatch, colors }) => {
   const dispatchColors = (event, newVal: ColorPair) => {
     dispatch({
       type: "setColors",
@@ -265,11 +265,16 @@ const DropdownColors = ({ dispatch }) => {
       { name: "Yellow", value: "#D9C100" },
       { name: "True Blue", value: "#007AC9" },
     ],
+    [
+      { name: "Fork", value: "#E36D60" },
+      { name: "Spoon", value: "#2FB89A" },
+    ],
   ]
 
   return (
     <Dropdown
       options={colorOptions}
+      value={colorOptions.filter(o => colors.includes(o[0].value)).pop()}
       onChange={dispatchColors}
       getOptionSelected={(o: ColorPair): boolean => colorOptions.includes(o)}
       getOptionLabel={(o: ColorPair) => `${o[0].name} vs ${o[1].name}`}
@@ -285,7 +290,7 @@ const DropdownColors = ({ dispatch }) => {
   )
 }
 
-const DropdownTeamName = ({ type, dispatch }) => {
+const DropdownTeamName = ({ dispatch, type, name }) => {
   const dispatchTeamName = (event, newVal: any) => {
     dispatch({
       type: `setName${type}`,
@@ -301,11 +306,15 @@ const DropdownTeamName = ({ type, dispatch }) => {
     "Ink Eye",
     "Red Sun",
     "Assault and Pepper",
+    "Revitalize",
+    "Kemistry",
+    "HydroForces",
   ]
 
   return (
     <Dropdown
       options={teams}
+      value={name}
       onChange={dispatchTeamName}
       getOptionSelected={(o): boolean => teams.includes(o)}
       name={`Team Name ${type}`}
