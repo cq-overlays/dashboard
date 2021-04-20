@@ -21,12 +21,12 @@ export default <T, U>({
   const replicant = nodecg.Replicant(name, namespace, opts)
 
   useEffect(() => {
-    const handler = (newValue: T): void => {
+    const update = (newValue: T): void => {
       updateValue(newValue)
     }
-    replicant.on("change", handler)
+    replicant.on("change", update)
     return () => {
-      replicant.removeListener("change", handler)
+      replicant.removeListener("change", update)
     }
   }, [replicant])
 
