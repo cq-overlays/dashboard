@@ -24,16 +24,16 @@ const Panel = () => {
           alignItems: "center",
         }}
       >
-        <Scoreboard {...{ teams, dispatch, replicate }} />
+        <Scoreboard {...{ teams, replicant, dispatch, replicate }} />
       </Section>
       <Section>
-        <Nameboard {...{ teams, dispatch, replicate, replicant }} />
+        <Nameboard {...{ teams, replicant, dispatch, replicate }} />
       </Section>
     </Box>
   )
 }
 
-const Scoreboard = ({ teams, dispatch, replicate }) => {
+const Scoreboard = ({ teams, replicant, dispatch, replicate }) => {
   const dispatchScoreResetter = () => dispatch({ type: "resetScores" })
 
   return (
@@ -43,6 +43,7 @@ const Scoreboard = ({ teams, dispatch, replicate }) => {
           type: "A",
           score: teams.scoreA,
           color: teams.colors[0],
+          replicant,
           dispatch,
           replicate,
         }}
@@ -62,6 +63,7 @@ const Scoreboard = ({ teams, dispatch, replicate }) => {
           type: "B",
           score: teams.scoreB,
           color: teams.colors[1],
+          replicant,
           dispatch,
           replicate,
         }}
@@ -75,110 +77,26 @@ const ScoreHalf = ({
   type,
   score,
   color,
-  replicate,
+  replicant,
   dispatch,
+  replicate,
   reversed = false,
 }) => {
-  const dispatchScore = score => dispatch({ type: `setScore${type}`, score })
-const Nameboard = ({ teams, dispatch, replicate, replicant }) => {
-          </Box>
-          <Score score={scoreB} setScore={setScoreB} left={false} />
-        </Box>
-      </Section>
-      <Section>
-        <Box
-          className={css`
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-          `}
-        >
-  return (
-    <>
-      <Box
-        className={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-        `}
-      >
-        <InkPreview color={teams.colors[0]} />
-        <Box
-          px={1.5}
-          className={css`
-            display: flex;
-            align-items: flex-end;
-            width: 100%;
-          `}
-        >
-          <Dropdown
-            name="Team Name A"
-            options={["a", "b", "f", "fa", "fb", "fc", "fg", "fn"]}
-          />
-          <Box ml={1.5} />
-          <Dropdown
-            name="Team Name B"
-            options={["a", "b", "f", "fa", "fb", "fc", "fg", "fn"]}
-          />
-        </Box>
-        <InkPreview color={teams.colors[1]} />
-      </Box>
-      <Box mt={3}>
-        <DropdownColors dispatch={dispatch} />
-      </Box>
-      <Box
-        mt={3}
-        className={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: baseline;
-        `}
-      >
-        <Button
-          variant="outlined"
-          className={css`
-            white-space: nowrap;
-          `}
-            variant="outlined"
-          >
-            Swap Colors
-          </Button>
-          <Box ml={1.5} />
-          <Button
-            variant="contained"
-            color="primary"
-        >
-          Swap Colors
-        </Button>
-        <Box ml={1.5} />
-        <Button
-          variant="contained"
-          color="primary"
-          disabled={isUpdated()}
-            disabled={true === false}
-            onClick={() => {}}
-          >
-        >
-          {isUpdated() ? "Updated" : "Update"}
-        </Button>
-      </Box>
-    </>
+  const dispatchScore = score =>
+    dispatch({ type: `setScore${type}`, payload: score })
+  React.useEffect(
+    function replicateScore() {
+      if (replicant) {
+        switch (type) {
+          case "A":
+            return replicate([{ score }, {}])
+          case "B":
+            return replicate([{}, { score }])
+        }
+      }
+    },
+    [score]
   )
-}
-  //   function replicateScore() {
-  //     switch (type) {
-  //       case "A":
-  //         return replicate([{ score }, {}])
-  //       case "B":
-  //         return replicate([{}, { score }])
-  //       default:
-  //         throw new Error(
-  //           `Unsupported team type '${type}' for ScoreHalf effect.`
-  //         )
-  //     }
-  //   },
-  //   [score]
-  // )
 
   type ButtonProps = {
     key: string
@@ -188,7 +106,7 @@ const Nameboard = ({ teams, dispatch, replicate, replicant }) => {
   }
 
   const fragments = [
-    <InkPreview color={color} />,
+    <InkPreview color={color} key={`score${type}-ink`} />,
     <Box
       key={`score${type}-buttons`}
       className={css`
@@ -198,13 +116,13 @@ const Nameboard = ({ teams, dispatch, replicate, replicant }) => {
     >
       {[
         {
-          key: `score${type}-inc`,
+          key: `score${type}-buttons-inc`,
           color: "primary",
           icon: <AddRounded />,
           mut: s => s + 1,
         },
         {
-          key: `score${type}-dec`,
+          key: `score${type}-buttons-dec`,
           color: "secondary",
           icon: <RemoveRounded />,
           mut: s => s - 1,
@@ -245,7 +163,7 @@ const Nameboard = ({ teams, dispatch, replicate, replicant }) => {
   return <>{fragments.map(f => f)}</>
 }
 
-const Nameboard = ({ teams, dispatch, replicate, replicant }) => {
+const Nameboard = ({ teams, replicant, dispatch, replicate }) => {
   const replicateNameboard = () =>
     replicate([
       { name: teams.nameA, color: teams.colors[0] },

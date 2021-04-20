@@ -80,12 +80,15 @@ const useTeamsReplicant = (): {
     createState
   )
 
-  const replicate = overrides => {
+  useEffect(() => {
+    console.log("State Reset!")
+    dispatch({ type: "reset" })
+  }, [teamsReplicant])
+  const replicate = overrides =>
     setTeamsReplicant([
       { ...teamsReplicant[0], ...overrides[0] },
       { ...teamsReplicant[1], ...overrides[1] },
     ])
-  }
 
   return {
     teams: teamsState,
