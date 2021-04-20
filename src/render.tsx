@@ -45,11 +45,8 @@ export const theme = createMuiTheme({
     },
   },
   overrides: {
-    MuiPaper: {
-      root: {
-        backgroundColor: "#2c374b",
-      },
-    },
+    MuiButton: { root: { letterSpacing: "0.05em" } },
+    MuiPaper: { root: { backgroundColor: "#2c374b" } },
   },
 })
 
