@@ -40,7 +40,7 @@ const SceneBox = ({ name, scene, setScene }) => (
         disabled={name === scene}
         onClick={() => setScene(name)}
       >
-        {name === scene ? "In Use" : "Switch"}
+        {name === scene ? "Active" : "Switch"}
       </Button>
     </Box>
   </Section>
