@@ -48,7 +48,11 @@ const Scoreboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
   const dispatchScoreResetter = () => dispatch({ type: "resetScores" })
   React.useEffect(
     function replicateScore() {
-      if (replicant) {
+      if (
+        replicant &&
+        replicant[0].score !== teams.scoreA &&
+        replicant[1].score !== teams.scoreB
+      ) {
         replicate([{ score: teams.scoreA }, { score: teams.scoreB }])
       }
     },
