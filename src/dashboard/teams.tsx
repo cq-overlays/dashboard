@@ -14,9 +14,13 @@ import useTeamsReplicant, {
   TeamsReplicant,
   ActionTypes,
 } from "../hooks/useTeamsReplicant"
+import useLoadedDataReplicant, {
+  Teamlist,
+} from "../hooks/useLoadedDataReplicant"
 
 const Panel = () => {
   const { teams, replicant, dispatch, replicate } = useTeamsReplicant()
+  const [loadedData] = useLoadedDataReplicant()
   console.log(teams, replicant)
 
   return (
@@ -28,10 +32,26 @@ const Panel = () => {
           alignItems: "center",
         }}
       >
-        <Scoreboard {...{ teams, replicant, dispatch, replicate }} />
+        <Scoreboard
+          {...{
+            teams,
+            replicant,
+            dispatch,
+            replicate,
+            teamlist: loadedData?.teamlist,
+          }}
+        />
       </Section>
       <Section>
-        <Nameboard {...{ teams, replicant, dispatch, replicate }} />
+        <Nameboard
+          {...{
+            teams,
+            replicant,
+            dispatch,
+            replicate,
+            teamlist: loadedData?.teamlist,
+          }}
+        />
       </Section>
     </Box>
   )
@@ -42,6 +62,7 @@ type BoardProps = {
   replicant: TeamsReplicant
   dispatch: React.Dispatch<ActionTypes>
   replicate: Function
+  teamlist?: Teamlist
 }
 
 const Scoreboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
@@ -166,7 +187,13 @@ const ScoreHalf = ({
   return <>{fragments.map(f => f)}</>
 }
 
-const Nameboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
+const Nameboard = ({
+  teams,
+  replicant,
+  dispatch,
+  replicate,
+  teamlist,
+}: BoardProps) => {
   const replicateNameboard = () =>
     replicate([
       { name: teams.nameA, color: teams.colors[0] },
@@ -188,9 +215,19 @@ const Nameboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
           width: 100%;
         `}
       >
-        <DropdownTeamName dispatch={dispatch} type="A" name={teams.nameA} />
+        <DropdownTeamName
+          dispatch={dispatch}
+          type="A"
+          name={teams.nameA}
+          teamlist={teamlist}
+        />
         <Box ml={1.5} />
-        <DropdownTeamName dispatch={dispatch} type="B" name={teams.nameB} />
+        <DropdownTeamName
+          dispatch={dispatch}
+          type="B"
+          name={teams.nameB}
+          teamlist={teamlist}
+        />
       </Box>
       <Box mt={3}>
         <DropdownColors dispatch={dispatch} colors={teams.colors} />
@@ -304,10 +341,12 @@ const DropdownTeamName = ({
   dispatch,
   type,
   name,
+  teamlist,
 }: {
   dispatch: Function
   type: string
   name: string
+  teamlist: Teamlist | undefined
 }) => {
   const dispatchTeamName = (event: unknown, newVal: any) => {
     dispatch({
@@ -315,19 +354,7 @@ const DropdownTeamName = ({
       payload: newVal,
     })
   }
-  const teams = [
-    "Xanadu",
-    "Persistence",
-    "Team Olive",
-    "Geek Squids",
-    "Twisted Time",
-    "Ink Eye",
-    "Red Sun",
-    "Assault and Pepper",
-    "Revitalize",
-    "Kemistry",
-    "HydroForces",
-  ]
+  const teams = Object.keys(teamlist || {})
 
   return (
     <Dropdown

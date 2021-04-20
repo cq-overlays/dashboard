@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "maplist": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "map": {"type": "string"},
+            "mode": {"type": "string"}
+          }
+        }
+      }
+    },
+    "teamlist": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {"type": "string"}
+      }
+    }
+  },
+  "default": {
+    "maplist": [
+      [
+        {"map": "Urchin Underpass", "mode": "Rocket"},
+        {"map": "Urchin Underpass", "mode": "Rocket"},
+        {"map": "Urchin Underpass", "mode": "Rocket"}
+      ]
+    ],
+    "teamlist": {
+      "Team A": [
+        "Atmosphere",
+        "Airport",
+        "Assumption",
+        "Application"
+      ],
+      "Team B": [
+        "Balloon",
+        "Brick",
+        "Breakfast",
+        "Bathtub"
+      ]
+    }
+  }
+}
