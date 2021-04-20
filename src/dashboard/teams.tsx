@@ -35,6 +35,14 @@ const Panel = () => {
 
 const Scoreboard = ({ teams, replicant, dispatch, replicate }) => {
   const dispatchScoreResetter = () => dispatch({ type: "resetScores" })
+  React.useEffect(
+    function replicateScore() {
+      if (replicant) {
+        replicate([{ score: teams.scoreA }, { score: teams.scoreB }])
+      }
+    },
+    [teams.scoreA, teams.scoreB]
+  )
 
   return (
     <>
@@ -43,9 +51,7 @@ const Scoreboard = ({ teams, replicant, dispatch, replicate }) => {
           type: "A",
           score: teams.scoreA,
           color: teams.colors[0],
-          replicant,
           dispatch,
-          replicate,
         }}
       />
       <Button
@@ -63,9 +69,7 @@ const Scoreboard = ({ teams, replicant, dispatch, replicate }) => {
           type: "B",
           score: teams.scoreB,
           color: teams.colors[1],
-          replicant,
           dispatch,
-          replicate,
         }}
         reversed={true}
       />
@@ -73,30 +77,9 @@ const Scoreboard = ({ teams, replicant, dispatch, replicate }) => {
   )
 }
 
-const ScoreHalf = ({
-  type,
-  score,
-  color,
-  replicant,
-  dispatch,
-  replicate,
-  reversed = false,
-}) => {
+const ScoreHalf = ({ type, score, color, dispatch, reversed = false }) => {
   const dispatchScore = score =>
     dispatch({ type: `setScore${type}`, payload: score })
-  React.useEffect(
-    function replicateScore() {
-      if (replicant) {
-        switch (type) {
-          case "A":
-            return replicate([{ score }, {}])
-          case "B":
-            return replicate([{}, { score }])
-        }
-      }
-    },
-    [score]
-  )
 
   type ButtonProps = {
     key: string
