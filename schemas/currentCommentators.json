@@ -4,9 +4,9 @@
   "items": {
     "type": "object",
     "properties": {
-      "name": {"type": "string"},
-      "twitter": {"type": "string"},
-      "pronouns": {"type": "string"}
+      "name": { "type": "string" },
+      "twitter": { "type": "string" },
+      "pronouns": { "type": "string" }
     }
   }
 }

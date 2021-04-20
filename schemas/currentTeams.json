@@ -6,9 +6,9 @@
   "items": {
     "type": "object",
     "properties": {
-      "name": {"type": "string"},
-      "color": {"type": "string", "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"},
-      "score": {"type": "number"}
+      "name": { "type": "string" },
+      "color": { "type": "string", "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$" },
+      "score": { "type": "number" }
     }
   },
   "default": [

@@ -4,9 +4,9 @@
   "items": {
     "type": "object",
     "properties": {
-      "map": {"type": "string"},
-      "mode": {"type": "string"},
-      "winner": {"type": "string"}
+      "map": { "type": "string" },
+      "mode": { "type": "string" },
+      "winner": { "type": "string" }
     }
   },
   "default": [

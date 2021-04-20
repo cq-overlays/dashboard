@@ -3,22 +3,12 @@
   "type": "array",
   "minItems": 2,
   "maxItems": 2,
-  "items":  {
+  "items": {
     "type": "array",
-    "items": {"type": "string"}
+    "items": { "type": "string" }
   },
   "default": [
-    [
-        "Atmosphere",
-        "Airport",
-        "Assumption",
-        "Application"
-    ],
-    [
-        "Balloon",
-        "Brick",
-        "Breakfast",
-        "Bathtub"
-    ]
+    ["Atmosphere", "Airport", "Assumption", "Application"],
+    ["Balloon", "Brick", "Breakfast", "Bathtub"]
   ]
 }
