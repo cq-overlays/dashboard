@@ -1,7 +1,7 @@
 import { Dispatch, useReducer, useEffect } from "react"
 import useReplicant from "./useReplicant"
 
-type TeamsState = {
+export type TeamsState = {
   nameA: string
   nameB: string
   scoreA: number
@@ -9,13 +9,13 @@ type TeamsState = {
   colors: Array<string>
 }
 
-type TeamsReplicant = Array<{
+export type TeamsReplicant = Array<{
   name: string
   score: number
   color: string
 }>
 
-type ActionTypes = {
+export type ActionTypes = {
   type:
     | "setNameA"
     | "setNameB"
@@ -28,7 +28,7 @@ type ActionTypes = {
   payload?: any
 }
 
-const createState = (teamsReplicant): TeamsState => ({
+const createState = (teamsReplicant: TeamsReplicant): TeamsState => ({
   nameA: teamsReplicant?.[0]?.name || "Team A",
   nameB: teamsReplicant?.[1]?.name || "Team B",
   scoreA: teamsReplicant?.[0]?.score || 0,
@@ -51,8 +51,11 @@ const useTeamsReplicant = (): {
   ] = useReplicant({
     name: "currentTeams",
   })
-  const [teamsState, dispatch]: [TeamsState, any] = useReducer(
-    (state, action) => {
+  const [teamsState, dispatch]: [
+    TeamsState,
+    Dispatch<ActionTypes>
+  ] = useReducer(
+    (state: TeamsState, action: ActionTypes) => {
       switch (action.type) {
         case "setNameA":
           return { ...state, nameA: action.payload }
@@ -84,7 +87,7 @@ const useTeamsReplicant = (): {
     console.log("State Reset!")
     dispatch({ type: "reset" })
   }, [teamsReplicant])
-  const replicate = overrides =>
+  const replicate = (overrides: Array<Object>) =>
     setTeamsReplicant([
       { ...teamsReplicant[0], ...overrides[0] },
       { ...teamsReplicant[1], ...overrides[1] },

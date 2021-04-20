@@ -30,7 +30,15 @@ const Panel = () => {
   )
 }
 
-const SceneBox = ({ name, scene, setScene }) => (
+const SceneBox = ({
+  name,
+  scene,
+  setScene,
+}: {
+  name: string
+  scene: string
+  setScene: Function
+}) => (
   <Section>
     <Box
       className={css`

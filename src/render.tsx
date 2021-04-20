@@ -50,7 +50,7 @@ export const theme = createMuiTheme({
   },
 })
 
-const Template = ({ children }) => (
+const Template = ({ children }: any) => (
   <ThemeProvider theme={theme}>
     <StylesProvider injectFirst>
       <div
@@ -64,7 +64,7 @@ const Template = ({ children }) => (
   </ThemeProvider>
 )
 
-export default App => {
+export default (App: any) => {
   render(
     <Template>
       <App />

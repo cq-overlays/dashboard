@@ -7,8 +7,11 @@ type Scene =
   | "Rosters Scene"
   | "BRB Scene"
 
-const useSceneReplicant = (): [Scene, any] => {
-  const [sceneReplicant, setSceneReplicant]: [Scene, any] = useReplicant({
+const useSceneReplicant = (): [Scene, (input: any) => void] => {
+  const [sceneReplicant, setSceneReplicant]: [
+    Scene,
+    (input: any) => void
+  ] = useReplicant({
     name: "currentScene",
   })
 

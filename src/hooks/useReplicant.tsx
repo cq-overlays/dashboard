@@ -6,9 +6,9 @@ import { ReplicantOptions } from "nodecg/types/server"
 
 type ReplicantParameters<T> = {
   name: string
-  namespace?: string
+  namespace?: any
   opts?: ReplicantOptions<T>
-  initialState?: undefined
+  initialState?: any
 }
 
 export default <T, U>({

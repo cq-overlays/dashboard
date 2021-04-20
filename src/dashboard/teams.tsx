@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Box, TextField, Button, SvgIcon } from "@material-ui/core"
+import { Box, TextField, Button, SvgIcon, PropTypes } from "@material-ui/core"
 import { Autocomplete } from "@material-ui/lab"
 import {
   AddRounded,
@@ -9,7 +9,11 @@ import {
 } from "@material-ui/icons"
 import render, { theme } from "../render"
 import Section from "../components/Section"
-import useTeamsReplicant from "../hooks/useTeamsReplicant"
+import useTeamsReplicant, {
+  TeamsState,
+  TeamsReplicant,
+  ActionTypes,
+} from "../hooks/useTeamsReplicant"
 
 const Panel = () => {
   const { teams, replicant, dispatch, replicate } = useTeamsReplicant()
@@ -33,7 +37,14 @@ const Panel = () => {
   )
 }
 
-const Scoreboard = ({ teams, replicant, dispatch, replicate }) => {
+type BoardProps = {
+  teams: TeamsState
+  replicant: TeamsReplicant
+  dispatch: React.Dispatch<ActionTypes>
+  replicate: Function
+}
+
+const Scoreboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
   const dispatchScoreResetter = () => dispatch({ type: "resetScores" })
   React.useEffect(
     function replicateScore() {
@@ -77,16 +88,21 @@ const Scoreboard = ({ teams, replicant, dispatch, replicate }) => {
   )
 }
 
-const ScoreHalf = ({ type, score, color, dispatch, reversed = false }) => {
-  const dispatchScore = score =>
+const ScoreHalf = ({
+  type,
+  score,
+  color,
+  dispatch,
+  reversed = false,
+}: {
+  type: string
+  score: number
+  color: string
+  dispatch: Function
+  reversed?: boolean
+}) => {
+  const dispatchScore = (score: number) =>
     dispatch({ type: `setScore${type}`, payload: score })
-
-  type ButtonProps = {
-    key: string
-    color: "primary" | "secondary"
-    icon: any
-    mut: any
-  }
 
   const fragments = [
     <InkPreview color={color} key={`score${type}-ink`} />,
@@ -102,15 +118,15 @@ const ScoreHalf = ({ type, score, color, dispatch, reversed = false }) => {
           key: `score${type}-buttons-inc`,
           color: "primary",
           icon: <AddRounded />,
-          mut: s => s + 1,
+          mut: (s: number) => s + 1,
         },
         {
           key: `score${type}-buttons-dec`,
           color: "secondary",
           icon: <RemoveRounded />,
-          mut: s => s - 1,
+          mut: (s: number) => s - 1,
         },
-      ].map((props: ButtonProps) => (
+      ].map((props: any) => (
         <Box my={0.5} key={props.key}>
           <Button
             className={css`
@@ -146,7 +162,7 @@ const ScoreHalf = ({ type, score, color, dispatch, reversed = false }) => {
   return <>{fragments.map(f => f)}</>
 }
 
-const Nameboard = ({ teams, replicant, dispatch, replicate }) => {
+const Nameboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
   const replicateNameboard = () =>
     replicate([
       { name: teams.nameA, color: teams.colors[0] },
@@ -206,8 +222,14 @@ const Nameboard = ({ teams, replicant, dispatch, replicate }) => {
   )
 }
 
-const DropdownColors = ({ dispatch, colors }) => {
-  const dispatchColors = (event, newVal: ColorPair) => {
+const DropdownColors = ({
+  dispatch,
+  colors,
+}: {
+  dispatch: Function
+  colors: Array<string>
+}) => {
+  const dispatchColors = (event: unknown, newVal: ColorPair) => {
     dispatch({
       type: "setColors",
       payload: [newVal[0].value, newVal[1].value],
@@ -274,8 +296,16 @@ const DropdownColors = ({ dispatch, colors }) => {
   )
 }
 
-const DropdownTeamName = ({ dispatch, type, name }) => {
-  const dispatchTeamName = (event, newVal: any) => {
+const DropdownTeamName = ({
+  dispatch,
+  type,
+  name,
+}: {
+  dispatch: Function
+  type: string
+  name: string
+}) => {
+  const dispatchTeamName = (event: unknown, newVal: any) => {
     dispatch({
       type: `setName${type}`,
       payload: newVal,
@@ -300,13 +330,13 @@ const DropdownTeamName = ({ dispatch, type, name }) => {
       options={teams}
       value={name}
       onChange={dispatchTeamName}
-      getOptionSelected={(o): boolean => teams.includes(o)}
+      getOptionSelected={(o: string): boolean => teams.includes(o)}
       name={`Team Name ${type}`}
     />
   )
 }
 
-const Dropdown = ({ name, options, ...rest }) => (
+const Dropdown = ({ name, options, ...rest }: any) => (
   <Autocomplete
     options={options}
     fullWidth
@@ -317,7 +347,7 @@ const Dropdown = ({ name, options, ...rest }) => (
   />
 )
 
-const InkPreview = ({ color }) => (
+const InkPreview = ({ color }: { color: string }) => (
   <Box p={1.5}>
     <SvgIcon
       className={css`
@@ -339,7 +369,7 @@ const InkPreview = ({ color }) => (
   </Box>
 )
 
-const InkIcon = ({ color, ...rest }) => (
+const InkIcon = ({ color, ...rest }: { color: string }) => (
   <Circle
     className={css`
       color: ${color};

@@ -3,7 +3,7 @@ import { css } from "@emotion/css"
 import { Box, InputLabel } from "@material-ui/core"
 import { theme } from "../render"
 
-const Section = ({ title = null, children, ...rest }) => (
+const Section = ({ title = null, children, ...rest }: any) => (
   <>
     {title && (
       <InputLabel
