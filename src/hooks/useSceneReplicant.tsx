@@ -11,6 +11,11 @@ const useSceneReplicant = (): [Scene, any] => {
   const [sceneReplicant, setSceneReplicant]: [Scene, any] = useReplicant({
     name: "currentScene",
   })
+
+  if (sceneReplicant === undefined) {
+    setSceneReplicant("Empty Scene")
+  }
+
   return [sceneReplicant, setSceneReplicant]
 }
 
