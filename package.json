@@ -16,6 +16,12 @@
         "file": "teams.html",
         "title": "Teams",
         "width": 3
+      },
+      {
+        "name": "upload",
+        "file": "upload.html",
+        "title": "Upload Data",
+        "width": 2
       }
     ]
   },
@@ -32,6 +38,8 @@
     "schemas"
   ],
   "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-transform-runtime": "^7.13.15",
     "parcel-bundler": "^1.12.5",
     "typescript": "^4.2.4"
   },

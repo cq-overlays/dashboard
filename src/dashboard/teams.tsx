@@ -24,7 +24,7 @@ import useLoadedDataReplicant, {
 const Panel = () => {
   const { teams, replicant, dispatch, replicate } = useTeamsReplicant()
   const [loadedData] = useLoadedDataReplicant()
-  console.log(teams, replicant)
+  console.log(teams, replicant, loadedData)
 
   return (
     <Box>
@@ -221,21 +221,21 @@ const Nameboard = ({
           dispatch={dispatch}
           type="A"
           name={teams.nameA}
-          teamlist={loadedData ? loadedData.teamlist : {}}
+          loadedData={loadedData}
         />
         <Box ml={1.5} />
         <DropdownTeamName
           dispatch={dispatch}
           type="B"
           name={teams.nameB}
-          teamlist={loadedData ? loadedData.teamlist : {}}
+          loadedData={loadedData}
         />
       </Box>
       <Box mt={3}>
         <DropdownColors
           dispatch={dispatch}
           colors={teams.colors}
-          colorlist={loadedData ? loadedData.colorlist : []}
+          loadedData={loadedData}
         />
       </Box>
       <Box
@@ -272,17 +272,24 @@ const Nameboard = ({
 const DropdownColors = ({
   dispatch,
   colors,
-  colorlist,
+  loadedData,
 }: {
   dispatch: Function
   colors: Array<string>
-  colorlist: Colorlist | Array<any>
+  loadedData: LoadedData
 }) => {
   const dispatchColors = (event: unknown, newVal: ColorPair) => {
     dispatch({
       type: "setColors",
       payload: [newVal[0].value, newVal[1].value],
     })
+  }
+
+  let colorlist: Array<ColorPair>
+  if (loadedData?.colorlist) {
+    colorlist = loadedData.colorlist
+  } else {
+    colorlist = []
   }
 
   return (
@@ -313,12 +320,12 @@ const DropdownTeamName = ({
   dispatch,
   type,
   name,
-  teamlist,
+  loadedData,
 }: {
   dispatch: Function
   type: string
   name: string
-  teamlist: Teamlist | Object
+  loadedData: LoadedData
 }) => {
   const dispatchTeamName = (event: unknown, newVal: any) => {
     dispatch({
@@ -326,7 +333,13 @@ const DropdownTeamName = ({
       payload: newVal,
     })
   }
-  const teams = Object.keys(teamlist)
+
+  let teams: Array<string>
+  if (loadedData?.teamlist) {
+    teams = Object.keys(loadedData.teamlist)
+  } else {
+    teams = []
+  }
 
   return (
     <Dropdown
