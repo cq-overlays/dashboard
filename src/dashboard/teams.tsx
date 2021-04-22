@@ -1,7 +1,6 @@
 import React from "react"
 import { css } from "@emotion/css"
 import { Box, TextField, Button, SvgIcon } from "@material-ui/core"
-import { Autocomplete } from "@material-ui/lab"
 import {
   AddRounded,
   RemoveRounded,
@@ -9,6 +8,7 @@ import {
 } from "@material-ui/icons"
 import render, { theme } from "../render"
 import Section from "../components/Section"
+import Dropdown from "../components/Dropdown"
 import useTeamsReplicant, {
   TeamsState,
   TeamsReplicant,
@@ -349,17 +349,6 @@ const DropdownName = ({
     />
   )
 }
-
-const Dropdown = ({ name, options, ...rest }: any) => (
-  <Autocomplete
-    options={options}
-    fullWidth
-    autoHighlight
-    disableClearable
-    renderInput={params => <TextField {...params} label={name} />}
-    {...rest}
-  />
-)
 
 const InkPreview = ({ color }: { color: string }) => (
   <Box p={1.5}>
