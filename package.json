@@ -6,16 +6,22 @@
     "compatibleRange": "^1.1.1",
     "dashboardPanels": [
       {
-        "name": "scene",
-        "file": "scene.html",
-        "title": "Scenes",
-        "width": 2
-      },
-      {
         "name": "teams",
         "file": "teams.html",
         "title": "Teams",
         "width": 3
+      },
+      {
+        "name": "maps",
+        "file": "maps.html",
+        "title": "Maps",
+        "width": 3
+      },
+      {
+        "name": "scene",
+        "file": "scene.html",
+        "title": "Scenes",
+        "width": 2
       },
       {
         "name": "upload",
