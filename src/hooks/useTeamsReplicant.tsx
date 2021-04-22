@@ -17,14 +17,14 @@ export type TeamsReplicant = Array<{
 export default () =>
   usePanel(
     "currentTeams",
-    (teamsReplicant: TeamsReplicant): TeamsState => ({
-      nameA: teamsReplicant?.[0]?.name || "Team A",
-      nameB: teamsReplicant?.[1]?.name || "Team B",
-      scoreA: teamsReplicant?.[0]?.score || 0,
-      scoreB: teamsReplicant?.[1]?.score || 0,
+    (replicant: TeamsReplicant): TeamsState => ({
+      nameA: replicant?.[0]?.name || "Team A",
+      nameB: replicant?.[1]?.name || "Team B",
+      scoreA: replicant?.[0]?.score || 0,
+      scoreB: replicant?.[1]?.score || 0,
       colors: [
-        teamsReplicant?.[0]?.color || "#E36D60",
-        teamsReplicant?.[1]?.color || "#2FB89A",
+        replicant?.[0]?.color || "#E36D60",
+        replicant?.[1]?.color || "#2FB89A",
       ],
     }),
     (state: TeamsState, action: any) => {
