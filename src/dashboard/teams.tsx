@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Box, TextField, Button, SvgIcon, PropTypes } from "@material-ui/core"
+import { Box, TextField, Button, SvgIcon } from "@material-ui/core"
 import { Autocomplete } from "@material-ui/lab"
 import {
   AddRounded,
@@ -12,17 +12,19 @@ import Section from "../components/Section"
 import useTeamsReplicant, {
   TeamsState,
   TeamsReplicant,
-  ActionTypes,
 } from "../hooks/useTeamsReplicant"
 import useLoadedDataReplicant, {
-  Colorlist,
   ColorPair,
   LoadedData,
-  Teamlist,
 } from "../hooks/useLoadedDataReplicant"
 
 const Panel = () => {
-  const [state, updateState, replicateState, replicant] = useTeamsReplicant()
+  const [
+    state,
+    updateState,
+    replicateState,
+    replicant,
+  ]: any = useTeamsReplicant()
   const [loadedData] = useLoadedDataReplicant()
 
   return (
@@ -39,6 +41,7 @@ const Panel = () => {
             state,
             updateState,
             replicateState,
+            replicant,
           }}
         />
       </Section>
@@ -59,18 +62,25 @@ const Panel = () => {
 
 type BoardProps = {
   state: TeamsState
-  updateState: React.Dispatch<ActionTypes>
+  updateState: React.Dispatch<any>
   replicateState: Function
   replicant: TeamsReplicant
   loadedData?: LoadedData
 }
 
-const Scoreboard = ({ state, updateState, replicateState }: BoardProps) => {
+const Scoreboard = ({
+  state,
+  updateState,
+  replicateState,
+  replicant,
+}: BoardProps) => {
   const resetScores = () => updateState({ type: "resetScores" })
   React.useEffect(
     function replicateScores() {
-      console.log("Running score effect")
-      replicateState({ type: "score" })
+      if (replicant) {
+        console.log("Running score effect")
+        replicateState({ type: "score" })
+      }
     },
     [state.scoreA, state.scoreB]
   )

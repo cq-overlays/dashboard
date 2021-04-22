@@ -45,25 +45,17 @@ export default () =>
           return { ...state, colors: [state.colors[1], state.colors[0]] }
         default:
           throw new Error(
-            `Unsupported action type '${action?.type}' for useTeams dispatch.`
+            `Unsupported action type '${action?.type}' for useTeams.`
           )
       }
     },
     (state, replicant, action) => {
       switch (action.type) {
         case "score":
-          if (
-            replicant &&
-            (replicant[0].score !== state.scoreA ||
-              replicant[1].score !== state.scoreB)
-          ) {
-            return [
-              { ...replicant?.[0], score: state.scoreA },
-              { ...replicant?.[1], score: state.scoreB },
-            ]
-          } else {
-            return replicant
-          }
+          return [
+            { ...replicant?.[0], score: state.scoreA },
+            { ...replicant?.[1], score: state.scoreB },
+          ]
         case "name":
           return [
             { ...replicant?.[0], name: state.nameA, color: state.colors[0] },
