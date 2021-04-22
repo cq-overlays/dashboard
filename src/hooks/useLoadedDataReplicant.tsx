@@ -21,7 +21,7 @@ const useLoadedDataReplicant = (): [
   LoadedData,
   (input: LoadedDataParameters) => void
 ] => {
-  const [state]: any = usePanel(
+  const [state, updateState, replicateState, replicant]: any = usePanel(
     "loadedData",
     (loadedDataReplicant: LoadedData): LoadedData => ({
       maplist: loadedDataReplicant?.maplist || [
@@ -65,14 +65,16 @@ const useLoadedDataReplicant = (): [
           { name: "True Blue", value: "#007AC9" },
         ],
       ],
+    }),
+    (state, data) => ({
+      ...replicant,
+      maplist: data.maplist,
+      teamlist: data.teamlist,
+      colorlist: data.colorlist,
     })
   )
 
-  const uploadData = async (data: LoadedDataParameters) => {
-    return await nodecg.sendMessage("uploadData", data)
-  }
-
-  return [state, uploadData]
+  return [state, updateState]
 }
 
 export default useLoadedDataReplicant
