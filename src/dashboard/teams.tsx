@@ -22,9 +22,8 @@ import useLoadedDataReplicant, {
 } from "../hooks/useLoadedDataReplicant"
 
 const Panel = () => {
-  const { teams, replicant, dispatch, replicate } = useTeamsReplicant()
+  const [state, updateState, replicateState, replicant] = useTeamsReplicant()
   const [loadedData] = useLoadedDataReplicant()
-  console.log(teams, replicant, loadedData)
 
   return (
     <Box>
@@ -37,20 +36,19 @@ const Panel = () => {
       >
         <Scoreboard
           {...{
-            teams,
-            replicant,
-            dispatch,
-            replicate,
+            state,
+            updateState,
+            replicateState,
           }}
         />
       </Section>
       <Section>
         <Nameboard
           {...{
-            teams,
+            state,
+            updateState,
+            replicateState,
             replicant,
-            dispatch,
-            replicate,
             loadedData,
           }}
         />
@@ -60,26 +58,21 @@ const Panel = () => {
 }
 
 type BoardProps = {
-  teams: TeamsState
+  state: TeamsState
+  updateState: React.Dispatch<ActionTypes>
+  replicateState: Function
   replicant: TeamsReplicant
-  dispatch: React.Dispatch<ActionTypes>
-  replicate: Function
   loadedData?: LoadedData
 }
 
-const Scoreboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
-  const dispatchScoreResetter = () => dispatch({ type: "resetScores" })
+const Scoreboard = ({ state, updateState, replicateState }: BoardProps) => {
+  const resetScores = () => updateState({ type: "resetScores" })
   React.useEffect(
-    function replicateScore() {
-      if (
-        replicant &&
-        (replicant[0].score !== teams.scoreA ||
-          replicant[1].score !== teams.scoreB)
-      ) {
-        replicate([{ score: teams.scoreA }, { score: teams.scoreB }])
-      }
+    function replicateScores() {
+      console.log("Running score effect")
+      replicateState({ type: "score" })
     },
-    [teams.scoreA, teams.scoreB]
+    [state.scoreA, state.scoreB]
   )
 
   return (
@@ -87,13 +80,13 @@ const Scoreboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
       <ScoreHalf
         {...{
           type: "A",
-          score: teams.scoreA,
-          color: teams.colors[0],
-          dispatch,
+          score: state.scoreA,
+          color: state.colors[0],
+          updateState,
         }}
       />
       <Button
-        onClick={dispatchScoreResetter}
+        onClick={resetScores}
         className={css`
           font-size: ${theme.spacing(2)}px;
           min-width: ${theme.spacing(3.5)}px;
@@ -105,9 +98,9 @@ const Scoreboard = ({ teams, replicant, dispatch, replicate }: BoardProps) => {
       <ScoreHalf
         {...{
           type: "B",
-          score: teams.scoreB,
-          color: teams.colors[1],
-          dispatch,
+          score: state.scoreB,
+          color: state.colors[1],
+          updateState,
         }}
         reversed={true}
       />
@@ -119,17 +112,17 @@ const ScoreHalf = ({
   type,
   score,
   color,
-  dispatch,
+  updateState,
   reversed = false,
 }: {
   type: string
   score: number
   color: string
-  dispatch: Function
+  updateState: Function
   reversed?: boolean
 }) => {
-  const dispatchScore = (score: number) =>
-    dispatch({ type: `setScore${type}`, payload: score })
+  const updateScore = (score: number) =>
+    updateState({ type: `setScore${type}`, payload: score })
 
   const fragments = [
     <InkPreview color={color} key={`score${type}-ink`} />,
@@ -164,7 +157,7 @@ const ScoreHalf = ({
             `}
             variant="contained"
             color={props.color}
-            onClick={() => dispatchScore(props.mut(score))}
+            onClick={() => updateScore(props.mut(score))}
           >
             {props.icon}
           </Button>
@@ -190,23 +183,18 @@ const ScoreHalf = ({
 }
 
 const Nameboard = ({
-  teams,
+  state,
+  updateState,
+  replicateState,
   replicant,
-  dispatch,
-  replicate,
   loadedData,
 }: BoardProps) => {
-  const replicateNameboard = () =>
-    replicate([
-      { name: teams.nameA, color: teams.colors[0] },
-      { name: teams.nameB, color: teams.colors[1] },
-    ])
-
+  const replicateNameboard = () => replicateState({ type: "name" })
   const isUpdated = () =>
-    replicant?.[0]?.name === teams.nameA &&
-    replicant?.[1]?.name === teams.nameB &&
-    replicant?.[0]?.color === teams.colors[0] &&
-    replicant?.[1]?.color === teams.colors[1]
+    replicant?.[0]?.name === state.nameA &&
+    replicant?.[1]?.name === state.nameB &&
+    replicant?.[0]?.color === state.colors[0] &&
+    replicant?.[1]?.color === state.colors[1]
 
   return (
     <>
@@ -217,24 +205,24 @@ const Nameboard = ({
           width: 100%;
         `}
       >
-        <DropdownTeamName
-          dispatch={dispatch}
+        <DropdownName
+          updateState={updateState}
           type="A"
-          name={teams.nameA}
+          name={state.nameA}
           loadedData={loadedData}
         />
         <Box ml={1.5} />
-        <DropdownTeamName
-          dispatch={dispatch}
+        <DropdownName
+          updateState={updateState}
           type="B"
-          name={teams.nameB}
+          name={state.nameB}
           loadedData={loadedData}
         />
       </Box>
       <Box mt={3}>
         <DropdownColors
-          dispatch={dispatch}
-          colors={teams.colors}
+          updateState={updateState}
+          colors={state.colors}
           loadedData={loadedData}
         />
       </Box>
@@ -251,7 +239,7 @@ const Nameboard = ({
           className={css`
             white-space: nowrap;
           `}
-          onClick={() => dispatch({ type: "swapColors" })}
+          onClick={() => updateState({ type: "swapColors" })}
         >
           Swap Colors
         </Button>
@@ -270,16 +258,16 @@ const Nameboard = ({
 }
 
 const DropdownColors = ({
-  dispatch,
+  updateState,
   colors,
   loadedData,
 }: {
-  dispatch: Function
+  updateState: Function
   colors: Array<string>
-  loadedData: LoadedData
+  loadedData?: LoadedData
 }) => {
-  const dispatchColors = (event: unknown, newVal: ColorPair) => {
-    dispatch({
+  const updateColors = (event: unknown, newVal: ColorPair) => {
+    updateState({
       type: "setColors",
       payload: [newVal[0].value, newVal[1].value],
     })
@@ -301,7 +289,7 @@ const DropdownColors = ({
           { name: "Spoon", value: "#2FB89A" },
         ]
       }
-      onChange={dispatchColors}
+      onChange={updateColors}
       getOptionSelected={(o: ColorPair): boolean => colorlist.includes(o)}
       getOptionLabel={(o: ColorPair) => `${o[0].name} vs ${o[1].name}`}
       renderOption={(o: ColorPair) => (
@@ -316,19 +304,19 @@ const DropdownColors = ({
   )
 }
 
-const DropdownTeamName = ({
-  dispatch,
+const DropdownName = ({
+  updateState,
   type,
   name,
   loadedData,
 }: {
-  dispatch: Function
+  updateState: Function
   type: string
   name: string
-  loadedData: LoadedData
+  loadedData?: LoadedData
 }) => {
-  const dispatchTeamName = (event: unknown, newVal: any) => {
-    dispatch({
+  const updateName = (event: unknown, newVal: any) => {
+    updateState({
       type: `setName${type}`,
       payload: newVal,
     })
@@ -345,7 +333,7 @@ const DropdownTeamName = ({
     <Dropdown
       options={teams}
       value={name}
-      onChange={dispatchTeamName}
+      onChange={updateName}
       getOptionSelected={(o: string): boolean => teams.includes(o)}
       name={`Team Name ${type}`}
     />

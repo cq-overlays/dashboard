@@ -1,4 +1,4 @@
-import useReplicant from "./useReplicant"
+import { usePanel } from "./useReplicant"
 
 type Scene =
   | "Empty Scene"
@@ -7,15 +7,5 @@ type Scene =
   | "Rosters Scene"
   | "BRB Scene"
 
-const useSceneReplicant = (): [Scene, (input: any) => void] => {
-  const [sceneReplicant, setSceneReplicant]: any = useReplicant({
-    name: "currentScene",
-    opts: {
-      defaultValue: "Empty Scene",
-    },
-  })
-
-  return [sceneReplicant, setSceneReplicant]
-}
-
-export default useSceneReplicant
+export default () =>
+  usePanel("currentScene", (scene: Scene) => scene || "Empty Scene")

@@ -7,7 +7,7 @@ import useLoadedDataReplicant from "../hooks/useLoadedDataReplicant"
 import Section from "../components/Section"
 
 const Panel = () => {
-  const [_, uploadData] = useLoadedDataReplicant()
+  const [loadedData, uploadData] = useLoadedDataReplicant()
   const [selectedFile, setSelectedFile]: any = React.useState()
   const [inputKey, setInputKey] = React.useState(Date.now())
 
