@@ -1,6 +1,7 @@
 import React from "react"
 import { css } from "@emotion/css"
 import { Button, Box, InputLabel, ButtonGroup } from "@material-ui/core"
+import { AddRounded, RemoveRounded } from "@material-ui/icons"
 
 import render from "../render"
 import useMapsReplicant from "../hooks/useMapsReplicant"
@@ -161,18 +162,18 @@ const GameSections = ({ state, updateState }) => {
           justify-content: flex-end;
         `}
       >
-        <ButtonGroup>
+        <ButtonGroup variant="text">
           <Button
-            variant="outlined"
+            color="primary"
             onClick={() => updateState({ type: "addGame" })}
           >
-            +
+            <AddRounded />
           </Button>
           <Button
-            variant="outlined"
+            color="secondary"
             onClick={() => updateState({ type: "removeGame" })}
           >
-            -
+            <RemoveRounded />
           </Button>
         </ButtonGroup>
       </Box>
