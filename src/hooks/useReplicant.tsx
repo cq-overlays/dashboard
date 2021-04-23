@@ -21,7 +21,7 @@ export const useReplicant = <T, U>({
   // Set state on replicant change
   useEffect(() => {
     const update = (newValue: T): void => {
-      console.log(`Update replicant value for '${name}'`, newValue)
+      console.debug(`Update replicant value for '${name}'`, newValue)
       setValue(newValue)
     }
     replicant.on("change", update)
@@ -70,16 +70,16 @@ export const usePanel = <Replicant, State>(
   useEffect(() => {
     if (!skipReset) {
       setSkipReset(false)
-      console.log(`Reset state for '${name}'`)
+      console.debug(`Reset state for '${name}'`)
       dispatch({ type: "initState" })
     }
   }, [replicant])
 
   const updateState = (action: any) => {
-    console.log(`Set state for '${name}'`)
+    console.debug(`Set state for '${name}'`)
     dispatch({ type: "updateState", payload: action })
     if (replicate === undefined) {
-      console.log(`Auto-replicate state for '${name}'`)
+      console.debug(`Auto-replicate state for '${name}'`)
       setReplicant(action)
     }
   }
@@ -87,11 +87,11 @@ export const usePanel = <Replicant, State>(
     if (replicate === undefined) {
       throw new Error("Unable to replicateState, replicate is not defined.")
     }
-    console.log(`Replicate state for '${name}'`)
+    console.debug(`Replicate state for '${name}'`)
     setSkipReset(true)
     setReplicant(replicate(state, replicant, action))
   }
 
-  console.log(`Rerender for '${name}'`, state, replicant)
+  console.debug(`Rerender for '${name}'`, state, replicant)
   return [state, updateState, replicateState, replicant]
 }
