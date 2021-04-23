@@ -1,9 +1,11 @@
 import { usePanel } from "./useReplicant"
 
-export type RoundMaps = Array<{ map: string; mode: string }>
-export type Maplist = {
-  [type: string]: RoundMaps
+export type Game = { map: string; mode: string; winner?: string | null }
+export type RoundMaps = {
+  name: string
+  games: Array<Game>
 }
+export type Maplist = Array<RoundMaps>
 export type Teamlist = { [key: string]: Array<string> }
 export type Colorlist = Array<ColorPair>
 export type ColorPair = Array<{ name: string; value: string }>
@@ -27,13 +29,16 @@ const useLoadedDataReplicant = (): [
   const [state, updateState, replicateState, replicant]: any = usePanel(
     "loadedData",
     (loadedDataReplicant: LoadedData): LoadedData => ({
-      maplist: loadedDataReplicant?.maplist || {
-        "Test Round": [
-          { map: "Urchin Underpass", mode: "Rocket" },
-          { map: "Urchin Underpass", mode: "Rocket" },
-          { map: "Urchin Underpass", mode: "Rocket" },
-        ],
-      },
+      maplist: loadedDataReplicant?.maplist || [
+        {
+          name: "Test Round",
+          games: [
+            { map: "Urchin Underpass", mode: "Rocket" },
+            { map: "Urchin Underpass", mode: "Rocket" },
+            { map: "Urchin Underpass", mode: "Rocket" },
+          ],
+        },
+      ],
       teamlist: loadedDataReplicant?.teamlist || {
         "Team A": ["Atmosphere", "Airport", "Assumption", "Application"],
         "Team B": ["Balloon", "Brick", "Breakfast", "Bathtub"],

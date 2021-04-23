@@ -3,14 +3,20 @@
   "type": "object",
   "properties": {
     "maplist": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "map": { "type": "string" },
-            "mode": { "type": "string" }
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "games": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "map": { "type": "string" },
+                "mode": { "type": "string" }
+              }
+            }
           }
         }
       }
@@ -39,13 +45,16 @@
     }
   },
   "default": {
-    "maplist": {
-      "Test Round": [
-        { "map": "Urchin Underpass", "mode": "Rocket" },
-        { "map": "Urchin Underpass", "mode": "Rocket" },
-        { "map": "Urchin Underpass", "mode": "Rocket" }
-      ]
-    },
+    "maplist": [
+      {
+        "name": "Test Round",
+        "games": [
+          { "map": "Urchin Underpass", "mode": "Rocket" },
+          { "map": "Urchin Underpass", "mode": "Rocket" },
+          { "map": "Urchin Underpass", "mode": "Rocket" }
+        ]
+      }
+    ],
     "teamlist": {
       "Team A": ["Atmosphere", "Airport", "Assumption", "Application"],
       "Team B": ["Balloon", "Brick", "Breakfast", "Bathtub"]
