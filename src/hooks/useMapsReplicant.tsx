@@ -11,30 +11,37 @@ export default () =>
     "currentMaps",
     (replicant: Maps): Maps =>
       replicant || [
-        {
-          map: "Urchin Underpass",
-          mode: "Rocket",
-          winner: null,
-        },
-        {
-          map: "Urchin Underpass",
-          mode: "Rocket",
-          winner: null,
-        },
-        {
-          map: "Urchin Underpass",
-          mode: "Rocket",
-          winner: null,
-        },
+        { map: null, mode: null, winner: null },
+        { map: null, mode: null, winner: null },
+        { map: null, mode: null, winner: null },
       ],
     (state: Maps, action: any) => {
       switch (action.type) {
-        case "setMaps":
+        case "setGames":
           return action.payload
-        case "setMapWinner":
-          let newState = [...state]
-          newState[action.index].winner = action.payload
-          return newState
+        case "setGameMap":
+          const gameMapState = [...state]
+          gameMapState[action.index].map = action.payload
+          return gameMapState
+        case "setGameMode":
+          const gameModeState = [...state]
+          gameModeState[action.index].mode = action.payload
+          return gameModeState
+        case "setGameWinner":
+          const gameWinnerState = [...state]
+          gameWinnerState[action.index].winner = action.payload
+          return gameWinnerState
+        case "addGame":
+          return [
+            ...state,
+            action?.payload || {
+              map: null,
+              mode: null,
+              winner: null,
+            },
+          ]
+        case "removeGame":
+          return state.slice(0, -1)
         default:
           throw new Error(
             `Unsupported action type '${action?.type}' for useMaps.`
