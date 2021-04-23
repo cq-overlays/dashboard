@@ -43,7 +43,7 @@ export const usePanel = <Replicant, State>(
   init: (replicant: Replicant) => State,
   update: (state: State, action: any) => State = (_, state) => state,
   replicate?: (state: State, replicant: Replicant, action: any) => Replicant
-) => {
+): [State, (action: any) => void, (action: any) => void, Replicant] => {
   const [replicant, setReplicant]: [Replicant, Function] = useReplicant({
     name,
   })

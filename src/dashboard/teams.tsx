@@ -20,12 +20,7 @@ import useLoadedDataReplicant, {
 } from "../hooks/useLoadedDataReplicant"
 
 const Panel = () => {
-  const [
-    state,
-    updateState,
-    replicateState,
-    replicant,
-  ]: any = useTeamsReplicant()
+  const [state, updateState, replicateState, replicant] = useTeamsReplicant()
   const [loadedData] = useLoadedDataReplicant()
 
   return (
