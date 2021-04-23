@@ -12,6 +12,7 @@ import Dropdown from "../components/Dropdown"
 import useTeamsReplicant, {
   TeamsState,
   TeamsReplicant,
+  ColorState,
 } from "../hooks/useTeamsReplicant"
 import useLoadedDataReplicant, {
   ColorPair,
@@ -276,39 +277,42 @@ const DropdownColors = ({
   colors: Array<string>
   loadedData?: LoadedData
 }) => {
-  const updateColors = (event: unknown, newVal: ColorPair) => {
+  const updateColors = (event: unknown, newVal: ColorPair) =>
     updateState({
       type: "setColors",
-      payload: [newVal[0].value, newVal[1].value],
+      payload: newVal,
     })
-  }
 
-  let colorlist: Array<ColorPair>
-  if (loadedData?.colorlist) {
-    colorlist = loadedData.colorlist
-  } else {
-    colorlist = []
-  }
+  const colorPairFromState = (colors: ColorState) =>
+    loadedData?.colorlist.find(
+      (pair: ColorPair) =>
+        colors.includes(pair[0].value) && colors.includes(pair[1].value)
+    )
 
   return (
     <Dropdown
-      options={colorlist}
-      value={
-        colorlist.filter(o => colors.includes(o[0].value)).pop() || [
-          { name: "Fork", value: "#E36D60" },
-          { name: "Spoon", value: "#2FB89A" },
-        ]
-      }
+      options={loadedData?.colorlist
+        .map((pair: ColorPair) => [pair[0].value, pair[1].value])
+        .slice(0, -1)}
+      value={colors}
       onChange={updateColors}
-      getOptionSelected={(o: ColorPair): boolean => colorlist.includes(o)}
-      getOptionLabel={(o: ColorPair) => `${o[0].name} vs ${o[1].name}`}
-      renderOption={(o: ColorPair) => (
-        <>
-          <InkIcon color={o[0].value} />
-          {` ${o[0].name} vs ${o[1].name} `}
-          <InkIcon color={o[1].value} />
-        </>
-      )}
+      getOptionSelected={(o: ColorState, v: ColorState) =>
+        JSON.stringify(o) === JSON.stringify(v)
+      }
+      getOptionLabel={(o: ColorState) => {
+        const pair = colorPairFromState(o)
+        return `${pair?.[0].name} vs ${pair?.[1].name}`
+      }}
+      renderOption={(o: ColorState) => {
+        const pair = colorPairFromState(o)
+        return (
+          <>
+            <InkIcon color={pair?.[0].value || "transparent"} />
+            {` ${pair?.[0].name} vs ${pair?.[1].name} `}
+            <InkIcon color={pair?.[1].value || "transparent"} />
+          </>
+        )
+      }}
       name="Team Colors"
     />
   )
@@ -332,19 +336,12 @@ const DropdownName = ({
     })
   }
 
-  let teams: Array<string>
-  if (loadedData?.teamlist) {
-    teams = Object.keys(loadedData.teamlist)
-  } else {
-    teams = []
-  }
-
   return (
     <Dropdown
-      options={teams}
+      freeSolo
+      options={Object.keys(loadedData?.teamlist || {})}
       value={name}
       onChange={updateName}
-      getOptionSelected={(o: string): boolean => teams.includes(o)}
       name={`Team Name ${type}`}
     />
   )

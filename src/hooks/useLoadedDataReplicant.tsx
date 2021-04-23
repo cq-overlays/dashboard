@@ -64,6 +64,10 @@ const useLoadedDataReplicant = (): [
           { name: "Yellow", value: "#D9C100" },
           { name: "True Blue", value: "#007AC9" },
         ],
+        [
+          { name: "Fork", value: "#E36D60" },
+          { name: "Spoon", value: "#2FB89A" },
+        ],
       ],
     }),
     (state, data) => ({
