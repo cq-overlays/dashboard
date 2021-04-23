@@ -1,11 +1,13 @@
 import { usePanel } from "./useReplicant"
 
+export type ColorState = Array<string>
+
 export type TeamsState = {
   nameA: string
   nameB: string
   scoreA: number
   scoreB: number
-  colors: Array<string>
+  colors: ColorState
 }
 
 export type TeamsReplicant = Array<{
