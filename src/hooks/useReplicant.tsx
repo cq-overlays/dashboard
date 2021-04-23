@@ -79,7 +79,7 @@ export const usePanel = <Replicant, State>(
     console.log(`Set state for '${name}'`)
     dispatch({ type: "updateState", payload: action })
     if (replicate === undefined) {
-      // console.log(`Auto-replicate state for '${name}'`)
+      console.log(`Auto-replicate state for '${name}'`)
       setReplicant(action)
     }
   }
