@@ -6,7 +6,7 @@
     "properties": {
       "map": { "type": "string" },
       "mode": { "type": "string" },
-      "winner": { "type": "string" }
+      "winner": { "type": ["null", "string"] }
     }
   },
   "default": [
