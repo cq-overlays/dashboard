@@ -1,12 +1,8 @@
 import React from "react"
 import { css } from "@emotion/css"
 import { Box, TextField, Button, SvgIcon } from "@material-ui/core"
-import {
-  AddRounded,
-  RemoveRounded,
-  FiberManualRecord as Circle,
-} from "@material-ui/icons"
-import render, { theme } from "../render"
+import Circle from "@material-ui/icons/FiberManualRecord"
+import render, { theme, AddRounded, RemoveRounded } from "../render"
 import Section from "../components/Section"
 import Dropdown from "../components/Dropdown"
 import useTeamsReplicant, {
@@ -364,17 +360,18 @@ const InkPreview = ({ color }: { color: string }) => (
   </Box>
 )
 
-const InkIcon = ({ color, ...rest }: { color: string }) => (
-  <Circle
-    className={css`
-      color: ${color};
-      circle {
+const InkIcon = ({ color }: { color: string }) => (
+  <SvgIcon>
+    <circle
+      className={css`
         stroke: white;
         stroke-width: 2;
-      }
-    `}
-    {...rest}
-  />
+      `}
+      cx="12"
+      cy="12"
+      r="8"
+    />
+  </SvgIcon>
 )
 
 render(Panel)

@@ -1,12 +1,16 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Button, Box, InputLabel, ButtonGroup } from "@material-ui/core"
-import { AddRounded, RemoveRounded } from "@material-ui/icons"
-
-import render from "../render"
-import useMapsReplicant from "../hooks/useMapsReplicant"
+import {
+  Button,
+  Box,
+  InputLabel,
+  ButtonGroup,
+  IconButton,
+} from "@material-ui/core"
+import render, { AddRounded, RemoveRounded } from "../render"
+import useMapsReplicant, { Maps } from "../hooks/useMapsReplicant"
 import useLoadedDataReplicant, {
-  RoundMaps,
+  LoadedData,
   Game,
 } from "../hooks/useLoadedDataReplicant"
 import Section from "../components/Section"
@@ -30,9 +34,15 @@ const Panel = () => {
   )
 }
 
-const RoundInput = ({ state, updateState, loadedData }) => {
+type MapsParams = {
+  state: Maps
+  updateState: Function
+  loadedData?: LoadedData
+}
+
+const RoundInput = ({ state, updateState, loadedData }: MapsParams) => {
   const [roundInput, setRoundInput] = React.useState(
-    loadedData.maplist.find(
+    loadedData?.maplist.find(
       round => JSON.stringify(round.games) === JSON.stringify(state)
     )?.name || null
   )
@@ -40,7 +50,7 @@ const RoundInput = ({ state, updateState, loadedData }) => {
   const loadRoundMaps = () => {
     updateState({
       type: "setGames",
-      payload: loadedData.maplist.find(r => r.name === roundInput).games,
+      payload: loadedData?.maplist.find(r => r.name === roundInput)?.games,
     })
   }
   return (
@@ -51,10 +61,10 @@ const RoundInput = ({ state, updateState, loadedData }) => {
       `}
     >
       <Dropdown
-        options={loadedData.maplist.map(r => r.name)}
+        options={loadedData?.maplist.map(r => r.name)}
         name="Round"
         value={roundInput}
-        onChange={(e, round) => setRoundInput(round)}
+        onChange={(e: any, round: string) => setRoundInput(round)}
       />
       <Box ml={1.5}>
         <Button
@@ -63,7 +73,7 @@ const RoundInput = ({ state, updateState, loadedData }) => {
           `}
           color="primary"
           variant="contained"
-          disabled={!loadedData.maplist.find(r => r.name === roundInput)}
+          disabled={!loadedData?.maplist.find(r => r.name === roundInput)}
           onClick={loadRoundMaps}
         >
           Load Round
@@ -73,7 +83,7 @@ const RoundInput = ({ state, updateState, loadedData }) => {
   )
 }
 
-const GameSections = ({ state, updateState }) => {
+const GameSections = ({ state, updateState }: MapsParams) => {
   const modes = ["Splat Zones", "Tower Control", "Rainmaker", "Clam Blitz"]
   const maps = [
     "Goby Arena",
@@ -90,7 +100,7 @@ const GameSections = ({ state, updateState }) => {
   ]
   return (
     <>
-      {state.map((game: Game) => (
+      {state.map(game => (
         <Section key={`game-${state.indexOf(game)}`}>
           <Box
             className={css`
@@ -103,7 +113,7 @@ const GameSections = ({ state, updateState }) => {
                 options={maps}
                 name="Map"
                 value={game.map}
-                onChange={(e, newMap: string) => {
+                onChange={(e: any, newMap: string) => {
                   updateState({
                     type: "setGameMap",
                     index: state.indexOf(game),
@@ -117,7 +127,7 @@ const GameSections = ({ state, updateState }) => {
                 options={modes}
                 name="Mode"
                 value={game.mode}
-                onChange={(e, newMode: string) => {
+                onChange={(e: any, newMode: string) => {
                   updateState({
                     type: "setGameMode",
                     index: state.indexOf(game),
@@ -134,13 +144,15 @@ const GameSections = ({ state, updateState }) => {
                 justify-content: space-between;
               `}
             >
-              <InputLabel>Winner</InputLabel>
+              <Box mr={1.5}>
+                <InputLabel>Winner</InputLabel>
+              </Box>
               <ButtonGroup color="primary" variant="contained">
                 {[null, "A", "B"].map(letter => (
                   <Button
                     key={`game-${state.indexOf(game)}-${letter}`}
                     disabled={letter === game.winner}
-                    onClick={e =>
+                    onClick={(e: any) =>
                       updateState({
                         type: "setGameWinner",
                         index: state.indexOf(game),
