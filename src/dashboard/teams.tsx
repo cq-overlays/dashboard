@@ -361,7 +361,11 @@ const InkPreview = ({ color }: { color: string }) => (
 )
 
 const InkIcon = ({ color }: { color: string }) => (
-  <SvgIcon>
+  <SvgIcon
+    className={css`
+      color: ${color};
+    `}
+  >
     <circle
       className={css`
         stroke: white;
