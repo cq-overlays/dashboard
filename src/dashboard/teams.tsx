@@ -70,7 +70,6 @@ const Scoreboard = ({
   React.useEffect(
     function replicateScores() {
       if (replicant) {
-        console.log("Running score effect")
         replicateState({ type: "score" })
       }
     },
