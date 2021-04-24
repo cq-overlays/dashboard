@@ -7,7 +7,7 @@ import useSceneReplicant from "../hooks/useSceneReplicant"
 import Section from "../components/Section"
 
 const Panel = () => {
-  const [scene, setScene]: any = useSceneReplicant()
+  const [scene, setScene] = useSceneReplicant()
 
   return (
     <Box
