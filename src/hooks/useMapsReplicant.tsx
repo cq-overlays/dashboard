@@ -1,24 +1,33 @@
 import { usePanel } from "./useReplicant"
 
-export type Maps = Array<{
+export type Game = {
   map: string
   mode: string
   winner: string | null
-}>
+}
+export type Games = Array<Game>
 
 export default () =>
   usePanel(
     "currentMaps",
-    (replicant: Maps): Maps =>
+    (replicant: Games): Games =>
       replicant || [
-        { map: null, mode: null, winner: null },
-        { map: null, mode: null, winner: null },
-        { map: null, mode: null, winner: null },
+        { map: "Urchin Underpass", mode: "Rocket", winner: null },
+        { map: "Urchin Underpass", mode: "Rocket", winner: null },
+        { map: "Urchin Underpass", mode: "Rocket", winner: null },
       ],
-    (state: Maps, action: any) => {
+    (state: Games, action: any) => {
       switch (action.type) {
         case "setGames":
-          return action.payload
+          const games: Games = []
+          action.payload.forEach((game: Game) => {
+            games.push({
+              map: game.map,
+              mode: game.mode,
+              winner: game.winner || null,
+            })
+          })
+          return games
         case "setGameMap":
           const gameMapState = [...state]
           gameMapState[action.index].map = action.payload
@@ -48,5 +57,5 @@ export default () =>
           )
       }
     },
-    (state, replicant) => state
+    state => state
   )

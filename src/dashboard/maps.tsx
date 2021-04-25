@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@material-ui/core"
 import render, { AddRounded, RemoveRounded } from "../render"
-import useMapsReplicant, { Maps } from "../hooks/useMapsReplicant"
+import useMapsReplicant, { Games } from "../hooks/useMapsReplicant"
 import useLoadedDataReplicant, {
   LoadedData,
   Game,
@@ -35,17 +35,13 @@ const Panel = () => {
 }
 
 type MapsParams = {
-  state: Maps
+  state: Games
   updateState: Function
   loadedData?: LoadedData
 }
 
 const RoundInput = ({ state, updateState, loadedData }: MapsParams) => {
-  const [roundInput, setRoundInput] = React.useState(
-    loadedData?.maplist.find(
-      round => JSON.stringify(round.games) === JSON.stringify(state)
-    )?.name || null
-  )
+  const [roundInput, setRoundInput] = React.useState()
 
   const loadRoundMaps = () => {
     updateState({
@@ -53,6 +49,7 @@ const RoundInput = ({ state, updateState, loadedData }: MapsParams) => {
       payload: loadedData?.maplist.find(r => r.name === roundInput)?.games,
     })
   }
+
   return (
     <Box
       className={css`
@@ -98,6 +95,7 @@ const GameSections = ({ state, updateState }: MapsParams) => {
     "Humpback Pump Track",
     "Snapper Canal",
   ]
+
   return (
     <>
       {state.map(game => (

@@ -33,9 +33,9 @@ const useLoadedDataReplicant = (): [
         {
           name: "Test Round",
           games: [
-            { map: "Urchin Underpass", mode: "Rocket" },
-            { map: "Urchin Underpass", mode: "Rocket" },
-            { map: "Urchin Underpass", mode: "Rocket" },
+            { map: "Moray Towers", mode: "Clam Blitz" },
+            { map: "Moray Towers", mode: "Clam Blitz" },
+            { map: "Moray Towers", mode: "Clam Blitz" },
           ],
         },
       ],
