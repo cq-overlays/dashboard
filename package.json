@@ -68,6 +68,7 @@
     "@material-ui/lab": "*",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
+    "babel-plugin-import": "^1.13.3",
     "install": "^0.13.0",
     "nodecg": "^1.8.1",
     "npm": "^7.10.0",
