@@ -1,17 +1,49 @@
 import React from "react"
 import { render } from "react-dom"
 import { css } from "@emotion/css"
+import { SvgIcon } from "@material-ui/core"
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import { StylesProvider } from "@material-ui/core/styles"
-import AddRounded from "@material-ui/icons/AddRounded"
-import RemoveRounded from "@material-ui/icons/RemoveRounded"
 import "@fontsource/open-sans/300.css"
 import "@fontsource/open-sans/400.css"
 import "@fontsource/open-sans/600.css"
 import "@fontsource/open-sans/700.css"
 import "@fontsource/open-sans/800.css"
 
-export { AddRounded, RemoveRounded }
+export const AddRounded = () => (
+  <SvgIcon
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+    />
+  </SvgIcon>
+)
+
+export const RemoveRounded = () => (
+  <SvgIcon
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M20 12H4"
+    />
+  </SvgIcon>
+)
+
 export const theme = createMuiTheme({
   typography: {
     fontFamily: [
