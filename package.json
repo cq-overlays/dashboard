@@ -24,6 +24,12 @@
         "width": 3
       },
       {
+        "name": "flavorText",
+        "file": "flavorText.html",
+        "title": "Flavor Text",
+        "width": 3
+      },
+      {
         "name": "scene",
         "file": "scene.html",
         "title": "Scenes",
