@@ -8,4 +8,4 @@ type Scene =
   | "BRB Scene"
 
 export default () =>
-  usePanel("currentScene", (scene: Scene) => scene || "Empty Scene")
+  usePanel("currentScene", (replicant: Scene) => replicant || "Empty Scene")

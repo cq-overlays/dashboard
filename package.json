@@ -18,6 +18,12 @@
         "width": 3
       },
       {
+        "name": "commentators",
+        "file": "commentators.html",
+        "title": "Commentators",
+        "width": 3
+      },
+      {
         "name": "scene",
         "file": "scene.html",
         "title": "Scenes",

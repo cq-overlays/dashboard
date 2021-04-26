@@ -5,8 +5,8 @@
     "type": "object",
     "properties": {
       "name": { "type": "string" },
-      "twitter": { "type": "string" },
-      "pronouns": { "type": "string" }
+      "twitter": { "type": ["string", "null"] },
+      "pronouns": { "type": ["string", "null"] }
     }
   }
 }
