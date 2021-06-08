@@ -26,6 +26,7 @@ const Panel = () => {
           index={index}
           setState={setState}
           replicateState={replicateState}
+          replicant={replicant}
         />
       ))}
       <Box
@@ -58,6 +59,7 @@ type SectionParams = {
   index: number
   setState: (action: any) => void
   replicateState: (action: any) => void
+  replicant: Array<Commentator>
 }
 
 const CommentatorSection = ({
@@ -65,6 +67,7 @@ const CommentatorSection = ({
   index,
   setState,
   replicateState,
+  replicant,
 }: SectionParams) => {
   const commentator = state[index]
   const setCommentator = (type: string, payload: string) => {
@@ -76,6 +79,9 @@ const CommentatorSection = ({
       case "pronouns":
         return setState({ type: "setPronouns", index, payload })
     }
+  }
+  const isDisabled = () => {
+    return JSON.stringify(commentator) === JSON.stringify(replicant?.[index])
   }
 
   return (
@@ -127,10 +133,11 @@ const CommentatorSection = ({
           <Box mt={1.5} /> */}
           <Button
             onClick={() => replicateState({ index: index })}
+            disabled={isDisabled()}
             variant="contained"
             color="primary"
           >
-            Update
+            {isDisabled() ? "Updated" : "Update"}
           </Button>
         </Box>
       </Box>
