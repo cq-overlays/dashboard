@@ -10,7 +10,7 @@ export default () =>
   usePanel(
     "currentCommentators",
     (replicant: Array<Commentator>) =>
-      replicant || [
+      replicant?.map(comm => Object.assign({}, comm)) || [
         { name: null, twitter: null, pronouns: null },
         { name: null, twitter: null, pronouns: null },
       ],
@@ -45,5 +45,9 @@ export default () =>
           )
       }
     },
-    state => state
+    (state, replicant, action) => {
+      const newReplicant = replicant.map(comm => Object.assign({}, comm))
+      newReplicant[action.index] = state[action.index]
+      return newReplicant
+    }
   )

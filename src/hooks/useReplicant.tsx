@@ -30,6 +30,15 @@ export const useReplicant = <T, U>({
     }
   }, [replicant])
 
+  /* return a local function that's handling the onchange?
+  const fakeTest = React.useCallback(() => {
+    const update = (newValue: T): void => {
+      console.debug(`Update replicant value for '${name}'`, newValue)
+      setValue(newValue)
+    }
+    replicant.on("change", update)
+  }) */
+
   return [
     value,
     input => {

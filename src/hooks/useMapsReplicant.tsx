@@ -11,7 +11,7 @@ export default () =>
   usePanel(
     "currentMaps",
     (replicant: Games): Games =>
-      replicant || [
+      replicant?.map(game => Object.assign({}, game)) || [
         { map: "Urchin Underpass", mode: "Rocket", winner: null },
         { map: "Urchin Underpass", mode: "Rocket", winner: null },
         { map: "Urchin Underpass", mode: "Rocket", winner: null },
@@ -57,5 +57,5 @@ export default () =>
           )
       }
     },
-    state => state
+    (state, replicant, action) => action?.payload || [...state]
   )

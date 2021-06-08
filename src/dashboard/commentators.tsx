@@ -1,20 +1,16 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Button, Box, TextField, IconButton } from "@material-ui/core"
+import { Button, Box, TextField, ButtonGroup } from "@material-ui/core"
 
-import render, { RemoveRounded, theme } from "../render"
+import render, { RemoveRounded, AddRounded } from "../render"
 import useCommentatorsReplicant, {
   Commentator,
 } from "../hooks/useCommentatorsReplicant"
 import Section from "../components/Section"
 
 const Panel = () => {
-  const [
-    state,
-    setState,
-    replicateState,
-    replicant,
-  ] = useCommentatorsReplicant()
+  const [state, setState, replicateState, replicant] =
+    useCommentatorsReplicant()
 
   return (
     <Box
@@ -23,8 +19,36 @@ const Panel = () => {
         flex-direction: column;
       `}
     >
-      <CommentatorSection state={state} index={0} setState={setState} />
-      <CommentatorSection state={state} index={1} setState={setState} />
+      {state.map((_, index) => (
+        <CommentatorSection
+          key={index}
+          state={state}
+          index={index}
+          setState={setState}
+          replicateState={replicateState}
+        />
+      ))}
+      <Box
+        className={css`
+          display: flex;
+          justify-content: flex-end;
+        `}
+      >
+        <ButtonGroup variant="text">
+          <Button
+            color="primary"
+            onClick={() => setState({ type: "addCommentator" })}
+          >
+            <AddRounded />
+          </Button>
+          <Button
+            color="secondary"
+            onClick={() => setState({ type: "removeCommentator" })}
+          >
+            <RemoveRounded />
+          </Button>
+        </ButtonGroup>
+      </Box>
     </Box>
   )
 }
@@ -33,9 +57,15 @@ type SectionParams = {
   state: Array<Commentator>
   index: number
   setState: (action: any) => void
+  replicateState: (action: any) => void
 }
 
-const CommentatorSection = ({ state, index, setState }: SectionParams) => {
+const CommentatorSection = ({
+  state,
+  index,
+  setState,
+  replicateState,
+}: SectionParams) => {
   const commentator = state[index]
   const setCommentator = (type: string, payload: string) => {
     switch (type) {
@@ -63,14 +93,7 @@ const CommentatorSection = ({ state, index, setState }: SectionParams) => {
             justify-content: space-between;
           `}
         >
-          <TextField
-            value={commentator?.name || ""}
-            onChange={e => setCommentator("name", e.target.value)}
-            fullWidth
-            label="Name"
-          />
           <Box
-            mt={3}
             className={css`
               display: flex;
             `}
@@ -102,7 +125,11 @@ const CommentatorSection = ({ state, index, setState }: SectionParams) => {
             Remove
           </Button>
           <Box mt={1.5} /> */}
-          <Button variant="contained" color="primary">
+          <Button
+            onClick={() => replicateState({ index: index })}
+            variant="contained"
+            color="primary"
+          >
             Update
           </Button>
         </Box>

@@ -16,7 +16,6 @@ const Panel = () => {
         flex-direction: column;
       `}
     >
-      <SceneBox name="Empty Scene" {...{ scene, setScene }} />
       <SceneBox name="Scores Scene" {...{ scene, setScene }} />
       <SceneBox name="Maplist Scene" {...{ scene, setScene }} />
       <SceneBox name="Rosters Scene" {...{ scene, setScene }} />

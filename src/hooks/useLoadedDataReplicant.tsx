@@ -29,7 +29,9 @@ const useLoadedDataReplicant = (): [
   const [state, updateState, replicateState, replicant]: any = usePanel(
     "loadedData",
     (loadedDataReplicant: LoadedData): LoadedData => ({
-      maplist: loadedDataReplicant?.maplist || [
+      maplist: [
+        ...(loadedDataReplicant?.maplist ? loadedDataReplicant.maplist : []),
+      ] || [
         {
           name: "Test Round",
           games: [
@@ -39,11 +41,11 @@ const useLoadedDataReplicant = (): [
           ],
         },
       ],
-      teamlist: loadedDataReplicant?.teamlist || {
+      teamlist: Object.assign({}, loadedDataReplicant?.teamlist) || {
         "Team A": ["Atmosphere", "Airport", "Assumption", "Application"],
         "Team B": ["Balloon", "Brick", "Breakfast", "Bathtub"],
       },
-      colorlist: loadedDataReplicant?.colorlist || [
+      colorlist: [
         [
           { name: "Slimy Green", value: "#25B100" },
           { name: "Grape", value: "#571DB1" },
@@ -78,12 +80,19 @@ const useLoadedDataReplicant = (): [
         ],
       ],
     }),
-    (state, data) => ({
-      ...replicant,
-      maplist: data.maplist,
-      teamlist: data.teamlist,
-      colorlist: data.colorlist,
-    })
+    (state, data) => {
+      const newData = { ...replicant }
+      if (data.maplist) {
+        newData.maplist = data.maplist
+      }
+      if (data.teamlist) {
+        newData.teamlist = data.teamlist
+      }
+      if (data.colorlist) {
+        newData.colorlist = data.colorlist
+      }
+      return newData
+    }
   )
 
   return [state, updateState]

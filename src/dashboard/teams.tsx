@@ -1,7 +1,6 @@
 import React from "react"
 import { css } from "@emotion/css"
 import { Box, TextField, Button, SvgIcon } from "@material-ui/core"
-import Circle from "@material-ui/icons/FiberManualRecord"
 import render, { theme, AddRounded, RemoveRounded } from "../render"
 import Section from "../components/Section"
 import Dropdown from "../components/Dropdown"
