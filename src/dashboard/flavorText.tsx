@@ -7,7 +7,11 @@ import useFlavorTextReplicant from "../hooks/useFlavorTextReplicant"
 import Section from "../components/Section"
 
 const Panel = () => {
-  const [state, setState, replicateState]: any = useFlavorTextReplicant()
+  const [state, setState, replicateState, replicant]: any =
+    useFlavorTextReplicant()
+  const isDisabled = () => {
+    return state === replicant
+  }
 
   return (
     <Section>
@@ -17,35 +21,24 @@ const Panel = () => {
           align-items: flex-end;
         `}
       >
-        <Field
-          state={state}
-          setState={setState}
-          replicateState={replicateState}
+        <TextField
+          value={state || ""}
+          onChange={d => setState(d.target.value)}
+          label="Flavor Text"
+          fullWidth
         />
+        <Box ml={1.5}>
+          <Button
+            onClick={() => replicateState()}
+            variant="contained"
+            disabled={isDisabled()}
+            color="primary"
+          >
+            {isDisabled() ? "Updated" : "Update"}
+          </Button>
+        </Box>
       </Box>
     </Section>
-  )
-}
-
-const Field = ({ state, setState, replicateState }: any) => {
-  return (
-    <>
-      <TextField
-        value={state || ""}
-        onChange={d => setState(d.target.value)}
-        label="Flavor Text"
-        fullWidth
-      />
-      <Box ml={1.5}>
-        <Button
-          onClick={() => replicateState()}
-          variant="contained"
-          color="primary"
-        >
-          Update
-        </Button>
-      </Box>
-    </>
   )
 }
 
