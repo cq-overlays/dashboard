@@ -25,16 +25,24 @@ const Panel = () => {
       <Section>
         <RoundInput
           state={state}
+          replicant={replicant}
           updateState={updateState}
           replicateState={replicateState}
           loadedData={loadedData}
         />
       </Section>
-      <GameSections
-        state={state}
-        updateState={updateState}
-        replicateState={replicateState}
-      />
+      <GameSections updateState={updateState} replicateState={replicateState}>
+        {state.map(game => (
+          <Section key={`game-${state.indexOf(game)}`}>
+            <GameSection
+              game={game}
+              state={state}
+              updateState={updateState}
+              replicateState={replicateState}
+            />
+          </Section>
+        ))}
+      </GameSections>
     </Box>
   )
 }
@@ -44,24 +52,48 @@ type MapsParams = {
   updateState: Function
   replicateState: Function
   loadedData?: LoadedData
+  children: any
 }
 
 const RoundInput = ({
   state,
+  replicant,
   updateState,
   replicateState,
   loadedData,
 }: MapsParams) => {
   const [roundInput, setRoundInput] = React.useState()
 
+  const isDisabled = () => {
+    let isDisabled = true
+    let oldState: Games
+    if (roundInput) {
+      oldState = loadedData?.maplist.find(r => r.name === roundInput)?.games
+    } else {
+      oldState = replicant
+    }
+    state.forEach((game, i) => {
+      const oldGame = oldState?.[i]
+      if (oldGame?.map !== game.map || oldGame?.mode !== game.mode) {
+        isDisabled = false
+      }
+    })
+    return isDisabled
+  }
+
   const loadRoundMaps = () => {
-    updateState({
-      type: "setGames",
-      payload: loadedData?.maplist.find(r => r.name === roundInput)?.games,
-    })
-    replicateState({
-      payload: loadedData?.maplist.find(r => r.name === roundInput)?.games,
-    })
+    if (roundInput) {
+      updateState({
+        type: "setGames",
+        payload: loadedData?.maplist.find(r => r.name === roundInput)?.games,
+      })
+      replicateState({
+        payload: loadedData?.maplist.find(r => r.name === roundInput)?.games,
+      })
+      setRoundInput("")
+    } else {
+      replicateState()
+    }
   }
 
   return (
@@ -84,23 +116,19 @@ const RoundInput = ({
           `}
           color="primary"
           variant="contained"
-          disabled={!loadedData?.maplist.find(r => r.name === roundInput)}
+          disabled={isDisabled()}
           onClick={loadRoundMaps}
         >
-          Update
+          {isDisabled() ? "Updated" : "Update"}
         </Button>
       </Box>
     </Box>
   )
 }
 
-const GameSections = ({ state, updateState }: MapsParams) => (
+const GameSections = ({ children, updateState }: MapsParams) => (
   <>
-    {state.map(game => (
-      <Section key={`game-${state.indexOf(game)}`}>
-        <GameSection game={game} state={state} updateState={updateState} />
-      </Section>
-    ))}
+    {children}
     <Box
       className={css`
         display: flex;
@@ -125,22 +153,15 @@ const GameSections = ({ state, updateState }: MapsParams) => (
   </>
 )
 
-type GameSectionParams = {
-  game: Game
-  state: Games
-  updateState: Function
-  replicateState: Function
-}
-
 const GameSection = ({
   game,
   state,
   updateState,
   replicateState,
 }: GameSectionParams) => {
-  useEffect(() => {
-    replicateState()
-  }, [state[state.indexOf(game)].winner])
+  // useEffect(() => {
+  //   replicateState()
+  // }, [state[state.indexOf(game)].winner])
   return (
     <Box
       className={css`
@@ -207,6 +228,13 @@ const GameSection = ({
       </Box>
     </Box>
   )
+}
+
+type GameSectionParams = {
+  game: Game
+  state: Games
+  updateState: Function
+  replicateState: Function
 }
 
 const modes = ["Splat Zones", "Tower Control", "Rainmaker", "Clam Blitz"]
