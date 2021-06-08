@@ -30,7 +30,11 @@ const Panel = () => {
           loadedData={loadedData}
         />
       </Section>
-      <GameSections state={state} updateState={updateState} />
+      <GameSections
+        state={state}
+        updateState={updateState}
+        replicateState={replicateState}
+      />
     </Box>
   )
 }
@@ -69,7 +73,7 @@ const RoundInput = ({
     >
       <Dropdown
         options={loadedData?.maplist.map(r => r.name)}
-        name="Round"
+        name="Load Round"
         value={roundInput || ""}
         onChange={(e: any, round: string) => setRoundInput(round)}
       />
@@ -83,7 +87,7 @@ const RoundInput = ({
           disabled={!loadedData?.maplist.find(r => r.name === roundInput)}
           onClick={loadRoundMaps}
         >
-          Load Round
+          Update
         </Button>
       </Box>
     </Box>
@@ -125,9 +129,18 @@ type GameSectionParams = {
   game: Game
   state: Games
   updateState: Function
+  replicateState: Function
 }
 
-const GameSection = ({ game, state, updateState }: GameSectionParams) => {
+const GameSection = ({
+  game,
+  state,
+  updateState,
+  replicateState,
+}: GameSectionParams) => {
+  useEffect(() => {
+    replicateState()
+  }, [state[state.indexOf(game)].winner])
   return (
     <Box
       className={css`

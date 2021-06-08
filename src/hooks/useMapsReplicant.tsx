@@ -11,7 +11,7 @@ export default () =>
   usePanel(
     "currentMaps",
     (replicant: Games): Games =>
-      replicant?.map(game => Object.assign({}, game)) || [
+      replicant?.map(buildGameState) || [
         { map: "Urchin Underpass", mode: "Rocket", winner: null },
         { map: "Urchin Underpass", mode: "Rocket", winner: null },
         { map: "Urchin Underpass", mode: "Rocket", winner: null },
@@ -21,11 +21,7 @@ export default () =>
         case "setGames":
           const games: Games = []
           action.payload.forEach((game: Game) => {
-            games.push({
-              map: game.map,
-              mode: game.mode,
-              winner: game.winner || null,
-            })
+            games.push(buildGameState(game))
           })
           return games
         case "setGameMap":
@@ -59,3 +55,9 @@ export default () =>
     },
     (state, replicant, action) => action?.payload || [...state]
   )
+
+const buildGameState = (game: Game): Game => ({
+  map: game.map,
+  mode: game.mode,
+  winner: typeof game.winner === typeof "" ? game.winner : null,
+})
