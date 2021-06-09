@@ -3,7 +3,7 @@ import { usePanel } from "./useReplicant"
 export type Game = {
   map: string
   mode: string
-  winner: string | null
+  winner?: string | null
 }
 export type Games = Array<Game>
 
@@ -11,7 +11,7 @@ export default () =>
   usePanel(
     "currentMaps",
     (replicant: Games): Games =>
-      replicant?.map(buildGameState) || [
+      replicant?.map(game => Object.assign({}, game)) || [
         { map: "Urchin Underpass", mode: "Rocket", winner: null },
         { map: "Urchin Underpass", mode: "Rocket", winner: null },
         { map: "Urchin Underpass", mode: "Rocket", winner: null },
@@ -53,7 +53,20 @@ export default () =>
           )
       }
     },
-    (state, replicant, action) => action?.payload || [...state]
+    (state, replicant, action) => {
+      switch (action.type) {
+        case "all":
+          return (
+            action?.payload?.map(buildGameState) || [
+              ...state.map(buildGameState),
+            ]
+          )
+        case "winner":
+          const newReplicant = [...replicant]
+          newReplicant[action.index].winner = action.payload
+          return newReplicant
+      }
+    }
   )
 
 const buildGameState = (game: Game): Game => ({

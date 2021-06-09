@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { css } from "@emotion/css"
 import {
   Button,
@@ -48,11 +48,12 @@ const Panel = () => {
 }
 
 type MapsParams = {
-  state: Games
+  state?: Games
+  replicant?: Games
   updateState: Function
   replicateState: Function
   loadedData?: LoadedData
-  children: any
+  children?: any
 }
 
 const RoundInput = ({
@@ -92,11 +93,12 @@ const RoundInput = ({
         payload: loadedData?.maplist.find(r => r.name === roundInput)?.games,
       })
       replicateState({
+        type: "all",
         payload: loadedData?.maplist.find(r => r.name === roundInput)?.games,
       })
       setRoundInput("")
     } else {
-      replicateState()
+      replicateState({ type: "all" })
     }
   }
 
@@ -157,15 +159,20 @@ const GameSections = ({ children, updateState }: MapsParams) => (
   </>
 )
 
+type GameSectionParams = {
+  game: Game
+  state: Games
+  updateState: Function
+  replicateState: Function
+}
+
 const GameSection = ({
   game,
   state,
   updateState,
   replicateState,
 }: GameSectionParams) => {
-  // useEffect(() => {
-  //   replicateState()
-  // }, [state[state.indexOf(game)].winner])
+  const index = state.indexOf(game)
   return (
     <Box
       className={css`
@@ -181,7 +188,7 @@ const GameSection = ({
           onChange={(e: any, newMap: string) => {
             updateState({
               type: "setGameMap",
-              index: state.indexOf(game),
+              index,
               payload: newMap,
             })
           }}
@@ -195,7 +202,7 @@ const GameSection = ({
           onChange={(e: any, newMode: string) => {
             updateState({
               type: "setGameMode",
-              index: state.indexOf(game),
+              index,
               payload: newMode,
             })
           }}
@@ -215,15 +222,12 @@ const GameSection = ({
         <ButtonGroup color="primary" variant="contained">
           {[null, "A", "B"].map(letter => (
             <Button
-              key={`game-${state.indexOf(game)}-${letter}`}
+              key={`game-${index}-${letter}`}
               disabled={letter === game.winner}
-              onClick={(e: any) =>
-                updateState({
-                  type: "setGameWinner",
-                  index: state.indexOf(game),
-                  payload: letter,
-                })
-              }
+              onClick={(e: any) => {
+                updateState({ type: "setGameWinner", index, payload: letter })
+                replicateState({ type: "winner", index, payload: letter })
+              }}
             >
               {letter || "None"}
             </Button>
@@ -232,13 +236,6 @@ const GameSection = ({
       </Box>
     </Box>
   )
-}
-
-type GameSectionParams = {
-  game: Game
-  state: Games
-  updateState: Function
-  replicateState: Function
 }
 
 const modes = ["Splat Zones", "Tower Control", "Rainmaker", "Clam Blitz"]
