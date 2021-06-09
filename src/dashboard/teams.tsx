@@ -66,14 +66,11 @@ const Scoreboard = ({
   replicant,
 }: BoardProps) => {
   const resetScores = () => updateState({ type: "resetScores" })
-  React.useEffect(
-    function replicateScores() {
-      if (replicant) {
-        replicateState({ type: "score" })
-      }
-    },
-    [state.scoreA, state.scoreB]
-  )
+  React.useEffect(() => {
+    if (replicant) {
+      replicateState({ type: "score" })
+    }
+  }, [state.scoreA, state.scoreB])
 
   return (
     <>
