@@ -72,12 +72,16 @@ const RoundInput = ({
     } else {
       oldState = replicant
     }
-    state.forEach((game, i) => {
-      const oldGame = oldState?.[i]
-      if (oldGame?.map !== game.map || oldGame?.mode !== game.mode) {
-        isDisabled = false
-      }
-    })
+    if (oldState?.length !== state?.length) {
+      isDisabled = false
+    } else {
+      state.forEach((game, i) => {
+        const oldGame = oldState?.[i]
+        if (oldGame?.map !== game.map || oldGame?.mode !== game.mode) {
+          isDisabled = false
+        }
+      })
+    }
     return isDisabled
   }
 
@@ -239,17 +243,30 @@ type GameSectionParams = {
 
 const modes = ["Splat Zones", "Tower Control", "Rainmaker", "Clam Blitz"]
 const maps = [
-  "Goby Arena",
-  "MakoMart",
-  "New Albacore Hotel",
-  "Kelp Dome",
-  "Moray Towers",
-  "Skipper Pavilion",
+  "Ancho-V Games",
   "Arowana Mall",
   "Blackbelly Skatepark",
-  "Musselforge Fitness",
+  "Camp Triggerfish",
+  "Goby Arena",
   "Humpback Pump Track",
+  "Inkblot Art Academy",
+  "Kelp Dome",
+  "MakoMart",
+  "Manta Maria",
+  "Moray Towers",
+  "Musselforge Fitness",
+  "New Albacore Hotel",
+  "Piranha Pit",
+  "Port Mackerel",
+  "Shellendorf Institute",
+  "Skipper Pavilion",
   "Snapper Canal",
+  "Starfish Mainstage",
+  "Sturgeon Shipyard",
+  "The Reef",
+  "Urchin Underpass",
+  "Wahoo World",
+  "Walleye Warehouse",
 ]
 
 render(Panel)
