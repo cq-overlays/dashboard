@@ -61,12 +61,7 @@ const Panel = () => {
         }}
       >
         <Scoreboard
-          {...{
-            state,
-            updateState,
-            replicateState,
-            replicant,
-          }}
+          updateState={updateState}
           leftHalf={
             <ScoreHalf
               {...{
@@ -74,6 +69,8 @@ const Panel = () => {
                 score: state.scoreA,
                 color: state.colors[0],
                 updateState,
+                replicateState,
+                orderScores,
               }}
             />
           }
@@ -84,6 +81,8 @@ const Panel = () => {
                 score: state.scoreB,
                 color: state.colors[1],
                 updateState,
+                replicateState,
+                orderScores,
               }}
               reversed={true}
             />
@@ -129,30 +128,14 @@ const Panel = () => {
 }
 
 type BoardProps = {
-  state: TeamsState
   updateState: React.Dispatch<any>
-  replicant: TeamsReplicant
-  replicateState: Function
   loadedData?: LoadedData
   leftHalf: React.ReactFragment
   rightHalf: React.ReactFragment
 }
 
-const Scoreboard = ({
-  state,
-  updateState,
-  replicateState,
-  replicant,
-  leftHalf,
-  rightHalf,
-}: BoardProps) => {
+const Scoreboard = ({ updateState, leftHalf, rightHalf }: BoardProps) => {
   const resetScores = () => updateState({ type: "resetScores" })
-  React.useEffect(() => {
-    if (replicant) {
-      replicateState({ type: "score" })
-    }
-  }, [state.scoreA, state.scoreB])
-
   return (
     <>
       {leftHalf}
@@ -176,16 +159,23 @@ const ScoreHalf = ({
   score,
   color,
   updateState,
+  replicateState,
+  orderScores,
   reversed = false,
 }: {
   type: string
   score: number
   color: string
   updateState: Function
+  replicateState: Function
+  orderScores: Function
   reversed?: boolean
 }) => {
-  const updateScore = (score: number) =>
+  const updateScore = (score: number) => {
     updateState({ type: `setScore${type}`, payload: score })
+    replicateState({ type: "score", team: type, payload: score })
+    // orderScores()
+  }
 
   const fragments = [
     <InkPreview color={color} key={`score${type}-ink`} />,

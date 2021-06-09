@@ -54,10 +54,16 @@ export default () =>
     (state, replicant, action) => {
       switch (action.type) {
         case "score":
-          return [
+          const newReplicant = [
             { ...replicant?.[0], score: state.scoreA },
             { ...replicant?.[1], score: state.scoreB },
           ]
+          if (action.team === "A") {
+            newReplicant[0].score = action.payload
+          } else if (action.team === "B") {
+            newReplicant[1].score = action.payload
+          }
+          return newReplicant
         case "name":
           return [
             { ...replicant?.[0], name: state.nameA, color: state.colors[0] },
