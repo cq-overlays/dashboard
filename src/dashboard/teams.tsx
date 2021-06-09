@@ -18,39 +18,6 @@ import useMapsReplicant from "../hooks/useMapsReplicant"
 const Panel = () => {
   const [state, updateState, replicateState, replicant] = useTeamsReplicant()
   const [loadedData] = useLoadedDataReplicant()
-  const [, , replicateMaps] = useMapsReplicant()
-  const [scoreOrder, setScoreOrder]: any = React.useState([])
-  const resetScores = () => updateState({ type: "resetScores" })
-  const orderScores = () => {
-    // Set score order
-    const newScoreOrder: string[] = [...scoreOrder]
-    const count = [0, 0]
-    scoreOrder.forEach((score: string) => {
-      if (score === "A") {
-        count[0]++
-      } else if (score === "B") {
-        count[1]++
-      }
-    })
-    count[0] = state.scoreA - count[0]
-    count[1] = state.scoreB - count[1]
-    ;["A", "B"].forEach((char, index) => {
-      for (let i = 0; i < Math.abs(count[index]); i++) {
-        if (count[index] > 0) {
-          newScoreOrder.push(char)
-        } else {
-          newScoreOrder.splice(newScoreOrder.lastIndexOf(char), 1)
-        }
-      }
-    })
-    setScoreOrder(newScoreOrder)
-    // Auto-score map winners
-    newScoreOrder.forEach((score, index) => {
-      replicateMaps({ type: "winner", index, payload: score })
-    })
-    // Replicate
-    replicateState({ type: "score" })
-  }
 
   return (
     <Box>
@@ -61,36 +28,36 @@ const Panel = () => {
           alignItems: "center",
         }}
       >
-        <ScoreHalf
-          {...{
-            type: "A",
-            score: state.scoreA,
-            color: state.colors[0],
-            updateState,
-            replicateState,
-            orderScores,
+        <Scores
+          state={state}
+          replicant={replicant}
+          reset={() => {
+            updateState({ type: "resetScores" })
+            replicateState({ type: "score", team: "reset" })
           }}
-        />
-        <Button
-          onClick={resetScores}
-          className={css`
-            font-size: ${theme.spacing(2)}px;
-            min-width: ${theme.spacing(3.5)}px;
-            min-height: ${theme.spacing(3.5)}px;
-          `}
-        >
-          -
-        </Button>
-        <ScoreHalf
-          {...{
-            type: "B",
-            score: state.scoreB,
-            color: state.colors[1],
-            updateState,
-            replicateState,
-            orderScores,
-          }}
-          reversed={true}
+          leftHalf={
+            <ScoreHalf
+              {...{
+                type: "A",
+                score: state.scoreA,
+                color: state.colors[0],
+                updateState,
+                replicateState,
+              }}
+            />
+          }
+          rightHalf={
+            <ScoreHalf
+              {...{
+                type: "B",
+                score: state.scoreB,
+                color: state.colors[1],
+                updateState,
+                replicateState,
+              }}
+              reversed={true}
+            />
+          }
         />
       </Section>
       <Section>
@@ -131,13 +98,35 @@ const Panel = () => {
   )
 }
 
+const Scores = ({ state, replicant, reset, leftHalf, rightHalf }: any) => {
+  const resetScores = () => {
+    reset()
+  }
+
+  return (
+    <>
+      {leftHalf}
+      <Button
+        onClick={resetScores}
+        className={css`
+          font-size: ${theme.spacing(2)}px;
+          min-width: ${theme.spacing(3.5)}px;
+          min-height: ${theme.spacing(3.5)}px;
+        `}
+      >
+        -
+      </Button>
+      {rightHalf}
+    </>
+  )
+}
+
 const ScoreHalf = ({
   type,
   score,
   color,
   updateState,
   replicateState,
-  orderScores,
   reversed = false,
 }: {
   type: string
@@ -145,13 +134,11 @@ const ScoreHalf = ({
   color: string
   updateState: Function
   replicateState: Function
-  orderScores: Function
   reversed?: boolean
 }) => {
   const updateScore = (score: number) => {
     updateState({ type: `setScore${type}`, payload: score })
     replicateState({ type: "score", team: type, payload: score })
-    // orderScores()
   }
 
   const fragments = [

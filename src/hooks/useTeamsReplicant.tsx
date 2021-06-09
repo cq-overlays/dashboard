@@ -62,6 +62,9 @@ export default () =>
             newReplicant[0].score = action.payload
           } else if (action.team === "B") {
             newReplicant[1].score = action.payload
+          } else if (action.team === "reset") {
+            newReplicant[0].score = 0
+            newReplicant[1].score = 0
           }
           return newReplicant
         case "name":
