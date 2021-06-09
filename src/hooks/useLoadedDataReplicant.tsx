@@ -81,7 +81,7 @@ const useLoadedDataReplicant = (): [
       ],
     }),
     (state, data) => {
-      const newData = { ...replicant }
+      const newData = Object.assign({}, state)
       if (data.maplist) {
         newData.maplist = data.maplist
       }

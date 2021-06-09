@@ -84,12 +84,12 @@ export const usePanel = <Replicant, State>(
     }
   }, [replicant])
 
-  const updateState = (action: any) => {
+  const updateState = (payload: any) => {
     console.debug(`Set state for '${name}'`)
-    dispatch({ type: "updateState", payload: action })
+    dispatch({ type: "updateState", payload })
     if (replicate === undefined) {
       console.debug(`Auto-replicate state for '${name}'`)
-      setReplicant(action)
+      setReplicant(update(state, payload))
     }
   }
   const replicateState = (action: any) => {
