@@ -35,22 +35,38 @@ const Panel = () => {
           justify-content: flex-end;
         `}
       >
-        <ButtonGroup variant="text">
-          <Button
-            color="primary"
-            onClick={() => setState({ type: "addCommentator" })}
-          >
-            <AddRounded />
-          </Button>
-          <Button
-            color="secondary"
-            onClick={() => setState({ type: "removeCommentator" })}
-          >
-            <RemoveRounded />
-          </Button>
-        </ButtonGroup>
+        <CommentatorButtons
+          state={state}
+          replicant={replicant}
+          setState={setState}
+          replicateState={replicateState}
+        />
       </Box>
     </Box>
+  )
+}
+
+const CommentatorButtons = ({ state, replicant, setState, replicateState }) => {
+  React.useEffect(() => {
+    if (state && replicant && state.length !== replicant.length) {
+      replicateState()
+    }
+  }, [state])
+  return (
+    <ButtonGroup variant="text">
+      <Button
+        color="primary"
+        onClick={() => setState({ type: "addCommentator" })}
+      >
+        <AddRounded />
+      </Button>
+      <Button
+        color="secondary"
+        onClick={() => setState({ type: "removeCommentator" })}
+      >
+        <RemoveRounded />
+      </Button>
+    </ButtonGroup>
   )
 }
 
