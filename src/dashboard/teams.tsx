@@ -20,6 +20,7 @@ const Panel = () => {
   const [loadedData] = useLoadedDataReplicant()
   const [, , replicateMaps] = useMapsReplicant()
   const [scoreOrder, setScoreOrder]: any = React.useState([])
+  const resetScores = () => updateState({ type: "resetScores" })
   const orderScores = () => {
     // Set score order
     const newScoreOrder: string[] = [...scoreOrder]
@@ -60,33 +61,36 @@ const Panel = () => {
           alignItems: "center",
         }}
       >
-        <Scoreboard
-          updateState={updateState}
-          leftHalf={
-            <ScoreHalf
-              {...{
-                type: "A",
-                score: state.scoreA,
-                color: state.colors[0],
-                updateState,
-                replicateState,
-                orderScores,
-              }}
-            />
-          }
-          rightHalf={
-            <ScoreHalf
-              {...{
-                type: "B",
-                score: state.scoreB,
-                color: state.colors[1],
-                updateState,
-                replicateState,
-                orderScores,
-              }}
-              reversed={true}
-            />
-          }
+        <ScoreHalf
+          {...{
+            type: "A",
+            score: state.scoreA,
+            color: state.colors[0],
+            updateState,
+            replicateState,
+            orderScores,
+          }}
+        />
+        <Button
+          onClick={resetScores}
+          className={css`
+            font-size: ${theme.spacing(2)}px;
+            min-width: ${theme.spacing(3.5)}px;
+            min-height: ${theme.spacing(3.5)}px;
+          `}
+        >
+          -
+        </Button>
+        <ScoreHalf
+          {...{
+            type: "B",
+            score: state.scoreB,
+            color: state.colors[1],
+            updateState,
+            replicateState,
+            orderScores,
+          }}
+          reversed={true}
         />
       </Section>
       <Section>
@@ -124,33 +128,6 @@ const Panel = () => {
         />
       </Section>
     </Box>
-  )
-}
-
-type BoardProps = {
-  updateState: React.Dispatch<any>
-  loadedData?: LoadedData
-  leftHalf: React.ReactFragment
-  rightHalf: React.ReactFragment
-}
-
-const Scoreboard = ({ updateState, leftHalf, rightHalf }: BoardProps) => {
-  const resetScores = () => updateState({ type: "resetScores" })
-  return (
-    <>
-      {leftHalf}
-      <Button
-        onClick={resetScores}
-        className={css`
-          font-size: ${theme.spacing(2)}px;
-          min-width: ${theme.spacing(3.5)}px;
-          min-height: ${theme.spacing(3.5)}px;
-        `}
-      >
-        -
-      </Button>
-      {rightHalf}
-    </>
   )
 }
 
