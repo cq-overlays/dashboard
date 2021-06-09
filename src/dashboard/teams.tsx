@@ -13,10 +13,43 @@ import useLoadedDataReplicant, {
   ColorPair,
   LoadedData,
 } from "../hooks/useLoadedDataReplicant"
+import useMapsReplicant from "../hooks/useMapsReplicant"
 
 const Panel = () => {
   const [state, updateState, replicateState, replicant] = useTeamsReplicant()
   const [loadedData] = useLoadedDataReplicant()
+  const [, , replicateMaps] = useMapsReplicant()
+  const [scoreOrder, setScoreOrder]: any = React.useState([])
+  const orderScores = () => {
+    // Set score order
+    const newScoreOrder: string[] = [...scoreOrder]
+    const count = [0, 0]
+    scoreOrder.forEach((score: string) => {
+      if (score === "A") {
+        count[0]++
+      } else if (score === "B") {
+        count[1]++
+      }
+    })
+    count[0] = state.scoreA - count[0]
+    count[1] = state.scoreB - count[1]
+    ;["A", "B"].forEach((char, index) => {
+      for (let i = 0; i < Math.abs(count[index]); i++) {
+        if (count[index] > 0) {
+          newScoreOrder.push(char)
+        } else {
+          newScoreOrder.splice(newScoreOrder.lastIndexOf(char), 1)
+        }
+      }
+    })
+    setScoreOrder(newScoreOrder)
+    // Auto-score map winners
+    newScoreOrder.forEach((score, index) => {
+      replicateMaps({ type: "winner", index, payload: score })
+    })
+    // Replicate
+    replicateState({ type: "score" })
+  }
 
   return (
     <Box>
@@ -34,6 +67,27 @@ const Panel = () => {
             replicateState,
             replicant,
           }}
+          leftHalf={
+            <ScoreHalf
+              {...{
+                type: "A",
+                score: state.scoreA,
+                color: state.colors[0],
+                updateState,
+              }}
+            />
+          }
+          rightHalf={
+            <ScoreHalf
+              {...{
+                type: "B",
+                score: state.scoreB,
+                color: state.colors[1],
+                updateState,
+              }}
+              reversed={true}
+            />
+          }
         />
       </Section>
       <Section>
@@ -45,6 +99,29 @@ const Panel = () => {
             replicant,
             loadedData,
           }}
+          dropdownA={
+            <DropdownName
+              updateState={updateState}
+              type="A"
+              name={state.nameA}
+              loadedData={loadedData}
+            />
+          }
+          dropdownB={
+            <DropdownName
+              updateState={updateState}
+              type="B"
+              name={state.nameB}
+              loadedData={loadedData}
+            />
+          }
+          dropdownC={
+            <DropdownColors
+              updateState={updateState}
+              colors={state.colors}
+              loadedData={loadedData}
+            />
+          }
         />
       </Section>
     </Box>
@@ -54,9 +131,11 @@ const Panel = () => {
 type BoardProps = {
   state: TeamsState
   updateState: React.Dispatch<any>
-  replicateState: Function
   replicant: TeamsReplicant
+  replicateState: Function
   loadedData?: LoadedData
+  leftHalf: React.ReactFragment
+  rightHalf: React.ReactFragment
 }
 
 const Scoreboard = ({
@@ -64,6 +143,8 @@ const Scoreboard = ({
   updateState,
   replicateState,
   replicant,
+  leftHalf,
+  rightHalf,
 }: BoardProps) => {
   const resetScores = () => updateState({ type: "resetScores" })
   React.useEffect(() => {
@@ -74,14 +155,7 @@ const Scoreboard = ({
 
   return (
     <>
-      <ScoreHalf
-        {...{
-          type: "A",
-          score: state.scoreA,
-          color: state.colors[0],
-          updateState,
-        }}
-      />
+      {leftHalf}
       <Button
         onClick={resetScores}
         className={css`
@@ -92,15 +166,7 @@ const Scoreboard = ({
       >
         -
       </Button>
-      <ScoreHalf
-        {...{
-          type: "B",
-          score: state.scoreB,
-          color: state.colors[1],
-          updateState,
-        }}
-        reversed={true}
-      />
+      {rightHalf}
     </>
   )
 }
@@ -179,13 +245,25 @@ const ScoreHalf = ({
   return <>{fragments.map(f => f)}</>
 }
 
+type NameboardProps = {
+  state: TeamsState
+  updateState: React.Dispatch<any>
+  replicateState: Function
+  replicant: TeamsReplicant
+  dropdownA: React.ReactFragment
+  dropdownB: React.ReactFragment
+  dropdownC: React.ReactFragment
+}
+
 const Nameboard = ({
   state,
   updateState,
   replicateState,
   replicant,
-  loadedData,
-}: BoardProps) => {
+  dropdownA,
+  dropdownB,
+  dropdownC,
+}: NameboardProps) => {
   const replicateNameboard = () => replicateState({ type: "name" })
   const isUpdated = () =>
     replicant?.[0]?.name === state.nameA &&
@@ -202,27 +280,11 @@ const Nameboard = ({
           width: 100%;
         `}
       >
-        <DropdownName
-          updateState={updateState}
-          type="A"
-          name={state.nameA}
-          loadedData={loadedData}
-        />
+        {dropdownA}
         <Box ml={1.5} />
-        <DropdownName
-          updateState={updateState}
-          type="B"
-          name={state.nameB}
-          loadedData={loadedData}
-        />
+        {dropdownB}
       </Box>
-      <Box mt={3}>
-        <DropdownColors
-          updateState={updateState}
-          colors={state.colors}
-          loadedData={loadedData}
-        />
-      </Box>
+      <Box mt={3}>{dropdownC}</Box>
       <Box
         mt={3}
         className={css`
