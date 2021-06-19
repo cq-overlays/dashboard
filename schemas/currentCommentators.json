@@ -4,6 +4,7 @@
   "items": {
     "type": "object",
     "properties": {
+      "name": { "type": ["string", "null"] },
       "twitter": { "type": ["string", "null"] },
       "pronouns": { "type": ["string", "null"] }
     }

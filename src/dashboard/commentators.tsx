@@ -121,6 +121,36 @@ const CommentatorSection = ({
             `}
           >
             <TextField
+              value={commentator?.name || ""}
+              onChange={e => setCommentator("name", e.target.value)}
+              fullWidth
+              label="Name"
+            />
+            <Box
+              ml={1.5}
+              className={css`
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+              `}
+            >
+              <Button
+                onClick={() => replicateState({ index: index })}
+                disabled={isDisabled()}
+                variant="contained"
+                color="primary"
+              >
+                {isDisabled() ? "Updated" : "Update"}
+              </Button>
+            </Box>
+          </Box>
+          <Box
+            mt={3}
+            className={css`
+              display: flex;
+            `}
+          >
+            <TextField
               value={commentator?.twitter || ""}
               onChange={e => setCommentator("twitter", e.target.value)}
               fullWidth
@@ -134,27 +164,6 @@ const CommentatorSection = ({
               label="Pronouns"
             />
           </Box>
-        </Box>
-        <Box
-          ml={1.5}
-          className={css`
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-          `}
-        >
-          {/* <Button variant="outlined" color="secondary">
-            Remove
-          </Button>
-          <Box mt={1.5} /> */}
-          <Button
-            onClick={() => replicateState({ index: index })}
-            disabled={isDisabled()}
-            variant="contained"
-            color="primary"
-          >
-            {isDisabled() ? "Updated" : "Update"}
-          </Button>
         </Box>
       </Box>
     </Section>
