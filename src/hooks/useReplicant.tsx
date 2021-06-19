@@ -78,9 +78,10 @@ export const usePanel = <Replicant, State>(
   const [skipReset, setSkipReset] = useState(false)
   useEffect(() => {
     if (!skipReset) {
-      setSkipReset(false)
       console.debug(`Reset state for '${name}'`)
       dispatch({ type: "initState" })
+    } else {
+      setSkipReset(false)
     }
   }, [replicant])
 
