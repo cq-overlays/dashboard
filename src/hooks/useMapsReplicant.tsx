@@ -62,8 +62,10 @@ export default () =>
             ]
           )
         case "winner":
-          const newReplicant = [...replicant]
-          newReplicant[action.index].winner = action.payload
+          const newReplicant = [...state]
+          newReplicant.forEach((map, index) => {
+            map.winner = action.payload[index] || null
+          })
           return newReplicant
       }
     }

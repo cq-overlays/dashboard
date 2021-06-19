@@ -99,9 +99,40 @@ const Panel = () => {
 }
 
 const Scores = ({ state, replicant, reset, leftHalf, rightHalf }: any) => {
+  const [scoreOrder, setScoreOrder]: any = React.useState([])
+  const [, , replicateMaps, mapsReplicant] = useMapsReplicant()
   const resetScores = () => {
     reset()
+    setScoreOrder([])
   }
+  React.useEffect(() => {
+    if (replicant && mapsReplicant) {
+      const newScoreOrder: string[] = [...scoreOrder]
+      const count = [0, 0]
+      scoreOrder.forEach((score: string) => {
+        if (score === "A") {
+          count[0]++
+        } else if (score === "B") {
+          count[1]++
+        }
+      })
+      count[0] = state.scoreA - count[0]
+      count[1] = state.scoreB - count[1]
+      ;["A", "B"].forEach((char, index) => {
+        for (let i = 0; i < Math.abs(count[index]); i++) {
+          if (count[index] > 0) {
+            newScoreOrder.push(char)
+          } else {
+            newScoreOrder.splice(newScoreOrder.lastIndexOf(char), 1)
+          }
+        }
+      })
+      setScoreOrder(newScoreOrder)
+      // Auto-score map winners
+      console.log(newScoreOrder)
+      replicateMaps({ type: "winner", payload: newScoreOrder })
+    }
+  }, [state.scoreA, state.scoreB])
 
   return (
     <>
