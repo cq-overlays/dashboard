@@ -125,7 +125,7 @@ const RoundInput = ({
           disabled={isDisabled()}
           onClick={loadRoundMaps}
         >
-          {isDisabled() ? "Updated" : "Update"}
+          {isDisabled() ? "Updated" : roundInput ? "Load" : "Update"}
         </Button>
       </Box>
     </Box>
