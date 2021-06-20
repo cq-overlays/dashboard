@@ -358,10 +358,14 @@ const DropdownName = ({
   loadedData,
 }: {
   updateState: Function
-  type: string
+  type: "A" | "B"
   name: string
   loadedData?: LoadedData
 }) => {
+  const teamType = {
+    A: "Alpha",
+    B: "Bravo",
+  }
   const updateName = (event: unknown, newVal: any) => {
     updateState({
       type: `setName${type}`,
@@ -375,7 +379,7 @@ const DropdownName = ({
       options={Object.keys(loadedData?.teamlist || {})}
       value={name}
       onChange={updateName}
-      name={`Team Name ${type}`}
+      name={`Team ${teamType[type]}`}
     />
   )
 }
