@@ -8,5 +8,9 @@
       "twitter": { "type": ["string", "null"] },
       "pronouns": { "type": ["string", "null"] }
     }
-  }
+  },
+  "default": [
+    { "name": "Comm 1", "twitter": "@Comm1", "pronouns": "any" },
+    { "name": "Comm 2", "twitter": "@Comm2", "pronouns": "she/they" }
+  ]
 }

@@ -4,5 +4,9 @@
   "properties": {
     "artist": { "type": "string" },
     "song": { "type": "string" }
+  },
+  "default": {
+    "artist": "Lena Raine",
+    "song": "Farewell"
   }
 }
