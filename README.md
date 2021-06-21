@@ -33,7 +33,7 @@ This bundle was originally designed for [Off the Dial's overlays](https://github
 The dashboard should now be accessible! If you run into any issues or have any questions, feel free to contact me!
 
 ### Using the dashboard
-The dashboard is mainly self-explanatory and can be easily learned with just a bit playing with it. For those who want a quick run-down, here are some general tips.
+The dashboard is mainly self-explanatory and can be easily learned with just a bit playing with it. For those who want a quick run-down, here are some general tips:
 - Each panel is draggable and positionable, although NodeCG doesn't give you much flexibility with that.
 - All buttons with colored backgrounds will update the overlays directly and instantly. Secondary buttons (no colored backgrounds) usually need their changes to be applied using an "Update" button with a colored background.
 - On the `Teams` panel, there is a button in the middle of the scores that resets them.
@@ -42,7 +42,7 @@ The dashboard is mainly self-explanatory and can be easily learned with just a b
 If you run into any issues or have any questions, feel free to contact me!
 
 ### Making your own overlays with this bundle
-I've designed this bundle to make it as easy as possible to connect to your own overlay bundles. If you do not know how to code, and/or would be interested in commissioning me to make them for you, [ko-fi](https://ko-fi.com/leptoflare/commissions)!
+I've designed this bundle to make it as easy as possible to connect to your own overlay bundles. If you do not know how to code, and/or would be interested in commissioning me to make them for you, please see my [ko-fi](https://ko-fi.com/leptoflare/commissions)!
 
 The way you connect to the dashboard controls is exclusively with replicants.
 > ```js
