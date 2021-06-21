@@ -41,8 +41,10 @@ The dashboard is mainly self-explanatory and can be easily learned with just a b
 
 If you run into any issues or have any questions, feel free to contact me!
 
-### Connecting your own overlays to this bundle
-You interact with the dashboard controls using replicants. There is also an example in the `index.html` file.
+### Making your own overlays with this bundle
+I've designed this bundle to make it as easy as possible to connect to your own overlay bundles. If you do not know how to code, and/or would be interested in commissioning me to make them for you, [ko-fi](https://ko-fi.com/leptoflare/commissions)!
+
+The way you connect to the dashboard controls is exclusively with replicants.
 > ```js
 > const currentTeams = nodecg.Replicant("currentTeams", "cq-overlay-controls");
 >
@@ -51,7 +53,7 @@ You interact with the dashboard controls using replicants. There is also an exam
 > }
 > ```
 
-To find the list of all the avaliable replicants, you can check the [schemas](/schemas) folder.  Each file is the [JSON Schema](https://json-schema.org) for the corresponding replicant. There is also a `"default"` key that stores an example of what the replicant value might look like.
+The documented list of all the avaliable replicants are avaliable in the [schemas](/schemas) folder. Each file is the [JSON Schema](https://json-schema.org) for the corresponding replicant. There is also a `"default"` key that stores an example of what the replicant value might look like.
 
 For more information on how to build your own bundles, see the [NodeCG documentation](https://www.nodecg.dev/docs/creating-bundles). If you run into any issues or have any questions, feel free to contact me!
 
