@@ -19,7 +19,7 @@ const Panel = () => {
       <SceneBox name="Scores Scene" {...{ scene, setScene }} />
       <SceneBox name="Maplist Scene" {...{ scene, setScene }} />
       <SceneBox name="Rosters Scene" {...{ scene, setScene }} />
-      <SceneBox name="BRB Scene" {...{ scene, setScene }} />
+      <SceneBox name="Break Scene" {...{ scene, setScene }} />
       <Box
         className={css`
           margin-top: -${theme.spacing(1.5)}px;
