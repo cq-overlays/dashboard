@@ -4,7 +4,7 @@
   "minItems": 2,
   "maxItems": 2,
   "items": {
-    "type": "string"
+    "type": "number"
   },
-  "default": ["Team A", "Team B"]
+  "default": [0, 0]
 }

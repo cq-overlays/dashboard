@@ -28,7 +28,7 @@
         "items": { "type": "string" }
       }
     },
-    "colorlist": {
+    "colors": {
       "type": "array",
       "items": {
         "type": "array",
@@ -41,6 +41,18 @@
             "value": { "type": "string" }
           }
         }
+      }
+    },
+    "maps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "modes": {
+      "type": "array",
+      "items": {
+        "type": "string"
       }
     }
   },
@@ -59,7 +71,7 @@
       "Team A": ["Atmosphere", "Airport", "Assumption", "Application"],
       "Team B": ["Balloon", "Brick", "Breakfast", "Bathtub"]
     },
-    "colorlist": [
+    "colors": [
       [
         { "name": "Slimy Green", "value": "#25B100" },
         { "name": "Grape", "value": "#571DB1" }
@@ -88,6 +100,33 @@
         { "name": "Yellow", "value": "#D9C100" },
         { "name": "True Blue", "value": "#007AC9" }
       ]
-    ]
+    ],
+    "maps": [
+      "Ancho-V Games",
+      "Arowana Mall",
+      "Blackbelly Skatepark",
+      "Camp Triggerfish",
+      "Goby Arena",
+      "Humpback Pump Track",
+      "Inkblot Art Academy",
+      "Kelp Dome",
+      "MakoMart",
+      "Manta Maria",
+      "Moray Towers",
+      "Musselforge Fitness",
+      "New Albacore Hotel",
+      "Piranha Pit",
+      "Port Mackerel",
+      "Shellendorf Institute",
+      "Skipper Pavilion",
+      "Snapper Canal",
+      "Starfish Mainstage",
+      "Sturgeon Shipyard",
+      "The Reef",
+      "Urchin Underpass",
+      "Wahoo World",
+      "Walleye Warehouse"
+    ],
+    "modes": ["Splat Zones", "Tower Control", "Rainmaker", "Clam Blitz"]
   }
 }

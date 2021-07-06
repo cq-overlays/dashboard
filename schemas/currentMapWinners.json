@@ -1,10 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "array",
-  "minItems": 2,
-  "maxItems": 2,
   "items": {
-    "type": "string"
+    "type": "number"
   },
-  "default": ["Team A", "Team B"]
+  "default": []
 }

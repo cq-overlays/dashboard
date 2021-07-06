@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "showScores": { "type": "boolean" },
+    "showCommentators": { "type": "boolean" }
+  },
+  "default": {
+    "showScores": true,
+    "showCommentators": true
+  }
+}

@@ -4,13 +4,13 @@
 import { useEffect, useReducer, useState } from "react"
 import { ReplicantOptions } from "nodecg/types/server"
 
-type ReplicantParameters<T> = {
+export type ReplicantParameters<T> = {
   name: string
   namespace?: string | any
   opts?: ReplicantOptions<T>
 }
 
-export const useReplicant = <T, U>({
+const useRawReplicant = <T, U>({
   name,
   namespace,
   opts,
@@ -30,15 +30,6 @@ export const useReplicant = <T, U>({
     }
   }, [replicant])
 
-  /* return a local function that's handling the onchange?
-  const fakeTest = React.useCallback(() => {
-    const update = (newValue: T): void => {
-      console.debug(`Update replicant value for '${name}'`, newValue)
-      setValue(newValue)
-    }
-    replicant.on("change", update)
-  }) */
-
   return [
     value,
     input => {
@@ -47,28 +38,39 @@ export const useReplicant = <T, U>({
   ]
 }
 
-export const usePanel = <Replicant, State>(
+export type ActionType = {
+  type: string
+  payload: any
+}
+
+export type ReplicantReturnType<Replicant> = {
+  replicant: Replicant
+  state: Replicant
+  updateState: (action: ActionType) => void
+  replicateState: (action: ActionType) => void
+}
+
+export const useReplicant = <Replicant,>(
   name: string,
-  init: (replicant: Replicant) => State,
-  update: (state: State, action: any) => State = (_, state) => state,
-  replicate?: (state: State, replicant: Replicant, action: any) => Replicant
-): [State, (action: any) => void, (action: any) => void, Replicant] => {
-  const [replicant, setReplicant]: [Replicant, Function] = useReplicant({
-    name,
-  })
-  const [state, dispatch]: [State, Function] = useReducer(
+  update: (state: Replicant, action: ActionType) => Replicant
+): ReplicantReturnType<Replicant> => {
+  const init = (replicant: Replicant): Replicant =>
+    replicant ? replicant : require(`../../schemas/${name}.json`).default
+  const [replicant, setReplicant]: [Replicant, (input: Replicant) => void] =
+    useRawReplicant({ name })
+  const [state, dispatch] = useReducer(
     (
-      state: State,
+      state: Replicant,
       action: {
         type: "initState" | "updateState"
-        payload: any
+        payload?: any
       }
     ) => {
       switch (action.type) {
         case "initState":
-          return init(replicant)
+          return init(clone(replicant))
         case "updateState":
-          return update(state, action.payload)
+          return update(clone(state), action.payload)
       }
     },
     replicant,
@@ -85,23 +87,31 @@ export const usePanel = <Replicant, State>(
     }
   }, [replicant])
 
-  const updateState = (payload: any) => {
+  const updateState = (action: ActionType) => {
     console.debug(`Set state for '${name}'`)
-    dispatch({ type: "updateState", payload })
-    if (replicate === undefined) {
-      console.debug(`Auto-replicate state for '${name}'`)
-      setReplicant(update(state, payload))
-    }
+    dispatch({ type: "updateState", payload: action })
   }
-  const replicateState = (action: any) => {
-    if (replicate === undefined) {
-      throw new Error("Unable to replicateState, replicate is not defined.")
-    }
+  const replicateState = (action?: ActionType) => {
     console.debug(`Replicate state for '${name}'`)
     setSkipReset(true)
-    setReplicant(replicate(state, replicant, action))
+    let newState
+    if (action) {
+      newState = update(clone(state), action.payload)
+      updateState(action)
+    } else {
+      newState = clone(state)
+    }
+    setReplicant(newState)
   }
 
   console.debug(`Rerender for '${name}'`, state, replicant)
-  return [state, updateState, replicateState, replicant]
+  return { replicant, state, updateState, replicateState }
+}
+
+const clone = (obj: any) => {
+  if (typeof obj !== "undefined") {
+    return JSON.parse(JSON.stringify(obj))
+  } else {
+    return obj
+  }
 }

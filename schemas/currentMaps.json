@@ -5,25 +5,21 @@
     "type": "object",
     "properties": {
       "map": { "type": "string" },
-      "mode": { "type": "string" },
-      "winner": { "type": ["null", "string"] }
+      "mode": { "type": "string" }
     }
   },
   "default": [
     {
       "map": "Urchin Underpass",
-      "mode": "Rocket",
-      "winner": null
+      "mode": "Rocket"
     },
     {
       "map": "Urchin Underpass",
-      "mode": "Rocket",
-      "winner": null
+      "mode": "Rocket"
     },
     {
       "map": "Urchin Underpass",
-      "mode": "Rocket",
-      "winner": null
+      "mode": "Rocket"
     }
   ]
 }
