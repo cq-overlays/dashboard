@@ -1,4 +1,5 @@
 import { useReplicant } from "./useReplicant"
+import schema from "../../schemas/currentMusic.json"
 
 export type Music = {
   artist: string
@@ -6,7 +7,7 @@ export type Music = {
 }
 
 export default () =>
-  useReplicant("currentMusic", (state: Music, action) => {
+  useReplicant("currentMusic", schema.default, (state: Music, action) => {
     switch (action.type) {
       case "setArtist":
         return { ...state, artist: action.payload }

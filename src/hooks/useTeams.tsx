@@ -1,9 +1,13 @@
 import { useReplicant } from "./useReplicant"
+import schema from "../../schemas/currentTeams.json"
 
-export type Teams = Array<string>
+export type Teams = Array<{
+  name: string
+  roster: Array<string>
+}>
 
 export default () =>
-  useReplicant("currentTeams", (state: Teams, action) => {
+  useReplicant("currentTeams", schema.default, (state: Teams, action) => {
     switch (action.type) {
       case "A":
         return [action.payload, state[1]]

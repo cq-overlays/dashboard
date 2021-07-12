@@ -39,23 +39,24 @@ const useRawReplicant = <T, U>({
 }
 
 export type ActionType = {
-  type: string
-  payload: any
+  type?: string
+  payload?: any
 }
 
 export type ReplicantReturnType<Replicant> = {
   replicant: Replicant
   state: Replicant
   updateState: (action: ActionType) => void
-  replicateState: (action: ActionType) => void
+  replicateState: (action?: ActionType) => void
 }
 
 export const useReplicant = <Replicant,>(
   name: string,
+  defaultValue: Replicant,
   update: (state: Replicant, action: ActionType) => Replicant
 ): ReplicantReturnType<Replicant> => {
   const init = (replicant: Replicant): Replicant =>
-    replicant ? replicant : require(`../../schemas/${name}.json`).default
+    replicant ? replicant : defaultValue
   const [replicant, setReplicant]: [Replicant, (input: Replicant) => void] =
     useRawReplicant({ name })
   const [state, dispatch] = useReducer(
@@ -96,7 +97,7 @@ export const useReplicant = <Replicant,>(
     setSkipReset(true)
     let newState
     if (action) {
-      newState = update(clone(state), action.payload)
+      newState = update(clone(state), action)
       updateState(action)
     } else {
       newState = clone(state)
