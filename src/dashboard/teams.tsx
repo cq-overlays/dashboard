@@ -4,11 +4,11 @@ import { Box, TextField, Button, SvgIcon } from "@material-ui/core"
 import render, { theme, AddRounded, RemoveRounded } from "../render"
 import Section from "../components/Section"
 import Dropdown from "../components/Dropdown"
-import useTeams from "../hooks/useTeams"
 import { ReplicantReturnType } from "../hooks/useReplicant"
+import useTeams from "../hooks/useTeams"
 import useScores from "../hooks/useScores"
-import useMapWinners from "../hooks/useMapWinners"
 import useColors, { Colors } from "../hooks/useColors"
+import useMapWinners from "../hooks/useMapWinners"
 import useLoadedData, { LoadedData } from "../hooks/useLoadedData"
 
 const Panel = () => {

@@ -2,7 +2,13 @@ import React from "react"
 import { TextField } from "@material-ui/core"
 import { Autocomplete } from "@material-ui/lab"
 
-export default ({ name, options, ...rest }: any) => (
+type DropdownProps = {
+  name: string
+  options: Array<any>
+  [key: string]: React.ReactNode
+}
+
+export default ({ name, options, ...rest }: DropdownProps) => (
   <Autocomplete
     options={options}
     fullWidth

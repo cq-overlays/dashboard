@@ -15,7 +15,7 @@ const useRawReplicant = <T, U>({
   namespace,
   opts,
 }: ReplicantParameters<T>): [T | U, (input: T) => void] => {
-  const [value, setValue]: any = useState<T | U>()
+  const [value, setValue] = useState<T | U>()
   const replicant = nodecg.Replicant(name, namespace, opts)
 
   // Set state on replicant change
@@ -31,7 +31,7 @@ const useRawReplicant = <T, U>({
   }, [replicant])
 
   return [
-    value,
+    value as T | U,
     input => {
       replicant.value = input
     },

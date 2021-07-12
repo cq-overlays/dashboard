@@ -3,7 +3,13 @@ import { css } from "@emotion/css"
 import { Box, InputLabel } from "@material-ui/core"
 import { theme } from "../render"
 
-const Section = ({ title = null, children, ...rest }: any) => (
+type SectionProps = {
+  title?: string
+  children: React.ReactFragment
+  [key: string]: React.ReactNode
+}
+
+const Section = ({ title, children, ...rest }: SectionProps) => (
   <>
     {title && (
       <InputLabel
