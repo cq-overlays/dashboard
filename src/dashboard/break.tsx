@@ -1,13 +1,13 @@
 import React from "react"
 import { css } from "@emotion/css"
 import {
-  Box,
   Typography,
   Radio,
   FormControlLabel,
   RadioGroup,
+  Box,
 } from "@material-ui/core"
-import render, { theme } from "../render"
+import render from "../render"
 import Section from "../components/Section"
 import TextSection from "../components/TextSection"
 import useBreakScreen from "../hooks/useBreakScreen"
@@ -27,40 +27,28 @@ const ScreenSection = () => {
   const breakScreen = useBreakScreen()
   return (
     <Section>
-      <Box
-        className={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: stretch;
-        `}
+      <RadioGroup
+        value={breakScreen.replicant || ""}
+        onChange={e => {
+          breakScreen.replicateState({ payload: e.target.value })
+        }}
       >
-        <Box
-          className={css`
-            display: flex;
-            flex-direction: column;
-            gap: ${theme.spacing(1.5)}px;
-            width: 100%;
-          `}
-        >
-          <RadioGroup
-            value={breakScreen.replicant || ""}
-            onChange={e => {
-              breakScreen.replicateState({ payload: e.target.value })
-            }}
-          >
-            {["maplist", "brb", "rosters"].map(screen => (
-              <FormControlLabel
-                key={screen}
-                value={screen}
-                control={<Radio color="primary" />}
-                label={
-                  <Typography variant="button">{screen} screen</Typography>
-                }
-              />
-            ))}
-          </RadioGroup>
-        </Box>
-      </Box>
+        {["brb", "maplist", "rosters"].map(screen => (
+          <FormControlLabel
+            key={screen}
+            value={screen}
+            control={<Radio color="primary" />}
+            label={
+              <Box ml={1.5}>
+                <Typography variant="button">{screen} screen</Typography>
+              </Box>
+            }
+            className={css`
+              margin: 0px;
+            `}
+          />
+        ))}
+      </RadioGroup>
     </Section>
   )
 }
