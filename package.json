@@ -25,6 +25,13 @@
         "title": "Commentators",
         "workspace": "CQ Overlay Controls",
         "width": 3
+      },
+      {
+        "name": "break",
+        "file": "break.html",
+        "title": "Break Scene",
+        "workspace": "CQ Overlay Controls",
+        "width": 3
       }
     ]
   },
