@@ -4,141 +4,76 @@ import { Box, TextField, Button, SvgIcon } from "@material-ui/core"
 import render, { theme, AddRounded, RemoveRounded } from "../render"
 import Section from "../components/Section"
 import Dropdown from "../components/Dropdown"
-import useTeamsReplicant, {
-  TeamsState,
-  TeamsReplicant,
-  ColorState,
-} from "../hooks/useTeamsReplicant"
-import useLoadedDataReplicant, {
-  ColorPair,
-  LoadedData,
-} from "../hooks/useLoadedDataReplicant"
-import useMapsReplicant from "../hooks/useMapsReplicant"
+import useTeams from "../hooks/useTeams"
+import { ReplicantReturnType } from "../hooks/useReplicant"
+import useScores from "../hooks/useScores"
+import useMapWinners from "../hooks/useMapWinners"
+import useColors, { Colors } from "../hooks/useColors"
+import useLoadedData, { LoadedData } from "../hooks/useLoadedData"
 
 const Panel = () => {
-  const [state, updateState, replicateState, replicant] = useTeamsReplicant()
-  const [loadedData] = useLoadedDataReplicant()
-
+  const loadedData = useLoadedData()
+  const colors = useColors()
+  console.log("EE", loadedData.state, colors.state)
   return (
     <Box>
-      <Section
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Scores
-          state={state}
-          replicant={replicant}
-          reset={() => {
-            updateState({ type: "resetScores" })
-            replicateState({ type: "score", team: "reset" })
-          }}
-          leftHalf={
-            <ScoreHalf
-              {...{
-                type: "A",
-                score: state.scoreA,
-                color: state.colors[0],
-                updateState,
-                replicateState,
-              }}
-            />
-          }
-          rightHalf={
-            <ScoreHalf
-              {...{
-                type: "B",
-                score: state.scoreB,
-                color: state.colors[1],
-                updateState,
-                replicateState,
-              }}
-              reversed={true}
-            />
-          }
-        />
-      </Section>
-      <Section>
-        <Nameboard
-          {...{
-            state,
-            updateState,
-            replicateState,
-            replicant,
-            loadedData,
-          }}
-          dropdownA={
-            <DropdownName
-              updateState={updateState}
-              type="A"
-              name={state.nameA}
-              loadedData={loadedData}
-            />
-          }
-          dropdownB={
-            <DropdownName
-              updateState={updateState}
-              type="B"
-              name={state.nameB}
-              loadedData={loadedData}
-            />
-          }
-          dropdownC={
-            <DropdownColors
-              updateState={updateState}
-              colors={state.colors}
-              loadedData={loadedData}
-            />
-          }
-        />
-      </Section>
+      <Scores colors={colors} />
+      <Nameboard colors={colors} loadedData={loadedData.state} />
     </Box>
   )
 }
 
-const Scores = ({ state, replicant, reset, leftHalf, rightHalf }: any) => {
-  const [scoreOrder, setScoreOrder]: any = React.useState([])
-  const [, , replicateMaps, mapsReplicant] = useMapsReplicant()
-  const resetScores = () => {
-    reset()
-    setScoreOrder([])
-  }
+const Scores = ({ colors }: { colors: ReplicantReturnType<Colors> }) => {
+  const [prevOrder, setPrevOrder] = React.useState([] as string[])
+  const scores = useScores()
+  const mapWinners = useMapWinners()
+
   React.useEffect(() => {
-    if (replicant && mapsReplicant) {
-      const newScoreOrder: string[] = [...scoreOrder]
+    if (scores.replicant && mapWinners.replicant) {
+      const scoreOrder: string[] = [...prevOrder]
       const count = [0, 0]
-      scoreOrder.forEach((score: string) => {
+      prevOrder.forEach((score: string) => {
         if (score === "A") {
           count[0]++
         } else if (score === "B") {
           count[1]++
         }
       })
-      count[0] = state.scoreA - count[0]
-      count[1] = state.scoreB - count[1]
+      count[0] = scores.state[0] - count[0]
+      count[1] = scores.state[1] - count[1]
       ;["A", "B"].forEach((char, index) => {
         for (let i = 0; i < Math.abs(count[index]); i++) {
           if (count[index] > 0) {
-            newScoreOrder.push(char)
+            scoreOrder.push(char)
           } else {
-            newScoreOrder.splice(newScoreOrder.lastIndexOf(char), 1)
+            scoreOrder.splice(scoreOrder.lastIndexOf(char), 1)
           }
         }
       })
-      setScoreOrder(newScoreOrder)
-      // Auto-score map winners
-      console.log(newScoreOrder)
-      replicateMaps({ type: "winner", payload: newScoreOrder })
+      if (mapWinners.replicant.length !== scoreOrder.length) {
+        setPrevOrder(scoreOrder)
+        mapWinners.replicateState({ payload: scoreOrder })
+      }
     }
-  }, [state.scoreA, state.scoreB])
+  }, [scores.state])
 
   return (
-    <>
-      {leftHalf}
+    <Section
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <ScoreHalf
+        value={scores.state[0]}
+        handleScore={(mut: number) =>
+          scores.replicateState({ type: "A", payload: scores.state[0] + mut })
+        }
+        color={colors.state[0]}
+      />
       <Button
-        onClick={resetScores}
+        onClick={() => scores.replicateState({ type: "reset" })}
         className={css`
           font-size: ${theme.spacing(2)}px;
           min-width: ${theme.spacing(3.5)}px;
@@ -147,35 +82,35 @@ const Scores = ({ state, replicant, reset, leftHalf, rightHalf }: any) => {
       >
         -
       </Button>
-      {rightHalf}
-    </>
+      <ScoreHalf
+        value={scores.state[1]}
+        handleScore={(mut: number) =>
+          scores.replicateState({ type: "B", payload: scores.state[1] + mut })
+        }
+        color={colors.state[1]}
+        reversed={true}
+      />
+    </Section>
   )
 }
 
-const ScoreHalf = ({
-  type,
-  score,
-  color,
-  updateState,
-  replicateState,
-  reversed = false,
-}: {
-  type: string
-  score: number
+type ScoreHalfProps = {
+  value: number
+  handleScore: Function
   color: string
-  updateState: Function
-  replicateState: Function
   reversed?: boolean
-}) => {
-  const updateScore = (score: number) => {
-    updateState({ type: `setScore${type}`, payload: score })
-    replicateState({ type: "score", team: type, payload: score })
-  }
+}
 
+const ScoreHalf = ({
+  value,
+  handleScore,
+  color,
+  reversed = false,
+}: ScoreHalfProps) => {
   const fragments = [
-    <InkPreview color={color} key={`score${type}-ink`} />,
+    <InkPreview key="1" color={color} />,
     <Box
-      key={`score${type}-buttons`}
+      key="2"
       className={css`
         display: flex;
         flex-direction: column;
@@ -183,19 +118,17 @@ const ScoreHalf = ({
     >
       {[
         {
-          key: `score${type}-buttons-inc`,
           color: "primary",
           icon: <AddRounded />,
-          mut: (s: number) => s + 1,
+          mut: 1,
         },
         {
-          key: `score${type}-buttons-dec`,
           color: "secondary",
           icon: <RemoveRounded />,
-          mut: (s: number) => s - 1,
+          mut: -1,
         },
-      ].map((props: any) => (
-        <Box my={0.5} key={props.key}>
+      ].map((props, index) => (
+        <Box my={0.5} key={index}>
           <Button
             className={css`
               padding: ${theme.spacing(0)}px;
@@ -204,15 +137,15 @@ const ScoreHalf = ({
               min-height: ${theme.spacing(5)}px;
             `}
             variant="contained"
-            color={props.color}
-            onClick={() => updateScore(props.mut(score))}
+            color={props.color as "primary" | "secondary"}
+            onClick={() => handleScore(props.mut)}
           >
             {props.icon}
           </Button>
         </Box>
       ))}
     </Box>,
-    <Box p={1.5} key={`score${type}-input`}>
+    <Box key="3" p={1.5}>
       <TextField
         className={css`
           input {
@@ -222,7 +155,7 @@ const ScoreHalf = ({
             width: 1em;
           }
         `}
-        value={score}
+        value={value}
       />
     </Box>,
   ]
@@ -231,33 +164,29 @@ const ScoreHalf = ({
 }
 
 type NameboardProps = {
-  state: TeamsState
-  updateState: React.Dispatch<any>
-  replicateState: Function
-  replicant: TeamsReplicant
-  dropdownA: React.ReactFragment
-  dropdownB: React.ReactFragment
-  dropdownC: React.ReactFragment
+  loadedData: LoadedData
+  colors: ReplicantReturnType<Colors>
 }
 
-const Nameboard = ({
-  state,
-  updateState,
-  replicateState,
-  replicant,
-  dropdownA,
-  dropdownB,
-  dropdownC,
-}: NameboardProps) => {
-  const replicateNameboard = () => replicateState({ type: "name" })
+const Nameboard = ({ loadedData, colors }: NameboardProps) => {
+  const teams = useTeams()
+
+  const createChangeHandler =
+    (type: "A" | "B") => (event: unknown, newVal: string) =>
+      teams.updateState({
+        type,
+        payload: {
+          name: newVal,
+          roster: loadedData.teamlist[newVal],
+        },
+      })
+
   const isUpdated = () =>
-    replicant?.[0]?.name === state.nameA &&
-    replicant?.[1]?.name === state.nameB &&
-    replicant?.[0]?.color === state.colors[0] &&
-    replicant?.[1]?.color === state.colors[1]
+    JSON.stringify(teams.replicant) === JSON.stringify(teams.state) &&
+    JSON.stringify(colors.replicant) === JSON.stringify(colors.state)
 
   return (
-    <>
+    <Section>
       <Box
         className={css`
           display: flex;
@@ -265,11 +194,30 @@ const Nameboard = ({
           width: 100%;
         `}
       >
-        {dropdownA}
+        <Dropdown
+          freeSolo
+          options={Object.keys(loadedData.teamlist) || {}}
+          value={teams.state[0].name}
+          onChange={createChangeHandler("A")}
+          name="Team Alpha"
+        />
         <Box ml={1.5} />
-        {dropdownB}
+        <Dropdown
+          freeSolo
+          options={Object.keys(loadedData.teamlist) || {}}
+          value={teams.state[1].name}
+          onChange={createChangeHandler("B")}
+          name="Team Bravo"
+        />
       </Box>
-      <Box mt={3}>{dropdownC}</Box>
+      <Box mt={3}>
+        {" "}
+        <DropdownColors
+          updateState={colors.updateState}
+          state={colors.state}
+          colors={loadedData.colors}
+        />
+      </Box>
       <Box
         mt={3}
         className={css`
@@ -283,7 +231,7 @@ const Nameboard = ({
           className={css`
             white-space: nowrap;
           `}
-          onClick={() => updateState({ type: "swapColors" })}
+          onClick={() => colors.updateState({ type: "swap" })}
         >
           Swap Colors
         </Button>
@@ -291,53 +239,56 @@ const Nameboard = ({
         <Button
           variant="contained"
           color="primary"
-          onClick={replicateNameboard}
+          onClick={() => {
+            teams.replicateState()
+            colors.replicateState()
+          }}
           disabled={isUpdated()}
         >
           {isUpdated() ? "Updated" : "Update"}
         </Button>
       </Box>
-    </>
+    </Section>
   )
+}
+
+type DropdownColorsProps = {
+  updateState: ReplicantReturnType<Colors>["updateState"]
+  state: ReplicantReturnType<Colors>["state"]
+  colors: LoadedData["colors"]
 }
 
 const DropdownColors = ({
   updateState,
+  state,
   colors,
-  loadedData,
-}: {
-  updateState: Function
-  colors: Array<string>
-  loadedData?: LoadedData
-}) => {
-  const updateColors = (event: unknown, newVal: ColorPair) =>
-    updateState({
-      type: "setColors",
-      payload: newVal,
-    })
-
-  const colorPairFromState = (colors: ColorState) =>
-    loadedData?.colorlist.find(
-      (pair: ColorPair) =>
-        colors.includes(pair[0].value) && colors.includes(pair[1].value)
+}: DropdownColorsProps) => {
+  const getPairFromValue = (value: ReplicantReturnType<Colors>["state"]) =>
+    colors.find(
+      pair => value.includes(pair[0].value) && value.includes(pair[1].value)
     )
 
   return (
     <Dropdown
-      options={loadedData?.colorlist
-        .map((pair: ColorPair) => [pair[0].value, pair[1].value])
-        .slice(0, -1)}
-      value={colors}
-      onChange={updateColors}
-      getOptionSelected={(o: ColorState, v: ColorState) =>
+      options={
+        colors.map(pair => [pair[0].value, pair[1].value]).slice(0, -1) || []
+      }
+      value={state}
+      onChange={(event: unknown, newVal: Colors) =>
+        updateState({
+          type: "set",
+          payload: newVal,
+        })
+      }
+      getOptionSelected={(o: Colors, v: Colors) =>
         JSON.stringify(o) === JSON.stringify(v)
       }
-      getOptionLabel={(o: ColorState) => {
-        const pair = colorPairFromState(o)
+      getOptionLabel={(o: Colors) => {
+        const pair = getPairFromValue(o)
         return `${pair?.[0].name} vs ${pair?.[1].name}`
       }}
-      renderOption={(o: ColorState) => {
-        const pair = colorPairFromState(o)
+      renderOption={(o: Colors) => {
+        const pair = getPairFromValue(o)
         return (
           <>
             <InkIcon color={pair?.[0].value || "transparent"} />
@@ -347,39 +298,6 @@ const DropdownColors = ({
         )
       }}
       name="Team Colors"
-    />
-  )
-}
-
-const DropdownName = ({
-  updateState,
-  type,
-  name,
-  loadedData,
-}: {
-  updateState: Function
-  type: "A" | "B"
-  name: string
-  loadedData?: LoadedData
-}) => {
-  const teamType = {
-    A: "Alpha",
-    B: "Bravo",
-  }
-  const updateName = (event: unknown, newVal: any) => {
-    updateState({
-      type: `setName${type}`,
-      payload: newVal,
-    })
-  }
-
-  return (
-    <Dropdown
-      freeSolo
-      options={Object.keys(loadedData?.teamlist || {})}
-      value={name}
-      onChange={updateName}
-      name={`Team ${teamType[type]}`}
     />
   )
 }
