@@ -9,37 +9,22 @@
         "name": "teams",
         "file": "teams.html",
         "title": "Teams",
+        "workspace": "CQ Overlay Controls",
         "width": 3
       },
       {
         "name": "maps",
         "file": "maps.html",
         "title": "Maps",
+        "workspace": "CQ Overlay Controls",
         "width": 3
       },
       {
         "name": "commentators",
         "file": "commentators.html",
         "title": "Commentators",
+        "workspace": "CQ Overlay Controls",
         "width": 3
-      },
-      {
-        "name": "flavorText",
-        "file": "flavorText.html",
-        "title": "Flavor Text",
-        "width": 3
-      },
-      {
-        "name": "scene",
-        "file": "scene.html",
-        "title": "Scenes",
-        "width": 2
-      },
-      {
-        "name": "upload",
-        "file": "upload.html",
-        "title": "Upload Data",
-        "width": 2
       }
     ]
   },
