@@ -68,8 +68,8 @@
       }
     ],
     "teamlist": {
-      "Team A": ["Atmosphere", "Airport", "Assumption", "Application"],
-      "Team B": ["Balloon", "Brick", "Breakfast", "Bathtub"]
+      "Team A": ["Player A1", "Player A2", "Player A3", "Player A4"],
+      "Team B": ["Player B1", "Player B2", "Player B3", "Player B4"]
     },
     "colors": [
       [
