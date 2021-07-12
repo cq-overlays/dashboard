@@ -28,6 +28,7 @@ const Scores = ({ colors }: { colors: ReplicantReturnType<Colors> }) => {
   const scores = useScores()
   const mapWinners = useMapWinners()
 
+  // Automatically set map winners when scores are changed
   React.useEffect(() => {
     if (scores.replicant && mapWinners.replicant) {
       const scoreOrder: string[] = [...prevOrder]
@@ -270,9 +271,7 @@ const DropdownColors = ({
 
   return (
     <Dropdown
-      options={
-        colors.map(pair => [pair[0].value, pair[1].value]).slice(0, -1) || []
-      }
+      options={colors.map(pair => [pair[0].value, pair[1].value]) || []}
       value={state}
       onChange={(event: unknown, newVal: Colors) =>
         updateState({

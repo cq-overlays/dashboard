@@ -7,5 +7,5 @@
     "type": "string",
     "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"
   },
-  "default": ["#E36D60", "#2FB89A"]
+  "default": ["#25B100", "#571DB1"]
 }
