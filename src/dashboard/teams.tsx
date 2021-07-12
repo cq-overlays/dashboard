@@ -14,7 +14,6 @@ import useLoadedData, { LoadedData } from "../hooks/useLoadedData"
 const Panel = () => {
   const loadedData = useLoadedData()
   const colors = useColors()
-  console.log("EE", loadedData.state, colors.state)
   return (
     <Box>
       <Scores colors={colors} />
@@ -107,11 +106,16 @@ const ScoreHalf = ({
   handleScore,
   color,
   reversed = false,
-}: ScoreHalfProps) => {
-  const fragments = [
-    <InkPreview key="1" color={color} />,
+}: ScoreHalfProps) => (
+  <Box
+    style={{
+      display: "flex",
+      alignItems: "center",
+      flexDirection: reversed ? "row-reverse" : "row",
+    }}
+  >
+    <InkPreview color={color} />
     <Box
-      key="2"
       className={css`
         display: flex;
         flex-direction: column;
@@ -145,8 +149,8 @@ const ScoreHalf = ({
           </Button>
         </Box>
       ))}
-    </Box>,
-    <Box key="3" p={1.5}>
+    </Box>
+    <Box p={1.5}>
       <TextField
         className={css`
           input {
@@ -158,11 +162,9 @@ const ScoreHalf = ({
         `}
         value={value}
       />
-    </Box>,
-  ]
-  reversed && fragments.reverse()
-  return <>{fragments.map(f => f)}</>
-}
+    </Box>
+  </Box>
+)
 
 type NameboardProps = {
   loadedData: LoadedData
