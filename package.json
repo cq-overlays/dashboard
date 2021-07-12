@@ -32,6 +32,13 @@
         "title": "Break Scene",
         "workspace": "CQ Overlay Controls",
         "width": 3
+      },
+      {
+        "name": "game",
+        "file": "game.html",
+        "title": "Game Scene",
+        "workspace": "CQ Overlay Controls",
+        "width": 3
       }
     ]
   },
