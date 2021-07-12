@@ -53,6 +53,9 @@ export const theme = createMuiTheme({
       "Arial",
       "sans-serif",
     ].join(","),
+    button: {
+      letterSpacing: "0.05em",
+    },
   },
   palette: {
     type: "dark",
@@ -80,7 +83,6 @@ export const theme = createMuiTheme({
     },
   },
   overrides: {
-    MuiButton: { root: { letterSpacing: "0.05em" } },
     MuiPaper: { root: { backgroundColor: "#2c374b" } },
   },
 })

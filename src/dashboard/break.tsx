@@ -1,6 +1,12 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Button, Box, Typography } from "@material-ui/core"
+import {
+  Box,
+  Typography,
+  Radio,
+  FormControlLabel,
+  RadioGroup,
+} from "@material-ui/core"
 import render, { theme } from "../render"
 import Section from "../components/Section"
 import TextSection from "../components/TextSection"
@@ -19,10 +25,6 @@ const Panel = () => {
 
 const ScreenSection = () => {
   const breakScreen = useBreakScreen()
-  const isSelected = (screen: string) => screen === breakScreen.replicant
-  const handleClick = (screen: string) => () => {
-    breakScreen.replicateState({ payload: screen })
-  }
   return (
     <Section>
       <Box
@@ -40,29 +42,23 @@ const ScreenSection = () => {
             width: 100%;
           `}
         >
-          {["maplist", "brb", "rosters"].map(screen => (
-            <Box
-              className={css`
-                display: flex;
-                align-items: baseline;
-                justify-content: space-between;
-              `}
-            >
-              <Typography>
-                {screen.replace(/^\w/, c => c.toUpperCase())} Screen
-              </Typography>
-              <Box ml={1.5}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={handleClick(screen)}
-                  disabled={isSelected(screen)}
-                >
-                  {isSelected(screen) ? "Active" : "Switch"}
-                </Button>
-              </Box>
-            </Box>
-          ))}
+          <RadioGroup
+            value={breakScreen.replicant || ""}
+            onChange={e => {
+              breakScreen.replicateState({ payload: e.target.value })
+            }}
+          >
+            {["maplist", "brb", "rosters"].map(screen => (
+              <FormControlLabel
+                key={screen}
+                value={screen}
+                control={<Radio color="primary" />}
+                label={
+                  <Typography variant="button">{screen} screen</Typography>
+                }
+              />
+            ))}
+          </RadioGroup>
         </Box>
       </Box>
     </Section>
