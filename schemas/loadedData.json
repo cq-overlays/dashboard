@@ -2,30 +2,39 @@
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "properties": {
-    "maplist": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string" },
-          "games": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "map": { "type": "string" },
-                "mode": { "type": "string" }
-              }
-            }
+    "rounds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "map": { "type": "string" },
+            "mode": { "type": "string" }
           }
         }
       }
     },
-    "teamlist": {
+
+    "teams": {
       "type": "object",
       "additionalProperties": {
         "type": "array",
         "items": { "type": "string" }
+      }
+    },
+    "blocks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "twitter": { "type": "string" },
+            "pronouns": { "type": "string" }
+          }
+        }
       }
     },
     "colors": {
@@ -57,19 +66,22 @@
     }
   },
   "default": {
-    "maplist": [
-      {
-        "name": "Test Round",
-        "games": [
-          { "map": "Moray Towers", "mode": "Clam Blitz" },
-          { "map": "Moray Towers", "mode": "Clam Blitz" },
-          { "map": "Moray Towers", "mode": "Clam Blitz" }
-        ]
-      }
-    ],
-    "teamlist": {
+    "rounds": {
+      "Test Round": [
+        { "map": "Moray Towers", "mode": "Clam Blitz" },
+        { "map": "Moray Towers", "mode": "Clam Blitz" },
+        { "map": "Moray Towers", "mode": "Clam Blitz" }
+      ]
+    },
+    "teams": {
       "Team A": ["Player A1", "Player A2", "Player A3", "Player A4"],
       "Team B": ["Player B1", "Player B2", "Player B3", "Player B4"]
+    },
+    "blocks": {
+      "Test Block": [
+        { "name": "Comm 1", "twitter": "@Comm1", "pronouns": "any" },
+        { "name": "Comm 2", "twitter": "@Comm2", "pronouns": "any" }
+      ]
     },
     "colors": [
       [

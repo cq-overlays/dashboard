@@ -180,7 +180,7 @@ const Nameboard = ({ loadedData, colors }: NameboardProps) => {
         type,
         payload: {
           name: newVal,
-          roster: loadedData.teamlist[newVal],
+          roster: loadedData.teams[newVal],
         },
       })
 
@@ -199,7 +199,7 @@ const Nameboard = ({ loadedData, colors }: NameboardProps) => {
       >
         <Dropdown
           freeSolo
-          options={Object.keys(loadedData.teamlist) || {}}
+          options={Object.keys(loadedData.teams) || {}}
           value={teams.state[0].name}
           onChange={createChangeHandler("A")}
           name="Team Alpha"
@@ -207,7 +207,7 @@ const Nameboard = ({ loadedData, colors }: NameboardProps) => {
         <Box ml={1.5} />
         <Dropdown
           freeSolo
-          options={Object.keys(loadedData.teamlist) || {}}
+          options={Object.keys(loadedData.teams) || {}}
           value={teams.state[1].name}
           onChange={createChangeHandler("B")}
           name="Team Bravo"

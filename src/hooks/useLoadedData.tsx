@@ -2,15 +2,21 @@ import { useReplicant } from "./useReplicant"
 import schema from "../../schemas/loadedData.json"
 
 export type LoadedData = {
-  maplist: Array<{
-    name: string
-    games: Array<{
+  rounds: {
+    [key: string]: Array<{
       map: string
       mode: string
     }>
-  }>
-  teamlist: {
+  }
+  teams: {
     [key: string]: Array<string>
+  }
+  blocks: {
+    [key: string]: Array<{
+      name: string
+      twitter: string
+      pronouns: string
+    }>
   }
   colors: Array<
     Array<{
@@ -24,20 +30,10 @@ export type LoadedData = {
 
 export default () =>
   useReplicant("loadedData", schema.default, (state: LoadedData, action) => {
-    if (action.payload.maplist) {
-      state.maplist = action.payload.maplist
-    }
-    if (action.payload.teamlist) {
-      state.teamlist = action.payload.teamlist
-    }
-    if (action.payload.colors) {
-      state.colors = action.payload.colors
-    }
-    if (action.payload.maps) {
-      state.maps = action.payload.maps
-    }
-    if (action.payload.modes) {
-      state.modes = action.payload.modes
-    }
+    Object.keys(state).forEach(key => {
+      if (action.payload[key]) {
+        state[key] = action.payload[key]
+      }
+    })
     return state
   })

@@ -1,107 +1,67 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Button, Box, TextField, ButtonGroup } from "@material-ui/core"
+import { Box, TextField } from "@material-ui/core"
 
-import render, { RemoveRounded, AddRounded } from "../render"
-import useCommentatorsReplicant, {
-  Commentator,
-} from "../hooks/useCommentatorsReplicant"
+import render from "../render"
 import Section from "../components/Section"
+import ArrayStatePanel from "../components/ArrayStatePanel"
+import useCommentators, { Commentators } from "../hooks/useCommentators"
+import useLoadedData from "../hooks/useLoadedData"
+import { ReplicantReturnType } from "../hooks/useReplicant"
 
 const Panel = () => {
-  const [state, setState, replicateState, replicant] =
-    useCommentatorsReplicant()
+  const commentators = useCommentators()
+  const loadedData = useLoadedData()
 
   return (
-    <Box
-      className={css`
-        display: flex;
-        flex-direction: column;
-      `}
+    <ArrayStatePanel
+      hook={commentators}
+      name="Block"
+      options={Object.keys(loadedData.state.blocks)}
+      getOptionValue={option => loadedData.state.blocks[option]}
     >
-      {state.map((_, index) => (
+      {index => (
         <CommentatorSection
           key={index}
-          state={state}
           index={index}
-          setState={setState}
-          replicateState={replicateState}
-          replicant={replicant}
+          commentators={commentators}
         />
-      ))}
-      <Box
-        className={css`
-          display: flex;
-          justify-content: flex-end;
-        `}
-      >
-        <CommentatorButtons
-          state={state}
-          replicant={replicant}
-          setState={setState}
-          replicateState={replicateState}
-        />
-      </Box>
-    </Box>
+      )}
+    </ArrayStatePanel>
   )
 }
 
-const CommentatorButtons = ({ state, replicant, setState, replicateState }) => {
-  React.useEffect(() => {
-    if (state && replicant && state.length !== replicant.length) {
-      replicateState()
-    }
-  }, [state])
-  return (
-    <ButtonGroup variant="text">
-      <Button
-        color="primary"
-        onClick={() => setState({ type: "addCommentator" })}
-      >
-        <AddRounded />
-      </Button>
-      <Button
-        color="secondary"
-        onClick={() => setState({ type: "removeCommentator" })}
-      >
-        <RemoveRounded />
-      </Button>
-    </ButtonGroup>
-  )
-}
-
-type SectionParams = {
-  state: Array<Commentator>
+type CommentatorSectionProps = {
   index: number
-  setState: (action: any) => void
-  replicateState: (action: any) => void
-  replicant: Array<Commentator>
+  commentators: ReplicantReturnType<Commentators>
 }
 
 const CommentatorSection = ({
-  state,
   index,
-  setState,
-  replicateState,
-  replicant,
-}: SectionParams) => {
-  const commentator = state[index]
+  commentators,
+}: CommentatorSectionProps) => {
+  const commentator = commentators.state[index]
   const setCommentator = (type: string, payload: string) => {
     switch (type) {
       case "name":
-        return setState({ type: "setName", index, payload })
+        return commentators.updateState({
+          type: "update",
+          payload: { index, value: { name: payload } },
+        })
       case "twitter":
-        return setState({ type: "setTwitter", index, payload })
+        return commentators.updateState({
+          type: "update",
+          payload: { index, value: { twitter: payload } },
+        })
       case "pronouns":
-        return setState({ type: "setPronouns", index, payload })
+        return commentators.updateState({
+          type: "update",
+          payload: { index, value: { pronouns: payload } },
+        })
     }
   }
-  const isDisabled = () => {
-    return JSON.stringify(commentator) === JSON.stringify(replicant?.[index])
-  }
-
   return (
-    <Section>
+    <Section key={index}>
       <Box
         className={css`
           display: flex;
@@ -126,23 +86,6 @@ const CommentatorSection = ({
               fullWidth
               label="Name"
             />
-            <Box
-              ml={1.5}
-              className={css`
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-              `}
-            >
-              <Button
-                onClick={() => replicateState({ index: index })}
-                disabled={isDisabled()}
-                variant="contained"
-                color="primary"
-              >
-                {isDisabled() ? "Updated" : "Update"}
-              </Button>
-            </Box>
           </Box>
           <Box
             mt={3}
