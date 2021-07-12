@@ -111,6 +111,7 @@ const WinnerButtonGroup = ({ index }: WinnerButtonGroupProps) => {
         <Button
           key={letter || "None"}
           disabled={letter === mapWinners.replicant?.[index]}
+          disableTouchRipple={true}
         >
           {letter || "None"}
         </Button>
