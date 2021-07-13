@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Box, Button, TextField } from "@material-ui/core"
+import { Box, Button, SvgIcon, TextField, Typography } from "@material-ui/core"
 import render, { theme } from "../render"
 import Section from "../components/Section"
 import useMusic from "../hooks/useMusic"
@@ -37,9 +37,10 @@ const Panel = () => {
       <Box
         className={css`
           display: flex;
-          justify-content: flex-end;
+          justify-content: space-between;
         `}
       >
+        <LastFMButton />
         <Button
           color="primary"
           variant="contained"
@@ -50,6 +51,25 @@ const Panel = () => {
         </Button>
       </Box>
     </Section>
+  )
+}
+
+const LastFMButton = () => {
+  const linked = false
+  return (
+    <Button
+      color={linked ? "primary" : "secondary"}
+      variant="outlined"
+      startIcon={
+        <SvgIcon>
+          <circle cx="50%" cy="50%" r="5" />
+        </SvgIcon>
+      }
+    >
+      <Typography color="textPrimary">
+        LastFM - {linked ? "linked" : "unlinked"}
+      </Typography>
+    </Button>
   )
 }
 
