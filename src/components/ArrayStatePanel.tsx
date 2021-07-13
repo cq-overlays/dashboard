@@ -12,6 +12,7 @@ type ArrayStatePanelProps = {
   name: string
   options: Array<any>
   getOptionValue: (option: any) => any
+  onLoad?: (option: any) => void
   children: (index: number) => React.ReactFragment
 }
 
@@ -20,6 +21,7 @@ export default ({
   name,
   options,
   getOptionValue,
+  onLoad,
   children,
 }: ArrayStatePanelProps) => {
   const [selectedOption, setSelectedOption] = React.useState("")
@@ -45,6 +47,9 @@ export default ({
         type: "set",
         payload: getOptionValue(selectedOption),
       })
+      if (onLoad) {
+        onLoad(selectedOption)
+      }
       setSelectedOption("")
     } else {
       hook.replicateState()
