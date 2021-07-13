@@ -27,15 +27,15 @@
         "width": 3
       },
       {
-        "name": "break",
-        "file": "break.html",
+        "name": "breakScene",
+        "file": "breakScene.html",
         "title": "Break Scene",
         "workspace": "CQ Overlay Controls",
         "width": 3
       },
       {
-        "name": "game",
-        "file": "game.html",
+        "name": "gameScene",
+        "file": "gameScene.html",
         "title": "Game Scene",
         "workspace": "CQ Overlay Controls",
         "width": 3
