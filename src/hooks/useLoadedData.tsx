@@ -28,12 +28,22 @@ export type LoadedData = {
   modes: Array<string>
 }
 
+export const defaultData = schema.default
+
 export default () =>
   useReplicant("loadedData", schema.default, (state: LoadedData, action) => {
-    Object.keys(state).forEach(key => {
-      if (action.payload[key]) {
-        state[key] = action.payload[key]
-      }
-    })
-    return state
+    switch (action.type) {
+      case "upload":
+        Object.keys(state).forEach(key => {
+          if (action.payload[key]) {
+            state[key] = action.payload[key]
+          }
+          return state
+        })
+      case "resetKey":
+        state[action.payload] = schema.default[action.payload]
+        return state
+      case "resetAll":
+        return schema.default
+    }
   })

@@ -46,6 +46,13 @@
         "title": "Music",
         "workspace": "CQ Overlay Controls",
         "width": 3
+      },
+      {
+        "name": "loadedData",
+        "file": "loadedData.html",
+        "title": "Loaded Data",
+        "workspace": "CQ Overlay Controls",
+        "width": 3
       }
     ]
   },
