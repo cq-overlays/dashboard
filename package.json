@@ -39,6 +39,13 @@
         "title": "Game Scene",
         "workspace": "CQ Overlay Controls",
         "width": 3
+      },
+      {
+        "name": "music",
+        "file": "music.html",
+        "title": "Music",
+        "workspace": "CQ Overlay Controls",
+        "width": 3
       }
     ]
   },
