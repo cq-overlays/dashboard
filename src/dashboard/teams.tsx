@@ -72,16 +72,18 @@ const Scores = ({ colors }: { colors: ReplicantReturnType<Colors> }) => {
         }
         color={colors.state[0]}
       />
-      <Button
-        onClick={() => scores.replicateState({ type: "reset" })}
-        className={css`
-          font-size: ${theme.spacing(2)}px;
-          min-width: ${theme.spacing(3.5)}px;
-          min-height: ${theme.spacing(3.5)}px;
-        `}
-      >
-        -
-      </Button>
+      <Box p={1.5}>
+        <Button
+          onClick={() => scores.replicateState({ type: "reset" })}
+          className={css`
+            font-size: ${theme.spacing(2)}px;
+            min-width: ${theme.spacing(3.5)}px;
+            min-height: ${theme.spacing(3.5)}px;
+          `}
+        >
+          -
+        </Button>
+      </Box>
       <ScoreHalf
         value={scores.state[1]}
         handleScore={(mut: number) =>
@@ -108,17 +110,19 @@ const ScoreHalf = ({
   reversed = false,
 }: ScoreHalfProps) => (
   <Box
-    style={{
-      display: "flex",
-      alignItems: "center",
-      flexDirection: reversed ? "row-reverse" : "row",
-    }}
+    className={css`
+      display: flex;
+      align-items: center;
+      flex-direction: ${reversed ? "row-reverse" : "row"};
+      gap: ${theme.spacing(1.5)}px;
+    `}
   >
-    <InkPreview color={color} />
+    <Ink color={color} size={5} />
     <Box
       className={css`
         display: flex;
         flex-direction: column;
+        gap: ${theme.spacing(1)}px;
       `}
     >
       {[
@@ -133,7 +137,7 @@ const ScoreHalf = ({
           mut: -1,
         },
       ].map((props, index) => (
-        <Box my={0.5} key={index}>
+        <Box key={index}>
           <Button
             className={css`
               padding: ${theme.spacing(0)}px;
@@ -150,19 +154,17 @@ const ScoreHalf = ({
         </Box>
       ))}
     </Box>
-    <Box p={1.5}>
-      <TextField
-        className={css`
-          input {
-            padding: 0px;
-            text-align: center;
-            font-size: ${theme.spacing(6)}px;
-            width: 1em;
-          }
-        `}
-        value={value}
-      />
-    </Box>
+    <TextField
+      className={css`
+        input {
+          padding: 0px;
+          text-align: center;
+          font-size: ${theme.spacing(6)}px;
+          width: 1em;
+        }
+      `}
+      value={value}
+    />
   </Box>
 )
 
@@ -291,11 +293,17 @@ const DropdownColors = ({
       renderOption={(o: Colors) => {
         const pair = getPairFromValue(o)
         return (
-          <>
-            <InkIcon color={pair?.[0].value || "transparent"} />
-            {` ${pair?.[0].name} vs ${pair?.[1].name} `}
-            <InkIcon color={pair?.[1].value || "transparent"} />
-          </>
+          <Box
+            className={css`
+              display: flex;
+              align-items: center;
+              gap: ${theme.spacing(0.5)}px;
+            `}
+          >
+            <Ink color={pair?.[0].value || "transparent"} size={2} />
+            {`${pair?.[0].name} vs ${pair?.[1].name}`}
+            <Ink color={pair?.[1].value || "transparent"} size={2} />
+          </Box>
         )
       }}
       name="Team Colors"
@@ -303,32 +311,16 @@ const DropdownColors = ({
   )
 }
 
-const InkPreview = ({ color }: { color: string }) => (
-  <Box p={1.5}>
-    <SvgIcon
-      className={css`
-        color: ${color};
-        font-size: ${theme.spacing(5)}px;
-        vertical-align: text-bottom;
-      `}
-    >
-      <circle
-        className={css`
-          stroke: white;
-          stroke-width: 2;
-        `}
-        cx="12"
-        cy="12"
-        r="11"
-      />
-    </SvgIcon>
-  </Box>
-)
+type InkProps = {
+  color: string
+  size: number
+}
 
-const InkIcon = ({ color }: { color: string }) => (
+const Ink = ({ color, size }: InkProps) => (
   <SvgIcon
     className={css`
       color: ${color};
+      ${size && `font-size: ${theme.spacing(size)}px;`}
     `}
   >
     <circle
@@ -336,9 +328,9 @@ const InkIcon = ({ color }: { color: string }) => (
         stroke: white;
         stroke-width: 2;
       `}
-      cx="12"
-      cy="12"
-      r="8"
+      cx="50%"
+      cy="50%"
+      r="10"
     />
   </SvgIcon>
 )
