@@ -62,7 +62,7 @@ const LastFMButton = () => {
       variant="outlined"
       startIcon={
         <SvgIcon>
-          <circle cx="50%" cy="50%" r="5" />
+          <circle cx="50%" cy="50%" r="4.5" />
         </SvgIcon>
       }
     >
