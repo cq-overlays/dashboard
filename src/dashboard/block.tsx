@@ -5,56 +5,47 @@ import { Box, TextField } from "@material-ui/core"
 import render from "../render"
 import Section from "../components/Section"
 import ArrayStatePanel from "../components/ArrayStatePanel"
-import useCommentators, { Commentators } from "../hooks/useCommentators"
+import useBlock, { Block } from "../hooks/useBlock"
 import useLoadedData from "../hooks/useLoadedData"
 import { ReplicantReturnType } from "../hooks/useReplicant"
 
 const Panel = () => {
-  const commentators = useCommentators()
+  const block = useBlock()
   const loadedData = useLoadedData()
 
   return (
     <ArrayStatePanel
-      hook={commentators}
+      hook={block}
       name="Block"
       options={Object.keys(loadedData.state.blocks)}
       getOptionValue={option => loadedData.state.blocks[option]}
     >
-      {index => (
-        <CommentatorSection
-          key={index}
-          index={index}
-          commentators={commentators}
-        />
-      )}
+      {index => <CommentatorSection key={index} index={index} block={block} />}
     </ArrayStatePanel>
   )
 }
 
 type CommentatorSectionProps = {
   index: number
-  commentators: ReplicantReturnType<Commentators>
+  block: ReplicantReturnType<Block>
 }
 
-const CommentatorSection = ({
-  index,
-  commentators,
-}: CommentatorSectionProps) => {
-  const commentator = commentators.state[index]
+const CommentatorSection = ({ index, block }: CommentatorSectionProps) => {
+  const commentator = block.state.value[index]
   const setCommentator = (type: string, payload: string) => {
     switch (type) {
       case "name":
-        return commentators.updateState({
+        return block.updateState({
           type: "update",
           payload: { index, value: { name: payload } },
         })
       case "twitter":
-        return commentators.updateState({
+        return block.updateState({
           type: "update",
           payload: { index, value: { twitter: payload } },
         })
       case "pronouns":
-        return commentators.updateState({
+        return block.updateState({
           type: "update",
           payload: { index, value: { pronouns: payload } },
         })

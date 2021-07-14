@@ -5,18 +5,18 @@ import render from "../render"
 import Section from "../components/Section"
 import ArrayStatePanel from "../components/ArrayStatePanel"
 import Dropdown from "../components/Dropdown"
-import useMaps, { Maps } from "../hooks/useMaps"
+import useRound, { Round } from "../hooks/useRound"
 import useMapWinners from "../hooks/useMapWinners"
 import useLoadedData from "../hooks/useLoadedData"
 import { ReplicantReturnType } from "../hooks/useReplicant"
 
 const Panel = () => {
-  const maps = useMaps()
+  const round = useRound()
   const loadedData = useLoadedData()
 
   return (
     <ArrayStatePanel
-      hook={maps}
+      hook={round}
       name="Round"
       options={Object.keys(loadedData.state.rounds)}
       getOptionValue={option => loadedData.state.rounds[option]}
@@ -29,7 +29,7 @@ const Panel = () => {
             maps: loadedData.state.maps,
             modes: loadedData.state.modes,
           }}
-          maps={maps}
+          round={round}
         />
       )}
     </ArrayStatePanel>
@@ -42,11 +42,11 @@ type GameSectionProps = {
     maps: Array<string>
     modes: Array<string>
   }
-  maps: ReplicantReturnType<Maps>
+  round: ReplicantReturnType<Round>
 }
 
-const GameSection = ({ index, options, maps }: GameSectionProps) => {
-  const game = maps.state[index]
+const GameSection = ({ index, options, round }: GameSectionProps) => {
+  const game = round.state.value[index]
   return (
     <Section>
       <Box
@@ -61,7 +61,7 @@ const GameSection = ({ index, options, maps }: GameSectionProps) => {
             name="Map"
             value={game.map || ""}
             onChange={(e: any, newVal: string) => {
-              maps.updateState({
+              round.updateState({
                 type: "update",
                 payload: { index, value: { map: newVal } },
               })
@@ -74,7 +74,7 @@ const GameSection = ({ index, options, maps }: GameSectionProps) => {
             name="Mode"
             value={game.mode || ""}
             onChange={(e: any, newVal: string) => {
-              maps.updateState({
+              round.updateState({
                 type: "update",
                 payload: { index, value: { mode: newVal } },
               })

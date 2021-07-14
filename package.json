@@ -13,23 +13,23 @@
         "width": 3
       },
       {
-        "name": "maps",
-        "file": "maps.html",
-        "title": "Maps",
+        "name": "round",
+        "file": "round.html",
+        "title": "Round",
         "workspace": "CQ Overlay Controls",
         "width": 3
       },
       {
-        "name": "commentators",
-        "file": "commentators.html",
-        "title": "Commentators",
+        "name": "block",
+        "file": "block.html",
+        "title": "Block",
         "workspace": "CQ Overlay Controls",
         "width": 3
       },
       {
         "name": "scene",
         "file": "scene.html",
-        "title": "Scene Settings",
+        "title": "Scene",
         "workspace": "CQ Overlay Controls",
         "width": 3
       },

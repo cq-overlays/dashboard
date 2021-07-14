@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": ["string", "null"] },
+          "twitter": { "type": ["string", "null"] },
+          "pronouns": { "type": ["string", "null"] }
+        }
+      }
+    }
+  },
+  "default": {
+    "name": "Test Block",
+    "value": [
+      { "name": "Comm 1", "twitter": "@Comm1", "pronouns": "any" },
+      { "name": "Comm 2", "twitter": "@Comm2", "pronouns": "any" }
+    ]
+  }
+}

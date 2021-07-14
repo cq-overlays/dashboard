@@ -8,11 +8,10 @@ import Dropdown from "../components/Dropdown"
 import { ReplicantReturnType } from "../hooks/useReplicant"
 
 type ArrayStatePanelProps = {
-  hook: ReplicantReturnType<Array<any>>
+  hook: ReplicantReturnType<{ name: string; value: Array<any> }>
   name: string
   options: Array<any>
   getOptionValue: (option: any) => any
-  onLoad?: (option: any) => void
   children: (index: number) => React.ReactFragment
 }
 
@@ -21,36 +20,19 @@ export default ({
   name,
   options,
   getOptionValue,
-  onLoad,
   children,
 }: ArrayStatePanelProps) => {
-  const [selectedOption, setSelectedOption] = React.useState("")
-  const isUpdated = () => {
-    if (hook.replicant) {
-      if (JSON.stringify(hook.state) === JSON.stringify(hook.replicant)) {
-        if (!selectedOption) {
-          return true
-        } else {
-          if (
-            JSON.stringify(hook.state) ===
-            JSON.stringify(getOptionValue(selectedOption))
-          ) {
-            return true
-          }
-        }
-      }
-    }
-  }
+  const isUpdated = () =>
+    JSON.stringify(hook.state) === JSON.stringify(hook.replicant)
+  const isLoadable = () =>
+    !(hook.state.name === hook.replicant?.name) &&
+    getOptionValue(hook.state.name)
   const handleUpdate = () => {
-    if (selectedOption) {
+    if (isLoadable()) {
       hook.replicateState({
-        type: "set",
-        payload: getOptionValue(selectedOption),
+        type: "load",
+        payload: isLoadable(),
       })
-      if (onLoad) {
-        onLoad(selectedOption)
-      }
-      setSelectedOption("")
     } else {
       hook.replicateState()
     }
@@ -70,10 +52,13 @@ export default ({
           `}
         >
           <Dropdown
+            freeSolo
             options={options}
-            name={`Load ${name}`}
-            value={selectedOption}
-            onChange={(e: any, option: string) => setSelectedOption(option)}
+            value={hook.state.name}
+            onChange={(e: any, option: string) =>
+              hook.updateState({ type: "name", payload: option })
+            }
+            name={`${name} Name`}
           />
           <Box ml={1.5}>
             <Button
@@ -82,12 +67,12 @@ export default ({
               disabled={isUpdated()}
               onClick={handleUpdate}
             >
-              {isUpdated() ? "Updated" : selectedOption ? "Load" : "Update"}
+              {isUpdated() ? "Updated" : isLoadable() ? "Load" : "Update"}
             </Button>
           </Box>
         </Box>
       </Section>
-      {hook.state.map((_, index) => children(index))}
+      {hook.state.value.map((_, index) => children(index))}
       <Box
         className={css`
           display: flex;
