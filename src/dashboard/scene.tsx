@@ -19,17 +19,14 @@ import useBreakScreen from "../hooks/useBreakScreen"
 import useFlavorText from "../hooks/useFlavorText"
 import useMusic from "../hooks/useMusic"
 import useGameScreen from "../hooks/useGameScreen"
-import useRoundName from "../hooks/useRoundName"
 
 const Panel = () => {
   const flavorText = useFlavorText()
-  const roundName = useRoundName()
   return (
     <>
       <GameScreenSection />
       <BreakScreenSection />
       <TextSection label="Flavor Text" hook={flavorText} />
-      <TextSection label="Round Name" hook={roundName} />
       <MusicSection />
     </>
   )
