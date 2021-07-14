@@ -11,14 +11,14 @@ import render from "../render"
 import Section from "../components/Section"
 import TextSection from "../components/TextSection"
 import useBreakScreen from "../hooks/useBreakScreen"
-import useBreakText from "../hooks/useBreakText"
+import useFlavorText from "../hooks/useFlavorText"
 
 const Panel = () => {
-  const breakText = useBreakText()
+  const flavorText = useFlavorText()
   return (
     <>
       <ScreenSection />
-      <TextSection label="Break Text" hook={breakText} />
+      <TextSection label="Flavor Text" hook={flavorText} />
     </>
   )
 }
