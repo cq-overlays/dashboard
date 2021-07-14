@@ -7,14 +7,14 @@ import ArrayStatePanel from "../components/ArrayStatePanel"
 import Dropdown from "../components/Dropdown"
 import useMaps, { Maps } from "../hooks/useMaps"
 import useMapWinners from "../hooks/useMapWinners"
-import useGameText from "../hooks/useGameText"
+import useRoundName from "../hooks/useRoundName"
 import useLoadedData from "../hooks/useLoadedData"
 import { ReplicantReturnType } from "../hooks/useReplicant"
 
 const Panel = () => {
   const maps = useMaps()
   const loadedData = useLoadedData()
-  const gameText = useGameText()
+  const roundName = useRoundName()
 
   return (
     <ArrayStatePanel
@@ -22,7 +22,7 @@ const Panel = () => {
       name="Round"
       options={Object.keys(loadedData.state.rounds)}
       getOptionValue={option => loadedData.state.rounds[option]}
-      onLoad={option => gameText.replicateState({ payload: option })}
+      onLoad={option => roundName.replicateState({ payload: option })}
     >
       {index => (
         <GameSection

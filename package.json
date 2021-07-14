@@ -27,23 +27,9 @@
         "width": 3
       },
       {
-        "name": "breakScene",
-        "file": "breakScene.html",
-        "title": "Break Scene",
-        "workspace": "CQ Overlay Controls",
-        "width": 3
-      },
-      {
-        "name": "gameScene",
-        "file": "gameScene.html",
-        "title": "Game Scene",
-        "workspace": "CQ Overlay Controls",
-        "width": 3
-      },
-      {
-        "name": "music",
-        "file": "music.html",
-        "title": "Music",
+        "name": "scene",
+        "file": "scene.html",
+        "title": "Scene Settings",
         "workspace": "CQ Overlay Controls",
         "width": 3
       },
