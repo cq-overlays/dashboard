@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "enabled": { "type": "boolean" },
+    "config": {
+      "type": "object",
+      "properties": {
+        "username": { "type": ["string", "null"] },
+        "token": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "default": {
+    "enabled": false,
+    "config": {
+      "username": null,
+      "token": null
+    }
+  }
+}

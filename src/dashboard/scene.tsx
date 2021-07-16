@@ -11,14 +11,22 @@ import {
   TextField,
   FormGroup,
   Switch,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Tooltip,
 } from "@material-ui/core"
 import render, { theme } from "../render"
+import useSWR from "swr"
 import Section from "../components/Section"
 import TextSection from "../components/TextSection"
 import useBreakScreen from "../hooks/useBreakScreen"
 import useFlavorText from "../hooks/useFlavorText"
-import useMusic from "../hooks/useMusic"
+import useMusic, { Music } from "../hooks/useMusic"
+import useLastFmData from "../hooks/useLastFmData"
 import useGameScreen from "../hooks/useGameScreen"
+import { ReplicantReturnType } from "../hooks/useReplicant"
 
 const Panel = () => {
   const flavorText = useFlavorText()
@@ -135,7 +143,7 @@ const MusicSection = () => {
           justify-content: space-between;
         `}
       >
-        <LastFMButton />
+        <LastFMButton music={music} />
         <Button
           color="primary"
           variant="contained"
@@ -149,22 +157,152 @@ const MusicSection = () => {
   )
 }
 
-const LastFMButton = () => {
-  const linked = false
-  return (
-    <Button
-      color={linked ? "primary" : "secondary"}
-      variant="outlined"
-      startIcon={
-        <SvgIcon>
-          <circle cx="50%" cy="50%" r="4.5" />
-        </SvgIcon>
+const LastFMButton = ({ music }: { music: ReplicantReturnType<Music> }) => {
+  const lastFmData = useLastFmData()
+  const { data, error } = useSWR(
+    () =>
+      lastFmData.replicant?.enabled
+        ? `//ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${lastFmData.replicant.config.username}&api_key=${lastFmData.replicant.config.token}&format=json&limit=1`
+        : null,
+    async (resource, init) => {
+      // Attempt to fetch data, if json() fails, SWR will handle it
+      const response = await fetch(resource, init)
+      const data = await response.json()
+      // Check if the request has failed
+      if (data.error) {
+        throw new Error(data.message)
       }
-    >
-      <Typography color="textPrimary">
-        LastFM - {linked ? "linked" : "unlinked"}
-      </Typography>
-    </Button>
+      // All good! Get song data
+      const lastSong = data.recenttracks.track?.[0]
+      const output =
+        !lastSong || !lastSong["@attr"]?.nowplaying
+          ? {
+              status: "idle",
+              music: {
+                song: "",
+                artist: "",
+              },
+            }
+          : {
+              status: "playing",
+              music: {
+                song: lastSong.name,
+                artist: lastSong.artist["#text"],
+              },
+            }
+      if (JSON.stringify(output.music) !== JSON.stringify(music.replicant)) {
+        music.replicateState({
+          type: "load",
+          payload: output.music,
+        })
+      }
+      return output
+    },
+    { refreshInterval: 8000 }
+  )
+  const state = {
+    status: lastFmData.state.enabled
+      ? error
+        ? "error"
+        : data?.status
+        ? data?.status
+        : "loading"
+      : "disabled",
+    error: error,
+    color: () =>
+      data?.status === "playing" || data?.status === "idle"
+        ? "primary"
+        : "secondary",
+    tooltip: error
+      ? error.message
+      : lastFmData.state.enabled
+      ? "Disable"
+      : "Enable",
+  }
+  const [open, setOpen] = React.useState<boolean>(false)
+
+  return (
+    <>
+      <Tooltip title={state.tooltip} placement="top" arrow={true}>
+        <Button
+          color={state.color()}
+          variant="outlined"
+          startIcon={
+            <SvgIcon>
+              <circle cx="50%" cy="50%" r="4.5" />
+            </SvgIcon>
+          }
+          onClick={() =>
+            lastFmData.state.enabled
+              ? lastFmData.replicateState({
+                  type: "setEnabled",
+                  payload: false,
+                })
+              : setOpen(true)
+          }
+        >
+          <Typography color="textPrimary">lastfm - {state.status}</Typography>
+        </Button>
+      </Tooltip>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>LastFM Config</DialogTitle>
+        <DialogContent
+          className={css`
+            padding: ${theme.spacing(2)}px ${theme.spacing(3)}px;
+          `}
+        >
+          <TextField
+            className={css`
+              margin-bottom: ${theme.spacing(2)}px;
+            `}
+            label="Username"
+            value={lastFmData.state.config.username || ""}
+            onChange={e =>
+              lastFmData.updateState({
+                type: "setUsername",
+                payload: e.target.value,
+              })
+            }
+            fullWidth
+          />
+          <TextField
+            label="API Key"
+            type="password"
+            value={lastFmData.state.config.token || ""}
+            onChange={e =>
+              lastFmData.updateState({
+                type: "setToken",
+                payload: e.target.value,
+              })
+            }
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions
+          className={css`
+            padding: ${theme.spacing(2)}px ${theme.spacing(3)}px;
+          `}
+        >
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button
+            className={css`
+              margin-left: ${theme.spacing(2)}px !important;
+            `}
+            onClick={() => {
+              setOpen(false)
+              lastFmData.replicateState({
+                type: "setEnabled",
+                payload: true,
+              })
+            }}
+            color="primary"
+            variant="contained"
+          >
+            Enable
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 

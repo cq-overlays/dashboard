@@ -44,7 +44,7 @@ export type ActionType = {
 }
 
 export type ReplicantReturnType<Replicant> = {
-  replicant: Replicant
+  replicant: Replicant | undefined
   state: Replicant
   updateState: (action: ActionType) => void
   replicateState: (action?: ActionType) => void

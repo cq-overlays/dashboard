@@ -38,7 +38,7 @@ export default () =>
         return state
       default:
         throw new Error(
-          `Unsupported action type '${action?.type}' for useMaps.`
+          `Unsupported action type '${action?.type}' for useRound.`
         )
     }
   })

@@ -39,7 +39,7 @@ export default () =>
         return state
       default:
         throw new Error(
-          `Unsupported action type '${action?.type}' for useCommentators.`
+          `Unsupported action type '${action?.type}' for useBlock.`
         )
     }
   })

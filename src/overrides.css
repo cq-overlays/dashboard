@@ -3,5 +3,10 @@
 }
 .MuiTooltip-tooltipPlacementTop {
   margin: 14px 0;
-  opacity: 1 !important;
+}
+.MuiTooltip-tooltip {
+  font-size: 12px;
+}
+.MuiTypography-h6 {
+  letter-spacing: 0.05em;
 }

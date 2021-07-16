@@ -2,11 +2,11 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
-    "artist": { "type": "string" },
-    "song": { "type": "string" }
+    "song": { "type": "string" },
+    "artist": { "type": "string" }
   },
   "default": {
-    "artist": "Lena Raine",
-    "song": "Farewell"
+    "song": "Farewell",
+    "artist": "Lena Raine"
   }
 }

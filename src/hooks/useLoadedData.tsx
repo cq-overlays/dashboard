@@ -45,5 +45,9 @@ export default () =>
         return state
       case "resetAll":
         return schema.default
+      default:
+        throw new Error(
+          `Unsupported action type '${action?.type}' for useLoadedData.`
+        )
     }
   })
