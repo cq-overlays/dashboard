@@ -1,0 +1,7 @@
+.MuiPaper-root {
+  background-color: #2c374b;
+}
+.MuiTooltip-tooltipPlacementTop {
+  margin: 14px 0;
+  opacity: 1 !important;
+}

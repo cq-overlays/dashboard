@@ -9,6 +9,7 @@ import "@fontsource/open-sans/400.css"
 import "@fontsource/open-sans/600.css"
 import "@fontsource/open-sans/700.css"
 import "@fontsource/open-sans/800.css"
+import "./overrides.css"
 
 export const AddRounded = () => (
   <SvgIcon
@@ -87,9 +88,6 @@ export const theme = createMuiTheme({
       A200: "#7D8799",
       A100: "#8992A2",
     },
-  },
-  overrides: {
-    MuiPaper: { root: { backgroundColor: "#2c374b" } },
   },
 })
 
