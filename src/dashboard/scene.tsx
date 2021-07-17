@@ -179,8 +179,8 @@ const LastFMButton = ({ music }: { music: ReplicantReturnType<Music> }) => {
           ? {
               status: "idle",
               music: {
-                song: "",
-                artist: "",
+                song: null,
+                artist: null,
               },
             }
           : {

@@ -2,8 +2,8 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
-    "song": { "type": "string" },
-    "artist": { "type": "string" }
+    "song": { "type": ["string", "null"] },
+    "artist": { "type": ["string", "null"] }
   },
   "default": {
     "song": "Farewell",
