@@ -11,9 +11,9 @@ It's used in all of the overlays that I build for myself, and all of the overlay
 
 This bundle was originally designed for [Off the Dial's overlays](https://github.com/offthedial/overlays), however it has since been refined and remodeled to support splatoon tournament streams of any size and complexity.
 
-- Seamlessly control teams, scores, maps, colors, rosters and more using a single, unified control panel.
-- Automatically set map winners when scores are changed.
-- Load team data and map data into the dashboard preemptively to save time during the stream.
+- Seamlessly control teams, scores, maps, colors, commentators and more using a single, unified control panel
+- Automatically set map winners when scores are changed
+- Preload team data, round data, and commentator block data into the dashboard
 
 ## Usage <!-- Using the product -->
 ### Installing NodeCG with this bundle
@@ -24,27 +24,29 @@ This bundle was originally designed for [Off the Dial's overlays](https://github
 2. Create a new directory and `cd` into it
 3. Setup a new NodeCG Instance: `nodecg setup`
 4. CD into the bundles directory: `cd bundles/`
-5. Install this bundle for production: `git clone -b production https://github.com/LeptoFlare/cq-overlay-controls`
-   - The production branch of this repository only contains the built files and the `package.json`, so you do not need to use `npm i`.
-   - To update, just use `git pull` as you would any repository.
-6. You can now make any other installations that you may need
+5. Download and unpack the ZIP file of the built bundle in the [releases](https://github.com/LeptoFlare/cq-overlay-controls/releases) page
+   - The zip file only contains the built files (and a `package.json`), so you do not need to use `npm i` or `npm run build`.
+   - To update, just use `git pull` as you would any repository
+6. You can now make any other installations you need
 7. Run NodeCG: `nodecg start`
 
 The dashboard should now be accessible! If you run into any issues or have any questions, feel free to contact me!
 
 ### Using the dashboard
-The dashboard is mainly self-explanatory and can be easily learned with just a bit playing with it. For those who want a quick run-down, here are some general tips:
-- Each panel is draggable and positionable, although NodeCG doesn't give you much flexibility with that.
-- All buttons with colored backgrounds will update the overlays directly and instantly. Secondary buttons (no colored backgrounds) usually need their changes to be applied using an "Update" button with a colored background.
-- On the `Teams` panel, there is a button in the middle of the scores that resets them.
-- Changing the score will attempt to automatically set the map winners.
+The dashboard is mainly self-explanatory and can be easily learned with just a bit playing with it. For those who want a quick run-down, here are some general tips and tricks:
+- Each panel is draggable and positionable, although NodeCG doesn't give you much flexibility with that
+- Buttons with colored backgrounds usually update the overlays immediately. Buttons with no color or background usually need their changes to be applied using an "Update" button with a colored background
+- On the `Teams` panel, there is a button in the middle of the 2 scores that will reset them
+- Changing the score will automatically set the map winners. The map winners buttons don't actually do anything-
+
+The upload file for `Loaded Data` is a JSON file, which you can find the schema for [here](https://github.com/LeptoFlare/cq-overlay-controls/blob/main/schemas/loadedData.json). If you don't know how to create a JSON file, there's a lot of online tools that let you create one without any programming experience, do a quick google search for "online json editor"! Maybe later I'll think of a way to create these files within the dashboard itself.
 
 If you run into any issues or have any questions, feel free to contact me!
 
 ### Making your own overlays with this bundle
-I've designed this bundle to make it as easy as possible to connect to your own overlay bundles. If you do not know how to code, and/or would be interested in commissioning me to make them for you, please see my [ko-fi](https://ko-fi.com/leptoflare/commissions)!
+I've tried to design this bundle to make it simple and easy to connect your own overlay bundles. If you don't know how to code, and/or would be interested in commissioning me to make overlays for you, please see my [ko-fi](https://ko-fi.com/leptoflare/commissions)!
 
-The way you connect to the dashboard controls is exclusively with replicants.
+The way you connect to the stored dashboard data is with just replicants.
 > ```js
 > const currentTeams = nodecg.Replicant("currentTeams", "cq-overlay-controls");
 >
@@ -53,7 +55,7 @@ The way you connect to the dashboard controls is exclusively with replicants.
 > }
 > ```
 
-The documented list of all the avaliable replicants are avaliable in the [schemas](/schemas) folder. Each file is the [JSON Schema](https://json-schema.org) for the corresponding replicant. There is also a `"default"` key that stores an example of what the replicant value might look like.
+The documented list of all the avaliable replicants are avaliable in the [schemas](/schemas) folder. Each file is the [JSON Schema](https://json-schema.org) for the corresponding replicant. Don't worry if you can't understand it though, there's also a `"default"` key in the schema which shows you an example of what the replicant value might look like.
 
 For more information on how to build your own bundles, see the [NodeCG documentation](https://www.nodecg.dev/docs/creating-bundles). If you run into any issues or have any questions, feel free to contact me!
 
@@ -67,6 +69,7 @@ For more information on how to build your own bundles, see the [NodeCG documenta
 3. CD into the bundle directory: `cd bundles/cq-overlay-controls`
 4. Start the development server: `npm run dev`
 5. Create a new window to start NodeCG from, and run NodeCG: `nodecg start`
+6. If you are building for production: `npm run build`
 
 ---
 
