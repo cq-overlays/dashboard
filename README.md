@@ -32,7 +32,7 @@ This bundle was originally designed for [Off the Dial's overlays](https://github
 #### For Non-Programmers
 1. Find the version you're looking for on the [releases](https://github.com/LeptoFlare/cq-overlay-controls/releases) page, and download `cq-nodecg-instance.zip`, a NodeCG instance with this bundle pre-installed, and unzip.
 2. You can now install other bundles by dragging them into the `bundles/` subdirectory.
-3. Run NodeCG by double-clicking `run.bat` (windows) or `run.sh` (mac/linux)
+3. Run NodeCG by double-clicking `run.bat`, This is only for windows.
 
 The dashboard should now be accessible! If you run into any issues or have any questions, feel free to contact me!
 
