@@ -17,18 +17,22 @@ This bundle was originally designed for [Off the Dial's overlays](https://github
 
 ## Usage <!-- Using the product -->
 ### Installing NodeCG with this bundle
+#### For Programmers
 1. Prerequisites
-   1. Make sure you have [Git](https://git-scm.com) installed
-   2. Make sure you have [Node (with NPM)](https://nodejs.org) installed
-   3. Make sure you have the NodeCG CLI installed: `npm i -g nodecg`
+   1. Make sure you have [Node (with NPM)](https://nodejs.org) installed
+   2. Make sure you have the NodeCG CLI installed: `npm i -g nodecg`
 2. Create a new directory and `cd` into it
 3. Setup a new NodeCG Instance: `nodecg setup`
 4. CD into the bundles directory: `cd bundles/`
-5. Download and unpack the ZIP file of the built bundle in the [releases](https://github.com/LeptoFlare/cq-overlay-controls/releases) page
+5. Find the version you're looking for on the [releases](https://github.com/LeptoFlare/cq-overlay-controls/releases) page, and download `cq-overlay-controls.zip`, the built bundle, and unzip.
    - The zip file only contains the built files (and a `package.json`), so you do not need to use `npm i` or `npm run build`.
-   - To update, just use `git pull` as you would any repository
-6. You can now make any other installations you need
+6. You can now install other bundles by dragging them into the `bundles/` subdirectory.
 7. Run NodeCG: `nodecg start`
+
+#### For Non-Programmers
+1. Find the version you're looking for on the [releases](https://github.com/LeptoFlare/cq-overlay-controls/releases) page, and download `cq-nodecg-instance.zip`, a NodeCG instance with this bundle pre-installed, and unzip.
+2. You can now install other bundles by dragging them into the `bundles/` subdirectory.
+3. Run NodeCG by double-clicking `run.bat` (windows) or `run.sh` (mac/linux)
 
 The dashboard should now be accessible! If you run into any issues or have any questions, feel free to contact me!
 
