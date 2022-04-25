@@ -6,7 +6,7 @@ type SectionProps = {
   [key: string]: React.ReactNode
 }
 
-const Section = ({ title, children, ...rest }: SectionProps) => (
+const Section = ({ children, ...rest }: SectionProps) => (
   <Box bgcolor="grey.300" p={1.5} mb={1.5} {...rest}>
     {children}
   </Box>

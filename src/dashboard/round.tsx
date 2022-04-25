@@ -9,6 +9,7 @@ import useRound, { Round } from "../hooks/useRound"
 import useMapWinners from "../hooks/useMapWinners"
 import useLoadedData from "../hooks/useLoadedData"
 import { ReplicantReturnType } from "../hooks/useReplicant"
+import useTeams from "../hooks/useTeams"
 
 const Panel = () => {
   const round = useRound()
@@ -105,12 +106,16 @@ type WinnerButtonGroupProps = {
 
 const WinnerButtonGroup = ({ index }: WinnerButtonGroupProps) => {
   const mapWinners = useMapWinners()
+  const teams = useTeams()
+
   return (
     <ButtonGroup color="primary" variant="contained">
-      {[undefined, "A", "B"].map(letter => (
+      {[undefined, "A", "B"].map((letter, i) => (
         <Button
           key={letter || "None"}
-          disabled={letter === mapWinners.replicant?.[index]}
+          disabled={
+            mapWinners.replicant?.[index] === teams.replicant?.[i - 1]?.name
+          }
           disableTouchRipple={true}
         >
           {letter || "None"}

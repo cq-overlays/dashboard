@@ -2,7 +2,7 @@ import React from "react"
 import { render } from "react-dom"
 import { css } from "@emotion/css"
 import { SvgIcon } from "@material-ui/core"
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
+import { ThemeProvider, createTheme } from "@material-ui/core/styles"
 import { StylesProvider } from "@material-ui/core/styles"
 import "@fontsource/open-sans/300.css"
 import "@fontsource/open-sans/400.css"
@@ -45,7 +45,7 @@ export const RemoveRounded = () => (
   </SvgIcon>
 )
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
   typography: {
     fontFamily: [
       "Open Sans",
