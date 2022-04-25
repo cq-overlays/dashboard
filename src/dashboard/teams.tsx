@@ -30,7 +30,7 @@ const Scores = ({ colors }: { colors: ReplicantReturnType<Colors> }) => {
 
   // Automatically set map winners when scores are changed
   React.useEffect(() => {
-    if (scores.replicant && mapWinners.replicant) {
+    if (scores.replicant && mapWinners.replicant && teams.replicant) {
       const scoreOrder: string[] = [...prevOrder]
       const count = [0, 0]
       prevOrder.forEach((score: string) => {
@@ -56,12 +56,14 @@ const Scores = ({ colors }: { colors: ReplicantReturnType<Colors> }) => {
         console.log("EEEEE", scoreOrder)
         mapWinners.replicateState({
           payload: scoreOrder.map((char, index) =>
-            char === "A" ? teams.state[0].name : teams.state[1].name
+            char === "A"
+              ? teams?.replicant?.[0]?.name
+              : teams?.replicant?.[1]?.name
           ),
         })
       }
     }
-  }, [scores.state, teams.state])
+  }, [scores.state, teams.replicant])
 
   return (
     <Section
