@@ -14,6 +14,9 @@ export default ({ name, options, ...rest }: DropdownProps) => (
     fullWidth
     autoHighlight
     disableClearable
+    handleHomeEndKeys
+    clearOnBlur
+    selectOnFocus
     renderInput={params => <TextField {...params} label={name} />}
     {...rest}
   />
