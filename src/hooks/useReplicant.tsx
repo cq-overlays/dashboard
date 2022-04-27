@@ -32,6 +32,16 @@ const useRawReplicant = <T, U>({
     }
   }, [replicant])
 
+  // Set default replicant value
+  useEffect(() => {
+    NodeCG.waitForReplicants(replicant).then(() => {
+      if (replicant.value === undefined) {
+        console.debug(`Initialize replicant value for '${name}'`, defaultValue)
+        replicant.value = defaultValue
+      }
+    })
+  }, [])
+
   return [
     value as T | U,
     input => {

@@ -53,7 +53,6 @@ const Scores = ({ colors }: { colors: ReplicantReturnType<Colors> }) => {
       })
       if (mapWinners.replicant.length !== scoreOrder.length) {
         setPrevOrder(scoreOrder)
-        console.log("EEEEE", scoreOrder)
         mapWinners.replicateState({
           payload: scoreOrder.map((char, index) =>
             char === "A"
