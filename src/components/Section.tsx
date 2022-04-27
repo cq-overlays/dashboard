@@ -1,8 +1,8 @@
 import React from "react"
-import { Box } from "@material-ui/core"
+import { Box } from "@mui/material"
 
 type SectionProps = {
-  children: React.ReactFragment
+  children: JSX.Element
   [key: string]: React.ReactNode
 }
 

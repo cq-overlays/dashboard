@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Button, Box, ButtonGroup } from "@material-ui/core"
+import { Button, Box, ButtonGroup } from "@mui/material"
 
 import { RemoveRounded, AddRounded } from "../render"
 import Section from "../components/Section"
@@ -12,7 +12,7 @@ type ArrayStatePanelProps = {
   name: string
   options: Array<any>
   getOptionValue: (option: any) => any
-  children: (index: number) => React.ReactFragment
+  children: (index: number) => JSX.Element
 }
 
 export default ({
@@ -55,7 +55,7 @@ export default ({
             freeSolo
             options={options}
             value={hook.state.name}
-            onChange={(e: any, option: string) =>
+            onChange={(e, option) =>
               hook.updateState({ type: "name", payload: option })
             }
             name={`${name} Name`}
@@ -79,7 +79,7 @@ export default ({
           justify-content: flex-end;
         `}
       >
-        <ButtonGroup variant="text">
+        <ButtonGroup variant="text" color="grey">
           <Button
             color="primary"
             onClick={() => hook.updateState({ type: "add" })}

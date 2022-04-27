@@ -1,12 +1,11 @@
 .MuiPaper-root {
   background-color: #2c374b;
 }
-.MuiTooltip-tooltipPlacementTop {
-  margin: 14px 0;
-}
-.MuiTooltip-tooltip {
-  font-size: 12px;
-}
+
 .MuiTypography-h6 {
   letter-spacing: 0.05em;
+}
+
+.MuiButtonGroup-grouped:not(:last-of-type) {
+  border-color: rgba(255, 255, 255, 0.23) !important;
 }

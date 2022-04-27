@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Button, Box, TextField } from "@material-ui/core"
+import { Button, Box, TextField } from "@mui/material"
 
 import Section from "../components/Section"
 import { ReplicantReturnType } from "../hooks/useReplicant"
@@ -25,6 +25,7 @@ export default ({ hook, label }: TextSectionProps) => {
         `}
       >
         <TextField
+          variant="standard"
           label={label}
           fullWidth
           value={hook.state}

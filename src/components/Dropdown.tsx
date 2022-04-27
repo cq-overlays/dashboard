@@ -1,14 +1,12 @@
 import React from "react"
-import { TextField } from "@material-ui/core"
-import { Autocomplete } from "@material-ui/lab"
+import { TextField, Autocomplete, AutocompleteProps } from "@mui/material"
 
-type DropdownProps = {
+interface DropdownProps<T> extends AutocompleteProps<T, true, true, true> {
   name: string
-  options: Array<any>
-  [key: string]: React.ReactNode
+  options: Array<T>
 }
 
-export default ({ name, options, ...rest }: DropdownProps) => (
+export default ({ options, name, ...props }: DropdownProps) => (
   <Autocomplete
     options={options}
     fullWidth
@@ -17,7 +15,9 @@ export default ({ name, options, ...rest }: DropdownProps) => (
     handleHomeEndKeys
     clearOnBlur
     selectOnFocus
-    renderInput={params => <TextField {...params} label={name} />}
-    {...rest}
+    renderInput={params => (
+      <TextField variant="standard" {...params} label={name} />
+    )}
+    {...props}
   />
 )

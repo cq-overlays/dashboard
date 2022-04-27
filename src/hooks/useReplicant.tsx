@@ -8,12 +8,14 @@ export type ReplicantParameters<T> = {
   name: string
   namespace?: string | any
   opts?: ReplicantOptions<T>
+  defaultValue?: T
 }
 
 const useRawReplicant = <T, U>({
   name,
   namespace,
   opts,
+  defaultValue,
 }: ReplicantParameters<T>): [T | U, (input: T) => void] => {
   const [value, setValue] = useState<T | U>()
   const replicant = nodecg.Replicant(name, namespace, opts)
@@ -58,7 +60,7 @@ export const useReplicant = <Replicant,>(
   const init = (replicant: Replicant): Replicant =>
     replicant ? replicant : defaultValue
   const [replicant, setReplicant]: [Replicant, (input: Replicant) => void] =
-    useRawReplicant({ name })
+    useRawReplicant({ name, defaultValue })
   const [state, dispatch] = useReducer(
     (
       state: Replicant,

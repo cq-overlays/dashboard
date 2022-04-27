@@ -16,7 +16,7 @@ import {
   DialogContent,
   DialogTitle,
   Tooltip,
-} from "@material-ui/core"
+} from "@mui/material"
 import render, { theme } from "../render"
 import useSWR from "swr"
 import Section from "../components/Section"
@@ -119,10 +119,11 @@ const MusicSection = () => {
         mb={3}
         className={css`
           display: flex;
-          gap: ${theme.spacing(1.5)}px;
+          gap: ${theme.spacing(1.5)};
         `}
       >
         <TextField
+          variant="standard"
           label="Song"
           value={music.state.song || ""}
           onChange={e =>
@@ -130,6 +131,7 @@ const MusicSection = () => {
           }
         />
         <TextField
+          variant="standard"
           label="Artist"
           value={music.state.artist || ""}
           onChange={e =>
@@ -248,12 +250,13 @@ const LastFMButton = ({ music }: { music: ReplicantReturnType<Music> }) => {
         <DialogTitle>LastFM Config</DialogTitle>
         <DialogContent
           className={css`
-            padding: ${theme.spacing(2)}px ${theme.spacing(3)}px;
+            padding: ${theme.spacing(2)} ${theme.spacing(3)};
           `}
         >
           <TextField
+            variant="standard"
             className={css`
-              margin-bottom: ${theme.spacing(2)}px;
+              margin-bottom: ${theme.spacing(2)};
             `}
             label="Username"
             value={lastFmData.state.config.username || ""}
@@ -266,6 +269,7 @@ const LastFMButton = ({ music }: { music: ReplicantReturnType<Music> }) => {
             fullWidth
           />
           <TextField
+            variant="standard"
             label="API Key"
             type="password"
             value={lastFmData.state.config.token || ""}
@@ -280,13 +284,13 @@ const LastFMButton = ({ music }: { music: ReplicantReturnType<Music> }) => {
         </DialogContent>
         <DialogActions
           className={css`
-            padding: ${theme.spacing(2)}px ${theme.spacing(3)}px;
+            padding: ${theme.spacing(2)} ${theme.spacing(3)};
           `}
         >
           <Button onClick={() => setOpen(false)}>Cancel</Button>
           <Button
             className={css`
-              margin-left: ${theme.spacing(2)}px !important;
+              margin-left: ${theme.spacing(2)} !important;
             `}
             onClick={() => {
               setOpen(false)

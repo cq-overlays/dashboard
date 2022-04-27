@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Box, TextField } from "@material-ui/core"
+import { Box, TextField } from "@mui/material"
 
 import render from "../render"
 import Section from "../components/Section"
@@ -72,6 +72,7 @@ const CommentatorSection = ({ index, block }: CommentatorSectionProps) => {
             `}
           >
             <TextField
+              variant="standard"
               value={commentator?.name || ""}
               onChange={e => setCommentator("name", e.target.value)}
               fullWidth
@@ -85,6 +86,7 @@ const CommentatorSection = ({ index, block }: CommentatorSectionProps) => {
             `}
           >
             <TextField
+              variant="standard"
               value={commentator?.twitter || ""}
               onChange={e => setCommentator("twitter", e.target.value)}
               fullWidth
@@ -92,6 +94,7 @@ const CommentatorSection = ({ index, block }: CommentatorSectionProps) => {
             />
             <Box ml={1.5} />
             <TextField
+              variant="standard"
               value={commentator?.pronouns || ""}
               onChange={e => setCommentator("pronouns", e.target.value)}
               fullWidth

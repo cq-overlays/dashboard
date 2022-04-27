@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/css"
-import { Box, TextField, Button, SvgIcon } from "@material-ui/core"
+import { Box, TextField, Button, SvgIcon } from "@mui/material"
 import render, { theme, AddRounded, RemoveRounded } from "../render"
 import Section from "../components/Section"
 import Dropdown from "../components/Dropdown"
@@ -83,10 +83,11 @@ const Scores = ({ colors }: { colors: ReplicantReturnType<Colors> }) => {
       <Box p={1.5}>
         <Button
           onClick={() => scores.replicateState({ type: "reset" })}
+          color="grey"
           className={css`
-            font-size: ${theme.spacing(2)}px;
-            min-width: ${theme.spacing(3.5)}px;
-            min-height: ${theme.spacing(3.5)}px;
+            font-size: ${theme.spacing(2)};
+            min-width: ${theme.spacing(3.5)};
+            min-height: ${theme.spacing(3.5)};
           `}
         >
           -
@@ -122,7 +123,7 @@ const ScoreHalf = ({
       display: flex;
       align-items: center;
       flex-direction: ${reversed ? "row-reverse" : "row"};
-      gap: ${theme.spacing(1.5)}px;
+      gap: ${theme.spacing(1.5)};
     `}
   >
     <Ink color={color} size={5} />
@@ -130,7 +131,7 @@ const ScoreHalf = ({
       className={css`
         display: flex;
         flex-direction: column;
-        gap: ${theme.spacing(1)}px;
+        gap: ${theme.spacing(1)};
       `}
     >
       {[
@@ -148,10 +149,10 @@ const ScoreHalf = ({
         <Box key={index}>
           <Button
             className={css`
-              padding: ${theme.spacing(0)}px;
-              font-size: ${theme.spacing(3)}px;
-              min-width: ${theme.spacing(5)}px;
-              min-height: ${theme.spacing(5)}px;
+              padding: ${theme.spacing(0)};
+              font-size: ${theme.spacing(3)};
+              min-width: ${theme.spacing(5)};
+              min-height: ${theme.spacing(5)};
             `}
             variant="contained"
             color={props.color as "primary" | "secondary"}
@@ -163,11 +164,12 @@ const ScoreHalf = ({
       ))}
     </Box>
     <TextField
+      variant="standard"
       className={css`
         input {
           padding: 0px;
           text-align: center;
-          font-size: ${theme.spacing(6)}px;
+          font-size: ${theme.spacing(6)};
           width: 1em;
         }
       `}
@@ -241,6 +243,7 @@ const Nameboard = ({ loadedData, colors }: NameboardProps) => {
       >
         <Button
           variant="outlined"
+          color="grey"
           className={css`
             white-space: nowrap;
           `}
@@ -271,12 +274,14 @@ type DropdownColorsProps = {
   colors: LoadedData["colors"]
 }
 
+type ColorPair = [string, string]
+
 const DropdownColors = ({
   updateState,
   state,
   colors,
 }: DropdownColorsProps) => {
-  const getPairFromValue = (value: ReplicantReturnType<Colors>["state"]) =>
+  const getPairFromValue = (value: ColorPair) =>
     colors.find(
       pair => value.includes(pair[0].value) && value.includes(pair[1].value)
     )
@@ -285,32 +290,34 @@ const DropdownColors = ({
     <Dropdown
       options={colors.map(pair => [pair[0].value, pair[1].value]) || []}
       value={state}
-      onChange={(event: unknown, newVal: Colors) =>
+      onChange={(e, newVal: Colors) =>
         updateState({
           type: "set",
           payload: newVal,
         })
       }
-      getOptionSelected={(o: Colors, v: Colors) =>
+      isOptionEqualToValue={(o: ColorPair, v: ColorPair) =>
         JSON.stringify(o) === JSON.stringify(v)
       }
-      getOptionLabel={(o: Colors) => {
+      getOptionLabel={(o: ColorPair) => {
         const pair = getPairFromValue(o)
         return `${pair?.[0].name} vs ${pair?.[1].name}`
       }}
-      renderOption={(o: Colors) => {
+      renderOption={(props, o: ColorPair) => {
         const pair = getPairFromValue(o)
         return (
-          <Box
-            className={css`
-              display: flex;
-              align-items: center;
-              gap: ${theme.spacing(0.5)}px;
-            `}
-          >
-            <Ink color={pair?.[0].value || "transparent"} size={2} />
-            {`${pair?.[0].name} vs ${pair?.[1].name}`}
-            <Ink color={pair?.[1].value || "transparent"} size={2} />
+          <Box {...props}>
+            <Box
+              className={css`
+                display: flex;
+                align-items: center;
+                gap: ${theme.spacing(0.5)};
+              `}
+            >
+              <Ink color={pair?.[0].value || "transparent"} size={2} />
+              {`${pair?.[0].name} vs ${pair?.[1].name}`}
+              <Ink color={pair?.[1].value || "transparent"} size={2} />
+            </Box>
           </Box>
         )
       }}
@@ -328,7 +335,7 @@ const Ink = ({ color, size }: InkProps) => (
   <SvgIcon
     className={css`
       color: ${color};
-      ${size && `font-size: ${theme.spacing(size)}px;`}
+      ${size && `font-size: ${theme.spacing(size)};`}
     `}
   >
     <circle

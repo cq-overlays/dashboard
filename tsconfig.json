@@ -1,18 +1,28 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
-    "lib": ["es6"],
-    "jsx": "react",
-    "esModuleInterop": true,
+    "target": "ESNext",
+    "lib": ["es6", "DOM", "DOM.Iterable", "ESNext"],
+    "jsx": "react-jsx",
+    "esModuleInterop": false,
     "strict": true,
-    "noImplicitAny": true,
     "sourceMap": true,
-    "resolveJsonModule": true
+    "useDefineForClassFields": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "node_modules/nodecg/types/browser.d.ts"
-  ]
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

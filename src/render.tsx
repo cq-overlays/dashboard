@@ -1,15 +1,33 @@
 import React from "react"
 import { render } from "react-dom"
 import { css } from "@emotion/css"
-import { SvgIcon } from "@material-ui/core"
-import { ThemeProvider, createTheme } from "@material-ui/core/styles"
-import { StylesProvider } from "@material-ui/core/styles"
+import { SvgIcon } from "@mui/material"
+import {
+  ThemeProvider,
+  Theme,
+  StyledEngineProvider,
+  createTheme,
+  alpha,
+} from "@mui/material/styles"
 import "@fontsource/open-sans/300.css"
 import "@fontsource/open-sans/400.css"
 import "@fontsource/open-sans/600.css"
 import "@fontsource/open-sans/700.css"
 import "@fontsource/open-sans/800.css"
 import "./overrides.css"
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    grey: true
+  }
+}
+
+declare module "@mui/material" {
+  interface Color {
+    main: string
+    dark: string
+  }
+}
 
 export const AddRounded = () => (
   <SvgIcon
@@ -45,7 +63,7 @@ export const RemoveRounded = () => (
   </SvgIcon>
 )
 
-export const theme = createTheme({
+const rawTheme = createTheme({
   typography: {
     fontFamily: [
       "Open Sans",
@@ -59,7 +77,7 @@ export const theme = createTheme({
     },
   },
   palette: {
-    type: "dark",
+    mode: "dark",
     primary: {
       light: "#008585",
       main: "#00BEBE",
@@ -87,13 +105,65 @@ export const theme = createTheme({
       A400: "#707B8F",
       A200: "#7D8799",
       A100: "#8992A2",
+      main: "#293346",
+      dark: "#2c374b",
+    },
+  },
+})
+
+export const theme = createTheme(rawTheme, {
+  components: {
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: "contained", color: "grey" },
+          style: {
+            color: rawTheme.palette.getContrastText(rawTheme.palette.grey[300]),
+          },
+        },
+        {
+          props: { variant: "outlined", color: "grey" },
+          style: {
+            color: rawTheme.palette.text.primary,
+            borderColor:
+              rawTheme.palette.mode === "light"
+                ? "rgba(0, 0, 0, 0.23)"
+                : "rgba(255, 255, 255, 0.23)",
+            "&.Mui-disabled": {
+              border: `1px solid ${rawTheme.palette.action.disabledBackground}`,
+            },
+            "&:hover": {
+              borderColor:
+                rawTheme.palette.mode === "light"
+                  ? "rgba(0, 0, 0, 0.23)"
+                  : "rgba(255, 255, 255, 0.23)",
+              backgroundColor: alpha(
+                rawTheme.palette.text.primary,
+                rawTheme.palette.action.hoverOpacity
+              ),
+            },
+          },
+        },
+        {
+          props: { color: "grey", variant: "text" },
+          style: {
+            color: rawTheme.palette.text.primary,
+            "&:hover": {
+              backgroundColor: alpha(
+                rawTheme.palette.text.primary,
+                rawTheme.palette.action.hoverOpacity
+              ),
+            },
+          },
+        },
+      ],
     },
   },
 })
 
 const Template = ({ children }: any) => (
-  <ThemeProvider theme={theme}>
-    <StylesProvider injectFirst>
+  <StyledEngineProvider injectFirst>
+    <ThemeProvider theme={theme}>
       <div
         className={css`
           font-family: "Open Sans", "Roboto", "Helvetica", "Arial", "sans-serif";
@@ -101,8 +171,8 @@ const Template = ({ children }: any) => (
       >
         {children}
       </div>
-    </StylesProvider>
-  </ThemeProvider>
+    </ThemeProvider>
+  </StyledEngineProvider>
 )
 
 export default (App: any) => {

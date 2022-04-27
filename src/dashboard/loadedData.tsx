@@ -1,36 +1,36 @@
-import React from "react"
-import { css } from "@emotion/css"
-import { Typography, Box, InputBase, Button } from "@material-ui/core"
-import render, { theme } from "../render"
-import Section from "../components/Section"
-import useLoadedData, { LoadedData, defaultData } from "../hooks/useLoadedData"
-import { ReplicantReturnType } from "../hooks/useReplicant"
+import React from "react";
+import { css } from "@emotion/css";
+import { Typography, Box, InputBase, Button } from "@mui/material";
+import render, { theme } from "../render";
+import Section from "../components/Section";
+import useLoadedData, { LoadedData, defaultData } from "../hooks/useLoadedData";
+import { ReplicantReturnType } from "../hooks/useReplicant";
 
 const Panel = () => {
-  const loadedData = useLoadedData()
+  const loadedData = useLoadedData();
 
   return (
     <>
       <UploadSection loadedData={loadedData} />
       <DataManagerSection loadedData={loadedData} />
     </>
-  )
-}
+  );
+};
 
 type SectionProps = {
-  loadedData: ReplicantReturnType<LoadedData>
-}
+  loadedData: ReplicantReturnType<LoadedData>;
+};
 
 const UploadSection = ({ loadedData }: SectionProps) => {
-  const [selectedFile, setSelectedFile]: any = React.useState()
-  const [inputKey, setInputKey] = React.useState(Date.now())
+  const [selectedFile, setSelectedFile]: any = React.useState();
+  const [inputKey, setInputKey] = React.useState(Date.now());
 
   const handleSubmit = async () => {
-    const json = JSON.parse(await selectedFile.text())
-    loadedData.replicateState({ type: "upload", payload: json })
-    setSelectedFile(undefined)
-    setInputKey(Date.now())
-  }
+    const json = JSON.parse(await selectedFile.text());
+    loadedData.replicateState({ type: "upload", payload: json });
+    setSelectedFile(undefined);
+    setInputKey(Date.now());
+  };
 
   return (
     <Section>
@@ -43,8 +43,8 @@ const UploadSection = ({ loadedData }: SectionProps) => {
         <InputBase
           type="file"
           key={inputKey}
-          onChange={e => {
-            setSelectedFile(e.target.files[0])
+          onChange={(e) => {
+            setSelectedFile(e.target.files[0]);
           }}
           inputProps={{ style: { height: "100%" } }}
         />
@@ -60,22 +60,22 @@ const UploadSection = ({ loadedData }: SectionProps) => {
         </Box>
       </Box>
     </Section>
-  )
-}
+  );
+};
 
 const DataManagerSection = ({ loadedData }: SectionProps) => {
   const isDefault = (key: string) =>
-    JSON.stringify(loadedData.state[key]) === JSON.stringify(defaultData[key])
+    JSON.stringify(loadedData.state[key]) === JSON.stringify(defaultData[key]);
   return (
     <Section
       className={css`
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        gap: ${theme.spacing(3)}px;
+        gap: ${theme.spacing(3)};
       `}
     >
-      {Object.keys(defaultData).map(key => {
+      {Object.keys(defaultData).map((key) => {
         return (
           <Box
             key={key}
@@ -99,10 +99,10 @@ const DataManagerSection = ({ loadedData }: SectionProps) => {
               {isDefault(key) ? "Default Value" : "Reset to Default"}
             </Button>
           </Box>
-        )
+        );
       })}
     </Section>
-  )
-}
+  );
+};
 
-render(Panel)
+render(Panel);
