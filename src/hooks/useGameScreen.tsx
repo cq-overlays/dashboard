@@ -1,5 +1,5 @@
-import { useReplicant } from "./useReplicant"
 import schema from "../../schemas/currentGameScreen.json"
+import { useReplicant } from "./useReplicant"
 
 export type GameScreen = {
   showScores: boolean

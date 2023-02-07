@@ -1,5 +1,5 @@
-import { useReplicant } from "./useReplicant"
 import schema from "../../schemas/lastFmData.json"
+import { useReplicant } from "./useReplicant"
 
 export type LastFMData = {
   enabled: boolean

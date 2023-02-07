@@ -1,13 +1,12 @@
-import React from "react"
 import { css } from "@emotion/css"
 import { Box, TextField } from "@mui/material"
 
-import render from "../render"
-import Section from "../components/Section"
 import ArrayStatePanel from "../components/ArrayStatePanel"
+import Section from "../components/Section"
 import useBlock, { Block } from "../hooks/useBlock"
 import useLoadedData from "../hooks/useLoadedData"
 import { ReplicantReturnType } from "../hooks/useReplicant"
+import render from "../render"
 
 const Panel = () => {
   const block = useBlock()

@@ -1,5 +1,5 @@
-import { useReplicant } from "./useReplicant"
 import schema from "../../schemas/currentBlock.json"
+import { useReplicant } from "./useReplicant"
 
 export type Block = {
   name: string

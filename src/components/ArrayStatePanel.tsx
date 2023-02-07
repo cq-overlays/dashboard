@@ -1,11 +1,10 @@
-import React from "react"
 import { css } from "@emotion/css"
-import { Button, Box, ButtonGroup } from "@mui/material"
+import { Box, Button, ButtonGroup } from "@mui/material"
 
-import { RemoveRounded, AddRounded } from "../render"
-import Section from "../components/Section"
 import Dropdown from "../components/Dropdown"
+import Section from "../components/Section"
 import { ReplicantReturnType } from "../hooks/useReplicant"
+import { AddRounded, RemoveRounded } from "../render"
 
 type ArrayStatePanelProps = {
   hook: ReplicantReturnType<{ name: string; value: Array<any> }>
@@ -79,7 +78,7 @@ export default ({
           justify-content: flex-end;
         `}
       >
-        <ButtonGroup variant="text" color="grey">
+        <ButtonGroup variant="text" color="inherit">
           <Button
             color="primary"
             onClick={() => hook.updateState({ type: "add" })}

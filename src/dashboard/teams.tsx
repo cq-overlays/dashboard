@@ -1,15 +1,15 @@
-import React from "react"
 import { css } from "@emotion/css"
-import { Box, TextField, Button, SvgIcon } from "@mui/material"
-import render, { theme, AddRounded, RemoveRounded } from "../render"
-import Section from "../components/Section"
+import { Box, Button, SvgIcon, TextField } from "@mui/material"
+import React from "react"
 import Dropdown from "../components/Dropdown"
-import { ReplicantReturnType } from "../hooks/useReplicant"
-import useTeams from "../hooks/useTeams"
-import useScores from "../hooks/useScores"
+import Section from "../components/Section"
 import useColors, { Colors } from "../hooks/useColors"
-import useMapWinners from "../hooks/useMapWinners"
 import useLoadedData, { LoadedData } from "../hooks/useLoadedData"
+import useMapWinners from "../hooks/useMapWinners"
+import { ReplicantReturnType } from "../hooks/useReplicant"
+import useScores from "../hooks/useScores"
+import useTeams from "../hooks/useTeams"
+import render, { AddRounded, RemoveRounded, theme } from "../render"
 
 const Panel = () => {
   const loadedData = useLoadedData()
@@ -82,7 +82,7 @@ const Scores = ({ colors }: { colors: ReplicantReturnType<Colors> }) => {
       <Box p={1.5}>
         <Button
           onClick={() => scores.replicateState({ type: "reset" })}
-          color="grey"
+          color="inherit"
           className={css`
             font-size: ${theme.spacing(2)};
             min-width: ${theme.spacing(3.5)};
@@ -242,9 +242,10 @@ const Nameboard = ({ loadedData, colors }: NameboardProps) => {
       >
         <Button
           variant="outlined"
-          color="grey"
+          color="inherit"
           className={css`
             white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.23);
           `}
           onClick={() => colors.updateState({ type: "swap" })}
         >

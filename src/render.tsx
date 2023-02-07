@@ -1,19 +1,15 @@
-import React from "react"
-import { render } from "react-dom"
-import { css } from "@emotion/css"
-import { SvgIcon } from "@mui/material"
-import {
-  ThemeProvider,
-  Theme,
-  StyledEngineProvider,
-  createTheme,
-  alpha,
-} from "@mui/material/styles"
 import "@fontsource/open-sans/300.css"
 import "@fontsource/open-sans/400.css"
 import "@fontsource/open-sans/600.css"
 import "@fontsource/open-sans/700.css"
 import "@fontsource/open-sans/800.css"
+import { SvgIcon } from "@mui/material"
+import {
+  createTheme,
+  StyledEngineProvider,
+  ThemeProvider,
+} from "@mui/material/styles"
+import { render } from "react-dom"
 import "./overrides.css"
 
 declare module "@mui/material/Button" {
@@ -63,7 +59,7 @@ export const RemoveRounded = () => (
   </SvgIcon>
 )
 
-const rawTheme = createTheme({
+export const theme = createTheme({
   typography: {
     fontFamily: [
       "Open Sans",
@@ -111,67 +107,9 @@ const rawTheme = createTheme({
   },
 })
 
-export const theme = createTheme(rawTheme, {
-  components: {
-    MuiButton: {
-      variants: [
-        {
-          props: { variant: "contained", color: "grey" },
-          style: {
-            color: rawTheme.palette.getContrastText(rawTheme.palette.grey[300]),
-          },
-        },
-        {
-          props: { variant: "outlined", color: "grey" },
-          style: {
-            color: rawTheme.palette.text.primary,
-            borderColor:
-              rawTheme.palette.mode === "light"
-                ? "rgba(0, 0, 0, 0.23)"
-                : "rgba(255, 255, 255, 0.23)",
-            "&.Mui-disabled": {
-              border: `1px solid ${rawTheme.palette.action.disabledBackground}`,
-            },
-            "&:hover": {
-              borderColor:
-                rawTheme.palette.mode === "light"
-                  ? "rgba(0, 0, 0, 0.23)"
-                  : "rgba(255, 255, 255, 0.23)",
-              backgroundColor: alpha(
-                rawTheme.palette.text.primary,
-                rawTheme.palette.action.hoverOpacity
-              ),
-            },
-          },
-        },
-        {
-          props: { color: "grey", variant: "text" },
-          style: {
-            color: rawTheme.palette.text.primary,
-            "&:hover": {
-              backgroundColor: alpha(
-                rawTheme.palette.text.primary,
-                rawTheme.palette.action.hoverOpacity
-              ),
-            },
-          },
-        },
-      ],
-    },
-  },
-})
-
 const Template = ({ children }: any) => (
   <StyledEngineProvider injectFirst>
-    <ThemeProvider theme={theme}>
-      <div
-        className={css`
-          font-family: "Open Sans", "Roboto", "Helvetica", "Arial", "sans-serif";
-        `}
-      >
-        {children}
-      </div>
-    </ThemeProvider>
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
   </StyledEngineProvider>
 )
 

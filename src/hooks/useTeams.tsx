@@ -1,5 +1,5 @@
-import { useReplicant } from "./useReplicant"
 import schema from "../../schemas/currentTeams.json"
+import { useReplicant } from "./useReplicant"
 
 export type Teams = Array<{
   name: string

@@ -1,5 +1,5 @@
-import { useReplicant } from "./useReplicant"
 import schema from "../../schemas/currentMusic.json"
+import { useReplicant } from "./useReplicant"
 
 export type Music = {
   song: string

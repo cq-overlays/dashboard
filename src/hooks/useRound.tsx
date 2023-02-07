@@ -1,5 +1,5 @@
-import { useReplicant } from "./useReplicant"
 import schema from "../../schemas/currentRound.json"
+import { useReplicant } from "./useReplicant"
 
 export type Round = {
   name: string

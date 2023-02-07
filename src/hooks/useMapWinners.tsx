@@ -1,5 +1,5 @@
-import { useReplicant } from "./useReplicant"
 import schema from "../../schemas/currentMapWinners.json"
+import { useReplicant } from "./useReplicant"
 
 export type MapWinners = Array<"A" | "B">
 

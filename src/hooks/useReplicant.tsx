@@ -1,8 +1,8 @@
 /**
  * A base react hook, to be implemented in other custom replicant hooks.
  */
-import { useEffect, useReducer, useState } from "react"
 import { ReplicantOptions } from "nodecg/types/server"
+import { useEffect, useReducer, useState } from "react"
 
 export type ReplicantParameters<T> = {
   name: string

@@ -1,32 +1,32 @@
-import React from "react"
 import { css } from "@emotion/css"
 import {
-  Typography,
-  Radio,
-  FormControlLabel,
-  RadioGroup,
   Box,
   Button,
-  SvgIcon,
-  TextField,
-  FormGroup,
-  Switch,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
+  FormGroup,
+  Radio,
+  RadioGroup,
+  SvgIcon,
+  Switch,
+  TextField,
   Tooltip,
+  Typography,
 } from "@mui/material"
-import render, { theme } from "../render"
+import React from "react"
 import useSWR from "swr"
 import Section from "../components/Section"
 import TextSection from "../components/TextSection"
 import useBreakScreen from "../hooks/useBreakScreen"
 import useFlavorText from "../hooks/useFlavorText"
-import useMusic, { Music } from "../hooks/useMusic"
-import useLastFmData from "../hooks/useLastFmData"
 import useGameScreen from "../hooks/useGameScreen"
+import useLastFmData from "../hooks/useLastFmData"
+import useMusic, { Music } from "../hooks/useMusic"
 import { ReplicantReturnType } from "../hooks/useReplicant"
+import render, { theme } from "../render"
 
 const Panel = () => {
   const flavorText = useFlavorText()

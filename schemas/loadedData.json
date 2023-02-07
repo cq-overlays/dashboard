@@ -68,9 +68,9 @@
   "default": {
     "rounds": {
       "Test Round": [
-        { "map": "Moray Towers", "mode": "Clam Blitz" },
-        { "map": "Moray Towers", "mode": "Clam Blitz" },
-        { "map": "Moray Towers", "mode": "Clam Blitz" }
+        { "map": "Scorch Gorge", "mode": "Splat Zones" },
+        { "map": "Scorch Gorge", "mode": "Splat Zones" },
+        { "map": "Scorch Gorge", "mode": "Splat Zones" }
       ]
     },
     "teams": {
@@ -85,60 +85,69 @@
     },
     "colors": [
       [
-        { "name": "Slimy Green", "value": "#25B100" },
-        { "name": "Grape", "value": "#571DB1" }
+        { "name": "Blue", "value": "#1a1aae" },
+        { "name": "Yellow", "value": "#e38d24" }
       ],
       [
-        { "name": "Winter Green", "value": "#03B362" },
-        { "name": "Dark Magenta", "value": "#B1008D" }
+        { "name": "Green", "value": "#a0c937" },
+        { "name": "Purple", "value": "#ba30b0" }
       ],
       [
-        { "name": "Turquoise", "value": "#0CAE6E" },
-        { "name": "Pumpkin", "value": "#F75900" }
+        { "name": "Lime Green", "value": "#becd41" },
+        { "name": "Purple", "value": "#6325cd" }
       ],
       [
-        { "name": "Mustard", "value": "#CE8003" },
-        { "name": "Purple", "value": "#9208B2" }
+        { "name": "Orange", "value": "#de6624" },
+        { "name": "Blue", "value": "#343bc4" }
       ],
       [
-        { "name": "Blue", "value": "#2922B5" },
-        { "name": "Green", "value": "#5EB604" }
+        { "name": "Orange", "value": "#cd510a" },
+        { "name": "Purple", "value": "#6e04b6" }
       ],
       [
-        { "name": "Rich Purple", "value": "#7B0393" },
-        { "name": "Green Apple", "value": "#43BA05" }
+        { "name": "Pink", "value": "#c12d74" },
+        { "name": "Green", "value": "#2cb721" }
       ],
       [
-        { "name": "Yellow", "value": "#D9C100" },
-        { "name": "True Blue", "value": "#007AC9" }
+        { "name": "Turquoise", "value": "#1bbeab" },
+        { "name": "Pink", "value": "#c43a6e" }
+      ],
+      [
+        { "name": "Turquoise", "value": "#1ec0ad" },
+        { "name": "Red", "value": "#d74b31" }
+      ],
+      [
+        { "name": "Yellow", "value": "#d0be08" },
+        { "name": "Blue", "value": "#3a0ccd" }
+      ],
+      [
+        { "name": "Yellow", "value": "#ceb121" },
+        { "name": "Purple", "value": "#9025c6" }
       ]
     ],
     "maps": [
-      "Ancho-V Games",
-      "Arowana Mall",
-      "Blackbelly Skatepark",
-      "Camp Triggerfish",
-      "Goby Arena",
-      "Humpback Pump Track",
+      "(counterpick)",
+      "Scorch Gorge",
+      "Eeltail Alley",
+      "Hagglefish Market",
+      "Undertow Spillway",
+      "Mincemeat Metalworks",
+      "Hammerhead Bridge",
+      "Museum d'Alfonsino",
+      "Mahi-Mahi Resort",
       "Inkblot Art Academy",
-      "Kelp Dome",
-      "MakoMart",
-      "Manta Maria",
-      "Moray Towers",
-      "Musselforge Fitness",
-      "New Albacore Hotel",
-      "Piranha Pit",
-      "Port Mackerel",
-      "Shellendorf Institute",
-      "Skipper Pavilion",
-      "Snapper Canal",
-      "Starfish Mainstage",
       "Sturgeon Shipyard",
-      "The Reef",
-      "Urchin Underpass",
+      "MakoMart",
       "Wahoo World",
-      "Walleye Warehouse"
+      "Flounder Heights",
+      "Brinewater Springs"
     ],
-    "modes": ["Splat Zones", "Tower Control", "Rainmaker", "Clam Blitz"]
+    "modes": [
+      "Turf War",
+      "Splat Zones",
+      "Tower Control",
+      "Rainmaker",
+      "Clam Blitz"
+    ]
   }
 }

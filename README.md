@@ -1,4 +1,4 @@
-# `cq-overlay-controls`
+# `cq-overlays/dashboard`
 > A broadcast graphics dashboard for controlling Splatoon tournament overlays
 
 ![License][license-shield]

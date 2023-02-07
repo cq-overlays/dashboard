@@ -1,6 +1,5 @@
-import React from "react"
 import { css } from "@emotion/css"
-import { Button, Box, TextField } from "@mui/material"
+import { Box, Button, TextField } from "@mui/material"
 
 import Section from "../components/Section"
 import { ReplicantReturnType } from "../hooks/useReplicant"

@@ -6,7 +6,7 @@
     "artist": { "type": ["string", "null"] }
   },
   "default": {
-    "song": "Farewell",
-    "artist": "Lena Raine"
+    "song": "Wave Prism",
+    "artist": "Chirpy Chips"
   }
 }

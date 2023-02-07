@@ -1,5 +1,4 @@
-import React from "react"
-import { TextField, Autocomplete, AutocompleteProps } from "@mui/material"
+import { Autocomplete, AutocompleteProps, TextField } from "@mui/material"
 
 interface DropdownProps<T> extends AutocompleteProps<T, true, true, true> {
   name: string
