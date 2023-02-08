@@ -10,7 +10,6 @@ import {
   ThemeProvider,
 } from "@mui/material/styles"
 import { render } from "react-dom"
-import "./overrides.css"
 
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
@@ -74,6 +73,9 @@ export const theme = createTheme({
   },
   palette: {
     mode: "dark",
+    background: {
+      paper: "#293346",
+    },
     primary: {
       light: "#008585",
       main: "#00BEBE",
