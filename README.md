@@ -5,7 +5,7 @@
 ![Stars][stars-shield]
 # ![Banner](banner.png)
 
-C.Q. Overlay Controls is a NodeCG dashboard bundle for controlling Splatoon tournament overlays. It's decoupled from any overlays to allow anyone to connect their own overlays seamlessly to the dashboard.
+A NodeCG dashboard bundle for controlling Splatoon tournament overlays. It's decoupled from any overlays to allow anyone to connect their own overlays seamlessly to the dashboard.
 
 It's used in all of the overlays that I build for myself, and all of the overlays that I have been [commissioned](https://ko-fi.com/leptoflare/commissions) for.
 
@@ -24,13 +24,13 @@ This bundle was originally designed for [Off the Dial's overlays](https://github
 2. Create a new directory and `cd` into it
 3. Setup a new NodeCG Instance: `nodecg setup`
 4. CD into the bundles directory: `cd bundles/`
-5. Find the version you're looking for on the [releases](https://github.com/LeptoFlare/cq-overlay-controls/releases) page, and download `cq-overlay-controls.zip`, the built bundle, and unzip.
+5. Find the version you're looking for on the [releases](https://github.com/cq-overlays/dashboard/releases) page, and download `cq-dashboard.zip`, the built bundle, and unzip.
    - The zip file only contains the built files (and a `package.json`), so you do not need to use `npm i` or `npm run build`.
 6. You can now install other bundles by dragging them into the `bundles/` subdirectory.
 7. Run NodeCG: `nodecg start`
 
 #### For Non-Programmers
-1. Find the version you're looking for on the [releases](https://github.com/LeptoFlare/cq-overlay-controls/releases) page, and download `cq-nodecg-instance.zip`, a NodeCG instance with this bundle pre-installed, and unzip.
+1. Find the version you're looking for on the [releases](https://github.com/cq-overlays/dashboard/releases) page, and download `cq-nodecg.zip`, a NodeCG instance with this bundle pre-installed, and unzip.
 2. You can now install other bundles by dragging them into the `bundles/` subdirectory.
 3. Run NodeCG by double-clicking `run.bat`, This is only for windows.
 
@@ -43,7 +43,7 @@ The dashboard is mainly self-explanatory and can be easily learned with just a b
 - On the `Teams` panel, there is a button in the middle of the 2 scores that will reset them
 - Changing the score will automatically set the map winners. The map winners buttons don't actually do anything-
 
-The upload file for `Loaded Data` is a JSON file, which you can find the schema for [here](https://github.com/LeptoFlare/cq-overlay-controls/blob/main/schemas/loadedData.json). If you don't know how to create a JSON file, there's a lot of online tools that let you create one without any programming experience, do a quick google search for "online json editor"! Maybe later I'll think of a way to create these files within the dashboard itself.
+The upload file for `Loaded Data` is a JSON file, which you can find the schema for [here](https://github.com/cq-overlays/dashboard/blob/main/schemas/loadedData.json). If you don't know how to create a JSON file, there's a lot of online tools that let you create one without any programming experience, do a quick google search for "online json editor"! Maybe later I'll think of a way to create these files within the dashboard itself.
 
 If you run into any issues or have any questions, feel free to contact me!
 
@@ -52,7 +52,7 @@ I've tried to design this bundle to make it simple and easy to connect your own 
 
 The way you connect to the stored dashboard data is with just replicants.
 > ```js
-> const currentTeams = nodecg.Replicant("currentTeams", "cq-overlay-controls");
+> const currentTeams = nodecg.Replicant("currentTeams", "cq-dashboard");
 >
 > currentTeams.on("change", (newValue, oldValue) => {
 >   // Write some logic here
@@ -69,8 +69,8 @@ For more information on how to build your own bundles, see the [NodeCG documenta
 
 ### Running locally
 1. Follow the steps in [Installing NodeCG](#installing-nodecg-with-this-bundle), **stop after step 3**
-2. Install this bundle for development: `nodecg install LeptoFlare/cq-overlay-controls --dev`
-3. CD into the bundle directory: `cd bundles/cq-overlay-controls`
+2. Install this bundle for development: `nodecg install cq-overlays/dashboard --dev`
+3. CD into the bundle directory: `cd bundles/dashboard`
 4. Start the development server: `npm run dev`
 5. Create a new window to start NodeCG from, and run NodeCG: `nodecg start`
 6. If you are building for production: `npm run build`
@@ -81,8 +81,8 @@ Contact me · [**@LeptoFlare**](https://github.com/LeptoFlare) · [lepto.tech](h
 
 As always, distributed under the MIT license. See `LICENSE` for more information.
 
-_[https://github.com/LeptoFlare/cq-overlay-controls](https://github.com/LeptoFlare/cq-overlay-controls)_
+_[https://github.com/cq-overlays/dashboard](https://github.com/cq-overlays/dashboard)_
 
 <!-- markdown links & imgs -->
-[stars-shield]: https://img.shields.io/github/stars/LeptoFlare/cq-overlay-controls.svg?style=social
-[license-shield]: https://img.shields.io/github/license/LeptoFlare/cq-overlay-controls.svg?style=flat
+[stars-shield]: https://img.shields.io/github/stars/cq-overlays/dashboard.svg?style=social
+[license-shield]: https://img.shields.io/github/license/cq-overlays/dashboard.svg?style=flat
