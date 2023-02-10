@@ -1,7 +1,7 @@
 import { css } from "@emotion/css"
 import { Box, Button, TextField } from "@mui/material"
 
-import Section from "../components/Section"
+import Section from "./Section"
 import { ReplicantReturnType } from "../hooks/useReplicant"
 
 type TextSectionProps = {

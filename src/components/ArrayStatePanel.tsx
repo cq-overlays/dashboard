@@ -1,8 +1,8 @@
 import { css } from "@emotion/css"
 import { Box, Button, ButtonGroup } from "@mui/material"
 
-import Dropdown from "../components/Dropdown"
-import Section from "../components/Section"
+import Dropdown from "./Dropdown"
+import Section from "./Section"
 import { ReplicantReturnType } from "../hooks/useReplicant"
 import { AddRounded, RemoveRounded } from "../render"
 
