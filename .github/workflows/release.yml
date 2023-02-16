@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm i
+      - run: npm run build
+      - run: mkdir dist
+      - run: cp -r dashboard package.json LICENSE dist/
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/
+          asset_name: cq-dashboard
+          tag: ${{ github.ref }}
+          overwrite: true
+
+      - uses: actions/checkout@v3
+        with:
+          repository: nodecg/nodecg
+          path: nodecg
+      - run: curl https://nodejs.org/dist/latest/win-x64/node.exe --output nodecg/node.exe
+      - run: echo "node.exe index.js" > nodecg/run.bat
+      - run: cp -r dist/ nodecg/bundles/cq-dashboard
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: nodecg/
+          asset_name: cq-nodecg
+          tag: ${{ github.ref }}
+          overwrite: true
