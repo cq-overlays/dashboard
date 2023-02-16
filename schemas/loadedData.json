@@ -17,7 +17,7 @@
     },
 
     "teams": {
-      "type": "object",
+      "type": ["object", "array", "null"],
       "additionalProperties": true
     },
     "blocks": {
@@ -71,8 +71,8 @@
       ]
     },
     "teams": {
-      "Team A": ["Player A1", "Player A2", "Player A3", "Player A4"],
-      "Team B": ["Player B1", "Player B2", "Player B3", "Player B4"]
+      "Team A": null,
+      "Team B": null
     },
     "blocks": {
       "Test Block": [

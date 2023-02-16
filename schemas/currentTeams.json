@@ -7,21 +7,20 @@
     "type": "object",
     "properties": {
       "name": { "type": "string" },
-      "data": { "type": "object", "additionalProperties": true }
+      "data": {
+        "type": ["object", "array", "null"],
+        "additionalProperties": true
+      }
     }
   },
   "default": [
     {
       "name": "Team A",
-      "data": {
-        "roster": ["Player A1", "Player A2", "Player A3", "Player A4"]
-      }
+      "data": null
     },
     {
       "name": "Team B",
-      "data": {
-        "roster": ["Player B1", "Player B2", "Player B3", "Player B4"]
-      }
+      "data": null
     }
   ]
 }
