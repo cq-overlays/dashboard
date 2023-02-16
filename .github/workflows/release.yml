@@ -30,9 +30,9 @@ jobs:
       - run: echo "node.exe index.js" > nodecg/run.bat
       - run: mkdir nodecg/bundles/cq-dashboard
       - run: cp -r dashboard package.json LICENSE nodecg/bundles/cq-dashboard
-      - run: cd nodecg
       - run: npm i
-      - run: zip -r cq-nodecg.zip ./*
+        working-directory: ./nodecg
+      - run: zip -r cq-nodecg.zip nodecg/
       - uses: svenstaro/upload-release-action@v2
         with:
           file: cq-nodecg.zip
