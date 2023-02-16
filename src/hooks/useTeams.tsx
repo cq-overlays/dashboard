@@ -3,7 +3,7 @@ import { useReplicant } from "./useReplicant"
 
 export type Teams = Array<{
   name: string
-  roster: Array<string>
+  data: object
 }>
 
 export default () =>

@@ -191,7 +191,7 @@ const Nameboard = ({ loadedData, colors }: NameboardProps) => {
         type,
         payload: {
           name: newVal,
-          roster: loadedData.teams[newVal],
+          data: loadedData.teams[newVal],
         },
       })
 
