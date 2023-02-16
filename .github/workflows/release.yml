@@ -28,6 +28,7 @@ jobs:
           path: nodecg
       - run: curl https://nodejs.org/dist/latest/win-x64/node.exe --output nodecg/node.exe
       - run: echo "node.exe index.js" > nodecg/run.bat
+      - run: mkdir nodecg/bundles/cq-dashboard
       - run: cp -r dashboard package.json LICENSE nodecg/bundles/cq-dashboard
       - run: zip -r cq-nodecg.zip nodecg/
       - uses: svenstaro/upload-release-action@v2
