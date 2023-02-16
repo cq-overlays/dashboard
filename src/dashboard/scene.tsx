@@ -8,6 +8,7 @@ import {
   DialogTitle,
   FormControlLabel,
   FormGroup,
+  Input,
   Radio,
   RadioGroup,
   SvgIcon,
@@ -103,8 +104,37 @@ const BreakScreenSection = () => {
             `}
           />
         ))}
+        <CustomScreen />
       </RadioGroup>
     </Section>
+  )
+}
+
+const CustomScreen = () => {
+  const [screen, setScreen] = React.useState("")
+
+  return (
+    <FormControlLabel
+      key="custom"
+      value={screen}
+      disabled={screen.length === 0}
+      control={<Radio color="primary" />}
+      label={
+        <Box ml={1.5}>
+          <Typography variant="button">
+            <Input
+              size="small"
+              placeholder="Custom Screen"
+              value={screen}
+              onChange={e => setScreen(e.target.value)}
+            />
+          </Typography>
+        </Box>
+      }
+      className={css`
+        margin: 0px;
+      `}
+    />
   )
 }
 
