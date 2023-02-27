@@ -1,4 +1,4 @@
-# <img src="cq-overlaysdashboard.png" height="36" />
+# <img src="cq-overlaysdashboard.png" alt="cq-overlays/dashboard" height="36" />
 > A broadcast graphics dashboard for controlling Splatoon tournament overlays
 
 ![License][license-shield]
