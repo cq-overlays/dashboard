@@ -1,9 +1,8 @@
-# `cq-overlays/dashboard`
+# <img src="cq-overlaysdashboard.png" height="36" />
 > A broadcast graphics dashboard for controlling Splatoon tournament overlays
 
 ![License][license-shield]
 ![Stars][stars-shield]
-# ![Banner](banner.png)
 
 A NodeCG dashboard bundle for controlling Splatoon tournament overlays. It's decoupled from any overlays to allow anyone to connect their own overlays seamlessly to the dashboard.
 
