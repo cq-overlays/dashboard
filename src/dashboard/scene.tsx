@@ -121,14 +121,23 @@ const CustomScreen = () => {
       control={<Radio color="primary" />}
       label={
         <Box ml={1.5}>
-          <Typography variant="button">
-            <Input
-              size="small"
-              placeholder="Custom Screen"
-              value={screen}
-              onChange={e => setScreen(e.target.value)}
-            />
-          </Typography>
+          <Input
+            size="small"
+            inputProps={{
+              style: {
+                fontSize: "14px",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+              },
+            }}
+            className={css`
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+            `}
+            placeholder="Custom Screen"
+            value={screen}
+            onChange={e => setScreen(e.target.value.toLowerCase())}
+          />
         </Box>
       }
       className={css`
