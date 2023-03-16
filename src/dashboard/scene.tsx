@@ -130,10 +130,6 @@ const CustomScreen = () => {
                 letterSpacing: "0.05em",
               },
             }}
-            className={css`
-              text-transform: uppercase;
-              letter-spacing: 0.05em;
-            `}
             placeholder="Custom Screen"
             value={screen}
             onChange={e => setScreen(e.target.value.toLowerCase())}
