@@ -12,6 +12,13 @@
         "width": 3
       },
       {
+        "name": "scene",
+        "file": "scene.html",
+        "title": "Scene",
+        "workspace": "CQ Overlays",
+        "width": 3
+      },
+      {
         "name": "round",
         "file": "round.html",
         "title": "Round",
@@ -22,13 +29,6 @@
         "name": "block",
         "file": "block.html",
         "title": "Block",
-        "workspace": "CQ Overlays",
-        "width": 3
-      },
-      {
-        "name": "scene",
-        "file": "scene.html",
-        "title": "Scene",
         "workspace": "CQ Overlays",
         "width": 3
       },
