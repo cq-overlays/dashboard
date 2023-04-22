@@ -14,6 +14,7 @@ export default defineConfig({
       input: [
         resolve(__dirname, "teams.html"),
         resolve(__dirname, "scene.html"),
+        resolve(__dirname, "finals.html"),
         resolve(__dirname, "round.html"),
         resolve(__dirname, "block.html"),
         resolve(__dirname, "loadedData.html"),
