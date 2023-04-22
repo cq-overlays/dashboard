@@ -19,6 +19,13 @@
         "width": 3
       },
       {
+        "name": "finals",
+        "file": "finals.html",
+        "title": "FABL Finals",
+        "workspace": "CQ Overlays",
+        "width": 10
+      },
+      {
         "name": "round",
         "file": "round.html",
         "title": "Round",
