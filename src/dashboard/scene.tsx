@@ -104,20 +104,27 @@ const BreakScreenSection = () => {
             `}
           />
         ))}
-        <CustomScreen />
+        <CustomScreen rep={breakScreen.replicant} />
       </RadioGroup>
     </Section>
   )
 }
 
-const CustomScreen = () => {
-  const [screen, setScreen] = React.useState("")
+const CustomScreen = ({ rep }: { rep: string | undefined }) => {
+  const [screen, setScreen] = React.useState(rep)
+  if (
+    screen === undefined &&
+    rep &&
+    !["brb", "maplist", "rosters"].includes(rep)
+  ) {
+    setScreen(rep)
+  }
 
   return (
     <FormControlLabel
       key="custom"
-      value={screen}
-      disabled={screen.length === 0}
+      value={screen || ""}
+      disabled={!screen || screen.length === 0}
       control={<Radio color="primary" />}
       label={
         <Box ml={1.5}>
@@ -131,7 +138,7 @@ const CustomScreen = () => {
               },
             }}
             placeholder="Custom Screen"
-            value={screen}
+            value={screen || ""}
             onChange={e => setScreen(e.target.value.toLowerCase())}
           />
         </Box>
