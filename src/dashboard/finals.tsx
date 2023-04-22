@@ -104,7 +104,7 @@ const GameSection = ({
           <RadioGroup
             row={true}
             value={game.state}
-            defaultValue="avaliable"
+            defaultValue="available"
             onChange={e => {
               fablFinals.replicateState({
                 type: "update",
@@ -112,7 +112,7 @@ const GameSection = ({
               })
             }}
           >
-            {["avaliable", "banned", "next", "winnerA", "winnerB"].map(v => (
+            {["available", "banned", "next", "winnerA", "winnerB"].map(v => (
               <FormControlLabel value={v} label={v} control={<Radio />} />
             ))}
           </RadioGroup>

@@ -12,7 +12,7 @@ export default () =>
     Array.from({ length: 16 }, (v, i) => i).map(i => ({
       map: "",
       mode: "",
-      state: "avaliable",
+      state: "available",
     })),
     (state: Array<FinalsGame>, action) => {
       switch (action.type) {
