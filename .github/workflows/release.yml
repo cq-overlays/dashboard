@@ -30,9 +30,8 @@ jobs:
           repo: nodecg/nodecg
           version: ${{ env.NODECG_VERSION }}
           file: "nodecg-.*\\.tgz"
-          target: nodecg.tgz
           regex: true
-      - run: tar zxvf nodecg.tgz
+      - run: tar zxvf nodecg-*.tgz
       - run: mv package/ nodecg/
       - run: npm i --omit=dev
         working-directory: ./nodecg
