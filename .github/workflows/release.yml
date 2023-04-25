@@ -5,6 +5,9 @@ on:
     tags:
       - "*"
 
+env:
+  NODECG_VERSION: latest
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,16 +25,20 @@ jobs:
           file: cq-dashboard.zip
           overwrite: true
 
-      - uses: actions/checkout@v3
+      - uses: dsaltares/fetch-gh-release-asset@master
         with:
-          repository: nodecg/nodecg
-          path: nodecg
+          repo: nodecg/nodecg
+          version: ${{ env.NODECG_VERSION }}
+          file: "nodecg-.*\\.tgz"
+          regex: true
+      - run: tar zxvf nodecg-*.tgz
+      - run: mv package/ nodecg/
+      - run: npm i --omit=dev
+        working-directory: ./nodecg
       - run: curl https://nodejs.org/dist/latest/win-x64/node.exe --output nodecg/node.exe
       - run: echo "node.exe index.js" > nodecg/run.bat
       - run: mkdir nodecg/bundles/cq-dashboard
       - run: cp -r dashboard package.json LICENSE nodecg/bundles/cq-dashboard
-      - run: npm i --production
-        working-directory: ./nodecg
       - run: zip -r cq-nodecg.zip nodecg/
       - uses: svenstaro/upload-release-action@v2
         with:
