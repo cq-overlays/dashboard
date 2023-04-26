@@ -2,7 +2,7 @@
   "name": "cq-dashboard",
   "version": "1.1.0",
   "nodecg": {
-    "compatibleRange": ">=2.0.0",
+    "compatibleRange": "^1.9.0",
     "dashboardPanels": [
       {
         "name": "teams",
