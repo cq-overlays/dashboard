@@ -7,19 +7,17 @@
 
 A NodeCG dashboard bundle for controlling Splatoon tournament overlays. It's decoupled from any overlays to allow anyone to connect their own overlays seamlessly to the dashboard.
 
-It's used in all of the overlays that I build for myself, and all of the overlays that I have been [commissioned](https://ko-fi.com/leptoflare/commissions) for.
-
 This bundle was originally designed for [Off the Dial's overlays](https://github.com/offthedial/overlays), however it has since been refined and remodeled to support splatoon tournament streams of any size and complexity.
 
 - Seamlessly control teams, scores, maps, colors, commentators and more using a single, unified control panel
 - Automatically set map winners when scores are changed
 - Preload team data, round data, and commentator block data into the dashboard
 
-## Usage <!-- Using the product -->
+## usage
 
-### Installing NodeCG with this bundle
+### installing nodecg with this bundle
 
-#### For Programmers
+#### for programmers
 
 1. Prerequisites
    1. Make sure you have [Node (with NPM)](https://nodejs.org) installed
@@ -32,7 +30,7 @@ This bundle was originally designed for [Off the Dial's overlays](https://github
 6. You can now install other bundles by dragging them into the `bundles/` subdirectory.
 7. Run NodeCG: `nodecg start`
 
-#### For Non-Programmers
+#### for non-programmers
 
 1. Find the version you're looking for on the [releases](https://github.com/cq-overlays/dashboard/releases) page, and download `cq-nodecg.zip`, a NodeCG instance with this bundle pre-installed, and unzip.
 2. You can now install other bundles by dragging them into the `bundles/` subdirectory.
@@ -40,7 +38,7 @@ This bundle was originally designed for [Off the Dial's overlays](https://github
 
 The dashboard should now be accessible! If you run into any issues or have any questions, feel free to contact me!
 
-### Using the dashboard
+### using the dashboard
 
 The dashboard is mainly self-explanatory and can be easily learned with just a bit playing with it. For those who want a quick run-down, here are some general tips and tricks:
 
@@ -53,10 +51,7 @@ The upload file for `Loaded Data` is a JSON file, which you can find the schema 
 
 If you run into any issues or have any questions, feel free to contact me!
 
-### Making your own overlays with this bundle
-
-I've tried to design this bundle to make it simple and easy to connect your own overlay bundles. If you don't know how to code, and/or would be interested in commissioning me to make overlays for you, please see my [ko-fi](https://ko-fi.com/leptoflare/commissions)!
-
+### making your own overlays with this bundle
 The way you connect to the stored dashboard data is with just replicants.
 
 > ```js
@@ -71,12 +66,7 @@ The documented list of all the available replicants are available in the [schema
 
 For more information on how to build your own bundles, see the [NodeCG documentation](https://www.nodecg.dev/docs/creating-bundles). If you run into any issues or have any questions, feel free to contact me!
 
-## Contributing <!-- Using the source -->
-
-1. Fork the repository and clone it.
-2. Make a new branch to submit your pull request from.
-
-### Running locally
+## local setup
 
 1. Follow the steps in [Installing NodeCG](#installing-nodecg-with-this-bundle), **stop after step 3**
 2. Install this bundle for development: `nodecg install cq-overlays/dashboard --dev`
@@ -87,11 +77,7 @@ For more information on how to build your own bundles, see the [NodeCG documenta
 
 ---
 
-Contact me · [**@LeptoFlare**](https://github.com/LeptoFlare) · [lepto.tech](https://lepto.tech)
-
-As always, distributed under the MIT license. See `LICENSE` for more information.
-
-_[https://github.com/cq-overlays/dashboard](https://github.com/cq-overlays/dashboard)_
+*empathy included • [**@cysabi**](https://github.com/cysabi) • [cysabi.github.io](https://cysabi.github.io)*
 
 <!-- markdown links & imgs -->
 
